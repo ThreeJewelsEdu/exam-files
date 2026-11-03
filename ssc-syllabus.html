@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Examinations Master Portal | Triratna Coaching Institute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF7F2;
+            background-image: 
+                radial-gradient(at 12% 12%, rgba(217, 119, 6, 0.04) 0px, transparent 50%),
+                radial-gradient(at 88% 88%, rgba(180, 83, 9, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* --- 3D ARCHITECTURAL SPEC SYSTEM (NO CARDS / NO FLAT DOORMATA) --- */
+        .dock-3d {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(217, 119, 6, 0.18);
+            box-shadow: 
+                0 1px 2px rgba(0,0,0,0.02),
+                0 10px 25px -5px rgba(180, 83, 9, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .dock-btn {
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .dock-btn:hover:not(.active) {
+            transform: translateY(-2px);
+            color: #92400e;
+        }
+
+        .dock-btn.active {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff !important;
+            box-shadow: 
+                0 4px 14px rgba(180, 83, 9, 0.38),
+                0 2px 0 #78350f,
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Continuous 3D HUD Telemetry Rail (replaces isolated mini boxes) */
+        .hud-slab {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF5EE 100%);
+            border: 1px solid rgba(217, 119, 6, 0.22);
+            border-bottom: 3px solid rgba(180, 83, 9, 0.35);
+            box-shadow: 
+                0 15px 35px -10px rgba(120, 53, 15, 0.08),
+                0 1px 3px rgba(0,0,0,0.02),
+                inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        }
+
+        .node-3d {
+            box-shadow: 
+                0 4px 10px rgba(180, 83, 9, 0.25),
+                0 2px 0 #92400e,
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        /* 3D Perspective Curriculum Drawer */
+        .drawer-3d {
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid rgba(217, 119, 6, 0.16);
+        }
+        .drawer-3d:hover {
+            background: rgba(255, 255, 255, 0.75);
+            padding-left: 0.6rem;
+        }
+
+        .content-swap {
+            animation: stageReveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes stageReveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.995);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Primary Architectural Header -->
+    <header class="border-b border-amber-900/10 bg-[#FAF7F2]/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform" style="box-shadow: 0 4px 0 #92400e, 0 8px 16px rgba(180,83,9,0.3);">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif block leading-tight">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-extrabold">Staff Selection Portal</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="#papers-section" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 text-white text-xs font-bold hover:bg-amber-700 shadow-sm transition-all" style="box-shadow: 0 3px 0 #92400e, 0 6px 12px rgba(180,83,9,0.25);">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Papers Archive</span>
+                </a>
+                <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-amber-800 flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING 3D NAVIGATION DOCK (Controls deep links for all 7 SSC exams) -->
+    <nav class="sticky top-20 z-40 py-3 bg-[#FAF7F2]/85 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="dock-3d p-2 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                <button onclick="navigateTo('cgl')" data-target="cgl" class="dock-btn active px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i> SSC CGL
+                </button>
+                <button onclick="navigateTo('chsl')" data-target="chsl" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="file-badge-2" class="w-3.5 h-3.5"></i> SSC CHSL
+                </button>
+                <button onclick="navigateTo('cpo')" data-target="cpo" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="shield" class="w-3.5 h-3.5"></i> SSC CPO SI
+                </button>
+                <button onclick="navigateTo('mts')" data-target="mts" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> SSC MTS &amp; Havaldar
+                </button>
+                <button onclick="navigateTo('gd')" data-target="gd" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="compass" class="w-3.5 h-3.5"></i> SSC GD Constable
+                </button>
+                <button onclick="navigateTo('steno')" data-target="steno" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> SSC Stenographer
+                </button>
+                <button onclick="navigateTo('selection-post')" data-target="selection-post" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="layers" class="w-3.5 h-3.5"></i> Selection Post
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN DYNAMIC STAGE (No cards, pure architectural canvas) -->
+    <main class="max-w-7xl mx-auto px-6 py-6 flex-grow w-full space-y-16">
+
+        <div id="dynamic-exam-canvas" class="content-swap space-y-16">
+            <!-- Content will be injected dynamically via JavaScript based on URL hash -->
+        </div>
+
+        <!-- SHARED TEST PAPERS ARCHIVE (Full-width sleek continuous section) -->
+        <section id="papers-section" class="scroll-mt-32 pt-8">
+            <div class="hud-slab p-10 rounded-3xl relative overflow-hidden">
+                <div class="max-w-3xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-600 text-white text-xs font-bold" style="box-shadow: 0 2px 0 #92400e;">
+                        <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i> Triratna SSC Test Repository
+                    </div>
+                    <h2 class="text-3xl font-serif font-bold text-slate-900">
+                        Official Previous Year Shift Papers &amp; CBT Simulator
+                    </h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Access official question papers with exact shift-wise timing, real negative penalty simulation, bilingual English/Hindi solutions, and instant percentile analytics.
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4" id="papers-actions">
+                        <!-- Dynamic paper links injected per exam -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Editorial Footer -->
+    <footer class="border-t border-amber-900/10 py-8 text-center text-xs text-slate-500 bg-[#FAF7F2] mt-16">
+        <p class="font-serif font-semibold text-slate-800 text-sm mb-1">TRIRATNA COACHING INSTITUTE</p>
+        <p>"Compassionate Learning for Success." &bull; Staff Selection Commission Comprehensive Master Portal</p>
+    </footer>
+
+    <!-- LOGIC & DATABASE FOR ALL 7 SSC EXAMS -->
+    <script>
+        const SSC_DATABASE = {
+            cgl: {
+                title: "SSC Combined Graduate Level (CGL)",
+                badge: "Staff Selection Commission &bull; Group 'B' & 'C' Cadres",
+                heroDesc: "India's premier civil executive recruitment for prestigious Group 'B' and 'C' Gazetted and Non-Gazetted posts in central ministries (Income Tax, Central Excise, CBI, Enforcement Directorate, MEA, IB, and CAG). Selection is 100% determined by written Tier-II marks.",
+                payScale: "Level 4 to Level 8 (₹25,500 - ₹1,51,100)",
+                selectionRounds: "Tier-I &rarr; Tier-II &rarr; DEST",
+                negMarking: "-0.50 (T1) | -1.00 (T2)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Bachelor's Degree in any discipline from a recognized University",
+                meritBasis: "Purely on Tier-II Written Score (390 Marks)",
+                stages: [
+                    { title: "Tier-I: Computer Based Preliminary Test", nature: "Qualifying Screening (100 Qs / 200 Marks / 60 Min)", desc: "Normalized score used solely to shortlist candidates for Tier-II. Tier-I marks are NOT added to the final merit ranking. +2 for correct, -0.50 for incorrect." },
+                    { title: "Tier-II: Paper-I (Mains Merit Decider)", nature: "Final Merit (130 Qs / 390 Marks / 2 Hr 15 Min)", desc: "Section I (Maths 30 + Reasoning 30 = 180 M) and Section II (English 45 + GA 25 = 210 M). Strict 60-minute auto-locking sectional limits per section. -1 mark penalty per incorrect answer." },
+                    { title: "Tier-II: Computer Knowledge & DEST Typing", nature: "Mandatory Qualifying Modules", desc: "Computer Test (20 Qs / 60 M / 15 min) + Data Entry Speed Test (DEST typing of 2,000 key depressions in 15 min / ~27 wpm). Mandatory to qualify for all posts." },
+                    { title: "Departmental Document Verification", nature: "Direct Ministry Posting", desc: "Document verification is conducted directly by the allocating user department/ministry (CBDT, CBIC, MEA) after the final merit list is released." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:45 AM", gate: "08:30 AM", time: "09:00 AM - 10:00 AM (60 Mins)" },
+                    { shift: "Shift 2 (Noon)", rep: "11:15 AM", gate: "12:00 PM", time: "12:30 PM - 01:30 PM (60 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "02:45 PM", gate: "03:30 PM", time: "04:00 PM - 05:00 PM (60 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence & Reasoning", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "General Awareness", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Quantitative Aptitude", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "English Comprehension", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Total Tier-I", q: "100 Qs", m: "200 Marks", time: "60 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Section I (Module 1: Maths | Module 2: Reasoning)", q: "60 (30+30)", m: "180", time: "60 min (Auto-locks)" },
+                    { sec: "Section II (Module 1: English | Module 2: GA)", q: "70 (45+25)", m: "210", time: "60 min (Auto-locks)" },
+                    { sec: "Section III: Computer Knowledge Module", q: "20", m: "60", time: "15 min (Qualifying)" },
+                    { sec: "Session II: Data Entry Speed Test (DEST)", q: "2000 KD", m: "Pass/Fail", time: "15 min (Qualifying)" },
+                    { sec: "Final Merit Total Base", q: "130 Qs", m: "390 Marks", time: "2 Hr 15 Min", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Assistant Audit / Accounts Officer (AAO)", level: "Level 8", basic: "₹47,600 - ₹1,51,100", inhand: "₹82,000 - ₹90,000" },
+                    { post: "Assistant Section Officer (ASO in CSS, MEA, IB)", level: "Level 7", basic: "₹44,900 - ₹1,42,400", inhand: "₹74,000 - ₹82,000" },
+                    { post: "Inspector of Income Tax / Central Excise", level: "Level 7", basic: "₹44,900 - ₹1,42,400", inhand: "₹74,000 - ₹82,000" },
+                    { post: "Sub-Inspector (CBI, NIA) / Executive (ED)", level: "Level 6 / 7", basic: "₹35,400 - ₹1,42,400", inhand: "₹60,000 - ₹78,000" },
+                    { post: "Auditor / Accountant / Tax Assistant", level: "Level 4 / 5", basic: "₹25,500 - ₹92,300", inhand: "₹38,000 - ₹48,000" }
+                ],
+                syllabus: [
+                    { subject: "Quantitative Aptitude (Arithmetic & Advance)", topics: "Percentages, Profit & Loss, SI/CI, Ratio, Time & Work, Speed Distance Time, Algebraic Identities, Geometry (Triangles, Circles, Tangents), Mensuration 2D/3D, Trigonometry (Heights & Distances), Coordinate Geometry, Statistics & Probability." },
+                    { subject: "Reasoning & General Intelligence", topics: "Semantic & Figural Analogies, Number Series, Coding-Decoding, Blood Relations, Syllogisms, Statement & Assumptions, Direction Sense, Seating Arrangement, Paper Folding, Embedded Figures, Critical Reasoning." },
+                    { subject: "English Language & Comprehension", topics: "Spotting Errors, Sentence Improvement, Active/Passive Voice conversions, Direct/Indirect Narration, Cloze Test passages, Synonyms & Antonyms, Idioms & Phrases, One-Word Substitution, Reading Comprehension." },
+                    { subject: "General Awareness & Static GK", topics: "Indian Constitution & Polity (Articles, Amendments), History (Modern Freedom movement), Geography (River systems, Climate, Soils), Economy (Union Budget, GDP), General Science, Current Affairs (last 6-8 months)." }
+                ],
+                papers: [
+                    { title: "SSC CGL Tier-I Shift Papers", url: "papers.html?exam=ssc-cgl&tier=1" },
+                    { title: "SSC CGL Tier-II Mains Papers", url: "papers.html?exam=ssc-cgl&tier=2" },
+                    { title: "CGL Full-Length CBT Mocks", url: "papers.html?exam=ssc-cgl&type=mock" }
+                ]
+            },
+
+            chsl: {
+                title: "SSC Combined Higher Secondary (10+2) Level (CHSL)",
+                badge: "Staff Selection Commission &bull; 10+2 Intermediate Cadre",
+                heroDesc: "The prime recruitment gateway for 12th pass aspirants into central administrative offices. Appoints Lower Division Clerks (LDC), Junior Secretariat Assistants (JSA), and Data Entry Operators (DEO) across Central Government Ministries. No viva interview.",
+                payScale: "Level 2 to Level 5 (₹19,900 - ₹92,300)",
+                selectionRounds: "Tier-I &rarr; Tier-II &rarr; Typing/DEST",
+                negMarking: "-0.50 (T1) | -1.00 (T2)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Passed 12th Standard or equivalent from a recognized Board",
+                meritBasis: "Purely on Tier-II Written Score (360 Marks)",
+                stages: [
+                    { title: "Tier-I: Computer Based Preliminary Test", nature: "Qualifying Only (100 Qs / 200 Marks / 60 Min)", desc: "Normalized score used solely to shortlist candidates for Tier-II. Tier-I marks are NOT counted in the final merit rank." },
+                    { title: "Tier-II: Mains Written Examination", nature: "Final Merit (120 Qs / 360 Marks / 2 Hr 15 Min)", desc: "Section I (Maths 30 + Reasoning 30 = 180 M) and Section II (English 40 + GA 20 = 180 M). 100% determinant of final selection. -1 mark penalty per wrong answer." },
+                    { title: "Tier-II: Computer Knowledge Module", nature: "Qualifying (15 Qs / 45 Marks / 15 Min)", desc: "Basic knowledge of computer systems, Windows, MS Office, and Internet fundamentals. Qualifying in nature." },
+                    { title: "Stage 3: Mandatory Typing / DEST Test", nature: "Qualifying Speed Test", desc: "Typing Test for LDC/JSA (35 wpm English / 30 wpm Hindi in 10 mins) + DEST for DEO (8,000 to 15,000 Key Depressions per hour in 15 mins)." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:45 AM", gate: "08:30 AM", time: "09:00 AM - 10:00 AM (60 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:00 PM", time: "12:30 PM - 01:30 PM (60 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "02:45 PM", gate: "03:30 PM", time: "04:00 PM - 05:00 PM (60 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence & Reasoning", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "General Awareness", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Quantitative Aptitude (Basic Arithmetic)", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "English Language (Basic Knowledge)", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Total Tier-I", q: "100 Qs", m: "200 Marks", time: "60 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Section I (Maths 30 + Reasoning 30)", q: "60", m: "180", time: "60 min" },
+                    { sec: "Section II (English 40 + GA 20)", q: "60", m: "180", time: "60 min" },
+                    { sec: "Section III: Computer Module", q: "15", m: "45", time: "15 min (Qualifying)" },
+                    { sec: "Session II: Typing / DEST Test", q: "Skill", m: "Pass/Fail", time: "10-15 min (Qualifying)" },
+                    { sec: "Final Merit Total Base", q: "120 Qs", m: "360 Marks", time: "2 Hr 15 Min", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Lower Division Clerk (LDC)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,500 - ₹35,000" },
+                    { post: "Junior Secretariat Assistant (JSA)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,500 - ₹35,000" },
+                    { post: "Data Entry Operator (DEO Standard)", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹41,000 - ₹45,000" },
+                    { post: "Data Entry Operator (Grade A in CAG)", level: "Level 5", basic: "₹29,200 - ₹92,300", inhand: "₹47,000 - ₹51,000" }
+                ],
+                syllabus: [
+                    { subject: "Quantitative Aptitude (Arithmetic & Basic Algebra)", topics: "Percentages, Ratio & Proportion, Averages, Profit & Loss, Simple & Compound Interest, Time & Work, Time Speed Distance, Basic Algebra, Trigonometry, Geometry, Mensuration 2D/3D, Data Interpretation." },
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Classification, Series, Coding-Decoding, Blood Relations, Syllogisms, Venn Diagrams, Paper Folding, Mirror/Water Images, Matrix, Direction Sense." },
+                    { subject: "English Language & Comprehension", topics: "Spotting Errors, Fill in the Blanks, Synonyms & Antonyms, Spellings, Idioms & Phrases, One Word Substitution, Active/Passive Voice, Narration, Cloze Test." },
+                    { subject: "General Awareness", topics: "Indian History, Geography, Indian Polity & Constitution, General Science (Physics, Chemistry, Biology), Current Affairs, Static GK (Folk Dances, Festivals, Monuments)." }
+                ],
+                papers: [
+                    { title: "SSC CHSL Tier-I Shift Papers", url: "papers.html?exam=ssc-chsl&tier=1" },
+                    { title: "SSC CHSL Tier-II Mains Papers", url: "papers.html?exam=ssc-chsl&tier=2" },
+                    { title: "CHSL Full-Length Mocks", url: "papers.html?exam=ssc-chsl&type=mock" }
+                ]
+            },
+
+            cpo: {
+                title: "SSC CPO Sub-Inspector (Delhi Police & CAPFs)",
+                badge: "Two-Star Executive Uniform Cadre &bull; Level 6 Pay Matrix",
+                heroDesc: "Direct executive appointment as Sub-Inspector with two-stars in Delhi Police and Central Armed Police Forces (BSF, CISF, CRPF, ITBP, and SSB). Total selection merit is based on 400 marks (Paper 1 + Paper 2) with mandatory physical qualifying standards.",
+                payScale: "Level 6 (₹35,400 - ₹1,12,400 | In-Hand ₹58,000 - ₹68,000)",
+                selectionRounds: "Paper-1 &rarr; PET/PST &rarr; Paper-2 &rarr; Medical",
+                negMarking: "-0.25 Mark per wrong answer",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Bachelor's Degree + Valid LMV Driving License (for Male SI in Delhi Police)",
+                meritBasis: "Combined Score of Paper-1 (200) + Paper-2 (200) = 400 Marks",
+                stages: [
+                    { title: "Paper-1: Computer Based Preliminary Test", nature: "Merit Contributor (200 Qs / 200 Marks / 120 Min)", desc: "Reasoning 50, GA 50, Quant 50, English 50. Scored marks add directly into the final merit rank (50% weightage). +1 for correct, -0.25 for incorrect." },
+                    { title: "Stage 2: Physical Standard (PST) & Endurance (PET)", nature: "Mandatory Qualifying Physical Test", desc: "Male: 100m sprint in 16s, 1.6km run in 6.5m, Long Jump 3.65m, High Jump 1.2m, Shot Put 4.5m. Female: 100m sprint in 18s, 800m run in 4m, Long Jump 2.7m, High Jump 0.9m." },
+                    { title: "Paper-2: English Language & Comprehension", nature: "Merit Contributor (200 Qs / 200 Marks / 120 Min)", desc: "Advanced English comprehension, grammar, and vocabulary test for PET-qualified candidates. Scored marks are added to Paper-1." },
+                    { title: "Stage 4: Detailed Medical Examination (DME)", nature: "Medical Board Standards", desc: "Vision (6/6 & 6/9 without glasses), color blindness check, absence of knock knees, flat foot, squint, or varicose veins." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 11:00 AM (120 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "02:30 PM", gate: "03:30 PM", time: "04:00 PM - 06:00 PM (120 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence & Reasoning", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "General Knowledge & General Awareness", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "Quantitative Aptitude", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "English Comprehension", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "Total Paper-1", q: "200 Qs", m: "200 Marks", time: "120 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Paper-2: English Language & Comprehension", q: "200", m: "200", time: "120 Min (2 Hours)" },
+                    { sec: "Final Merit Selection Base (Paper 1 + 2)", q: "400 Qs", m: "400 Marks", time: "4 Hours Total", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Sub-Inspector (Executive) in Delhi Police", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹62,000 - ₹68,000" },
+                    { post: "Sub-Inspector (GD) in Border Security Force (BSF)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹66,000 + Hardship" },
+                    { post: "Sub-Inspector (GD) in CISF", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹64,000" },
+                    { post: "Sub-Inspector (GD) in CRPF", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹66,000 + Risk" },
+                    { post: "Sub-Inspector (GD) in ITBP / SSB", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹65,000" }
+                ],
+                syllabus: [
+                    { subject: "Paper-1: Quant, Reasoning & General Awareness", topics: "Puzzles, Syllogisms, Arithmetic (Percentages, Ratios, SI/CI, Time & Work, Speed Distance Time), Algebra, Geometry, Indian Constitution, Modern History, Geography, Current Affairs." },
+                    { subject: "Paper-2: Advanced English Language & Comprehension", topics: "Error Recognition, Fill in the Blanks, Vocabulary, Spellings, Grammar, Sentence Structure, Synonyms, Antonyms, Idioms & Phrases, Cloze Test, and In-depth Reading Comprehension Passages." },
+                    { subject: "Physical Standards (PST Measurements)", topics: "Male: Height 170 cm (ST 162.5 cm), Chest 80 cm unexpanded / 85 cm expanded. Female: Height 157 cm (ST 154 cm)." }
+                ],
+                papers: [
+                    { title: "SSC CPO Paper-1 Shift Papers", url: "papers.html?exam=ssc-cpo&paper=1" },
+                    { title: "SSC CPO Paper-2 English Papers", url: "papers.html?exam=ssc-cpo&paper=2" },
+                    { title: "CPO Full Mock Simulator", url: "papers.html?exam=ssc-cpo&type=mock" }
+                ]
+            },
+
+            mts: {
+                title: "SSC MTS & Havaldar Examination",
+                badge: "Staff Selection Commission &bull; 10th Matriculation Level",
+                heroDesc: "Direct entry into central government ministries and departments as Multi-Tasking Staff (MTS) and Havaldar in Central Board of Indirect Taxes and Customs (CBIC) and Central Bureau of Narcotics (CBN). Final merit is 100% on Session-II (150 Marks).",
+                payScale: "Level 1 (₹18,000 - ₹56,900 | In-Hand ₹27,500 - ₹33,000)",
+                selectionRounds: "Session-I (Qualifying) &rarr; Session-II (Merit) &rarr; Havaldar PET",
+                negMarking: "Session-I: No Negative | Session-II: -1 Mark",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Passed Matriculation (10th Class) Examination from a recognized Board",
+                meritBasis: "Exclusively on Session-II Marks (150 Marks)",
+                stages: [
+                    { title: "Session-I: Math & Reasoning (Qualifying)", nature: "Qualifying Only (40 Qs / 120 Marks / 45 Min)", desc: "Maths 20 Qs + Reasoning 20 Qs. NO NEGATIVE MARKING. Only minimum qualifying percentage required (UR 30%, OBC/EWS 25%). Marks NOT added to merit." },
+                    { title: "Session-II: General Awareness & English (Merit)", nature: "100% Final Merit Decider (50 Qs / 150 Marks / 45 Min)", desc: "GA 25 Qs + English 25 Qs. -1 Mark penalty for every wrong answer. Entire final state allocation and merit rank is drawn exclusively from this 150 marks score." },
+                    { title: "Physical Efficiency Test (Havaldar Only)", nature: "Walking Test (PET)", desc: "1600 metres walking in 15 mins for Males; 1.0 km walking in 20 mins for Females. (MTS posts have NO physical test!)." },
+                    { title: "Final Allotment & Document Verification", nature: "Direct Posting", desc: "No descriptive paper, no viva interview. Direct state preference allocation based on Session-II merit list." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:45 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins Total)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:00 PM", time: "12:30 PM - 02:00 PM (90 Mins Total)" },
+                    { shift: "Shift 3 (Evening)", rep: "02:45 PM", gate: "03:30 PM", time: "04:00 PM - 05:30 PM (90 Mins Total)" }
+                ],
+                patternPrelims: [
+                    { sec: "Session-I: Numerical & Mathematical Ability", q: "20", m: "60", time: "45 min (No Negative)" },
+                    { sec: "Session-I: Reasoning Ability & Problem Solving", q: "20", m: "60", time: "45 min (No Negative)" },
+                    { sec: "Session-I Total (Qualifying)", q: "40 Qs", m: "120 Marks", time: "45 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Session-II: General Awareness", q: "25", m: "75", time: "45 min (-1 Penalty)" },
+                    { sec: "Session-II: English Language & Comprehension", q: "25", m: "75", time: "45 min (-1 Penalty)" },
+                    { sec: "Final Merit Total Base (Session-II)", q: "50 Qs", m: "150 Marks", time: "45 Mins", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Multi-Tasking Staff (MTS)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹29,000 - ₹33,000 (X Cities)" },
+                    { post: "Havaldar (Customs & GST in CBIC)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹29,000 - ₹33,000 (X Cities)" },
+                    { post: "Havaldar (Central Bureau of Narcotics)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹27,500 - ₹31,000 (Y/Z Cities)" }
+                ],
+                syllabus: [
+                    { subject: "Session-I: Numerical Ability & Reasoning", topics: "Integers & Whole Numbers, LCM/HCF, Percentages, Ratio, Work & Time, Simple Interest, Profit & Loss, Distance, Coding-Decoding, Analogies, Directions, Venn Diagrams, Non-verbal series." },
+                    { subject: "Session-II: General Awareness (High-Yield)", topics: "History, Geography, Art and Culture, Civics, Economics, Environmental Science, General Science, Current Affairs of last 6 months." },
+                    { subject: "Session-II: English Language & Comprehension", topics: "Vocabulary, Grammar, Sentence structure, Synonyms, Antonyms and its correct usage, Reading Comprehension passages." },
+                    { subject: "Havaldar Physical Standards (PST)", topics: "Male: Height 157.5 cm, Chest 81 cm (expanded 86 cm). Female: Height 152 cm, Minimum Weight 48 kg." }
+                ],
+                papers: [
+                    { title: "SSC MTS Shift Question Papers", url: "papers.html?exam=ssc-mts" },
+                    { title: "MTS Session 1 & 2 Mocks", url: "papers.html?exam=ssc-mts&type=mock" }
+                ]
+            },
+
+            gd: {
+                title: "SSC GD Constable (CAPFs, SSF & Rifleman)",
+                badge: "Staff Selection Commission &bull; Central Armed Police Forces",
+                heroDesc: "The largest national uniformed recruitment drive in India. Appoints General Duty Constables into BSF, CISF, CRPF, SSB, ITBP, Assam Rifles, and Secretariat Security Force. 100% selection based on Written CBE merit with physical qualifying standards.",
+                payScale: "Level 3 (₹21,700 - ₹69,100 | In-Hand ₹34,000 - ₹45,000)",
+                selectionRounds: "Written CBE &rarr; Physical PST/PET &rarr; DME Medical",
+                negMarking: "-0.25 Mark per wrong answer",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Matriculation (10th pass) from a recognized Board",
+                meritBasis: "Purely on Written CBE Marks (160 Marks)",
+                stages: [
+                    { title: "Stage 1: Computer Based Examination (CBE)", nature: "100% Final Merit Decider (80 Qs / 160 Marks / 60 Min)", desc: "Available in 13 regional languages + Hindi + English. 4 sections of 20 questions each. +2 marks for correct, -0.25 penalty for wrong answer." },
+                    { title: "Stage 2: Physical Standard Test (PST)", nature: "Height & Chest Verification", desc: "Male: Height 170 cm (ST 162.5 cm), Chest 80 cm unexpanded / 85 cm expanded. Female: Height 157 cm (ST 150 cm)." },
+                    { title: "Stage 3: Physical Efficiency Test (PET Race)", nature: "Timed Track Run (Pass/Fail)", desc: "Male: 5 km race in 24 minutes. Female: 1.6 km race in 8 minutes 30 seconds (Ladakh candidates have separate standards)." },
+                    { title: "Stage 4: Detailed Medical Examination (DME)", nature: "Medical Board Review", desc: "Eye sight 6/6 & 6/9, color vision test, absence of knock knees, flat foot, and bodily fitness for high-altitude/field postings." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:45 AM", gate: "08:30 AM", time: "09:00 AM - 10:00 AM (60 Mins)" },
+                    { shift: "Shift 2 (Mid-Day)", rep: "10:30 AM", gate: "11:15 AM", time: "11:45 AM - 12:45 PM (60 Mins)" },
+                    { shift: "Shift 3 (Afternoon)", rep: "01:15 PM", gate: "02:00 PM", time: "02:30 PM - 03:30 PM (60 Mins)" },
+                    { shift: "Shift 4 (Evening)", rep: "04:00 PM", gate: "04:45 PM", time: "05:15 PM - 06:15 PM (60 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence & Reasoning", q: "20", m: "40", time: "Composite 60 min" },
+                    { sec: "General Knowledge & General Awareness", q: "20", m: "40", time: "Composite 60 min" },
+                    { sec: "Elementary Mathematics", q: "20", m: "40", time: "Composite 60 min" },
+                    { sec: "English OR Hindi (Candidate's Choice)", q: "20", m: "40", time: "Composite 60 min" },
+                    { sec: "Total CBE Examination", q: "80 Qs", m: "160 Marks", time: "60 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Physical Efficiency Test (PET Race)", q: "5 km Run", m: "Pass/Fail", time: "24 Mins (Male)" },
+                    { sec: "Detailed Medical Board (DME)", q: "Medical", m: "Pass/Fail", time: "Board Check" }
+                ],
+                postsHierarchy: [
+                    { post: "CISF Constable (Airports, Metro, Sea Ports)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹34,000 - ₹38,000" },
+                    { post: "BSF Constable (Border Security)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹36,000 - ₹42,000 + Hardship" },
+                    { post: "CRPF Constable (Internal Security & CoBRA)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹36,000 - ₹44,000 + Risk" },
+                    { post: "ITBP Constable (Indo-China Himalayan Border)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹38,000 - ₹45,000 + Altitude" },
+                    { post: "SSF Constable (Central Secretariat, New Delhi)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹35,000 - ₹38,000" }
+                ],
+                syllabus: [
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Similarities & Differences, Spatial Visualization, Spatial Orientation, Visual Memory, Discrimination, Observation, Relationship concepts, Arithmetical reasoning." },
+                    { subject: "General Knowledge & General Awareness", topics: "India and its neighboring countries, Sports, History, Culture, Geography, Economic Scene, General Polity, Indian Constitution, Scientific Research." },
+                    { subject: "Elementary Mathematics", topics: "Number Systems, Computation of Whole Numbers, Decimals and Fractions, Fundamental arithmetical operations, Percentages, Ratio & Proportion, Averages, Interest, Profit & Loss, Time & Distance, Ratio & Time." },
+                    { subject: "English OR Hindi Language", topics: "Grammar, Spotting Errors, Fill in the blanks, Synonyms, Antonyms, Idioms, Comprehension / व्याकरण, वर्तनी शुद्धि, पर्यायवाची, विलोम शब्द, मुहावरे, गद्यांश आधारित प्रश्न।" }
+                ],
+                papers: [
+                    { title: "SSC GD Shift Question Papers", url: "papers.html?exam=ssc-gd" },
+                    { title: "SSC GD Bilingual Mocks", url: "papers.html?exam=ssc-gd&type=mock" }
+                ]
+            },
+
+            steno: {
+                title: "SSC Stenographer (Grade 'C' & 'D')",
+                badge: "Staff Selection Commission &bull; NO Mathematics Section!",
+                heroDesc: "The prime examination for aspirants proficient in shorthand stenography. Highly unique because there is NO Mathematics/Quantitative Aptitude section in the written test. English carries 50% weightage (100 Marks).",
+                payScale: "Grade C: Level 6/7 (₹35,400 - ₹1,42,400) | Grade D: Level 4 (₹25,500 - ₹81,100)",
+                selectionRounds: "Written CBT &rarr; Shorthand Skill Test &rarr; DV",
+                negMarking: "-0.25 Mark per wrong answer",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "12th Standard Pass + Shorthand Stenography proficiency",
+                meritBasis: "Purely on Written CBT Marks (200 Marks)",
+                stages: [
+                    { title: "Stage 1: Written Examination (CBT)", nature: "100% Final Merit Decider (200 Qs / 200 Marks / 120 Min)", desc: "Reasoning 50, GA 50, English 100. NO MATH SECTION. +1 for correct, -0.25 penalty for wrong answer." },
+                    { title: "Stage 2: Shorthand Skill Test (Grade C)", nature: "Qualifying Test (100 wpm)", desc: "10 minutes audio dictation at 100 wpm (1,000 words). Transcription time: English 40 min / Hindi 55 min on computer. Mistakes allowed: 5% UR." },
+                    { title: "Stage 2: Shorthand Skill Test (Grade D)", nature: "Qualifying Test (80 wpm)", desc: "10 minutes audio dictation at 80 wpm (800 words). Transcription time: English 50 min / Hindi 65 min on computer. Mistakes allowed: 7% UR." },
+                    { title: "Stage 3: Document Verification", nature: "User Ministry Validation", desc: "Certificate validation and cadre posting in MEA, Defence HQ, Home Ministry, CBDT, and Central Tribunals." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 11:00 AM (120 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "12:30 PM", gate: "01:30 PM", time: "02:00 PM - 04:00 PM (120 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence & Reasoning", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "General Awareness", q: "50", m: "50", time: "Composite 120 min" },
+                    { sec: "English Language & Comprehension", q: "100", m: "100", time: "Composite 120 min" },
+                    { sec: "Total CBT Written Exam", q: "200 Qs", m: "200 Marks", time: "120 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Grade C Shorthand (100 wpm)", q: "1000 Words", m: "Pass/Fail", time: "10 min dict + 40 min typing" },
+                    { sec: "Grade D Shorthand (80 wpm)", q: "800 Words", m: "Pass/Fail", time: "10 min dict + 50 min typing" }
+                ],
+                postsHierarchy: [
+                    { post: "Stenographer Grade 'C' (Group B)", level: "Level 6 / 7", basic: "₹35,400 - ₹1,42,400", inhand: "₹58,000 - ₹72,000" },
+                    { post: "Stenographer Grade 'D' (Group C)", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹40,000 - ₹45,000" }
+                ],
+                syllabus: [
+                    { subject: "English Language & Comprehension (100 Marks)", topics: "Error Recognition, Fill in the blanks, Synonyms, Antonyms, Spellings, Phrase Replacement, Idioms & Phrases, Active/Passive Voice, Direct/Indirect Speech, Cloze Test, Reading Passages." },
+                    { subject: "General Intelligence & Reasoning (50 Marks)", topics: "Analogies, Similarities, Problem Solving, Space Visualization, Analysis, Judgment, Decision Making, Visual Memory, Discriminating Observation, Relationship concepts, Arithmetical Reasoning." },
+                    { subject: "General Awareness (50 Marks)", topics: "Current Events, India and neighboring countries, History, Culture, Geography, Economic Scene, General Polity, Indian Constitution, Scientific Research." }
+                ],
+                papers: [
+                    { title: "SSC Steno Written Shift Papers", url: "papers.html?exam=ssc-steno" },
+                    { title: "Stenography Audio Dictation Practice", url: "papers.html?exam=ssc-steno&type=audio" }
+                ]
+            },
+
+            'selection-post': {
+                title: "SSC Selection Posts (Phase Examinations)",
+                badge: "Staff Selection Commission &bull; Matric, 10+2 &amp; Graduate Streams",
+                heroDesc: "Specialized recruitment for hundreds of technical, scientific, and administrative posts across Central Ministries, Zoological & Botanical Surveys, Archaeological Survey, CGHS, and National Archives. Separate exams for Matriculation, 10+2, and Graduate levels.",
+                payScale: "Level 1 to Level 7 (₹18,000 - ₹1,42,400)",
+                selectionRounds: "CBT &rarr; Postal Document Scrutiny &rarr; Skill Test (If Any)",
+                negMarking: "-0.50 Mark per wrong answer",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Stream-wise: 10th Pass / 12th Pass / Graduate Degree depending on post",
+                meritBasis: "100% on Written CBT Score (200 Marks)",
+                stages: [
+                    { title: "Stage 1: Computer Based Test (CBT)", nature: "100% Final Merit Decider (100 Qs / 200 Marks / 60 Min)", desc: "GI 25, GA 25, Quant 25, English 25. Same structure across all 3 levels (Matric, 10+2, Graduate) with difficulty matched to level. +2 for correct, -0.50 for wrong." },
+                    { title: "Stage 2: Hard Copy Document Scrutiny", nature: "Postal Verification", desc: "Shortlisted candidates speed-post self-attested copies of 10th certificate, degrees, experience documents to the respective SSC Regional Director within the deadline." },
+                    { title: "Stage 3: Trade / Skill Test (Specific Posts)", nature: "Qualifying", desc: "Only for specific technical posts requiring typing, laboratory analysis, or data handling. Pass/Fail only." },
+                    { title: "Final Direct Selection", nature: "No Viva Interview", desc: "Interview abolished. Final selection is determined strictly on the 200 marks score in the CBT." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Matriculation Level)", rep: "07:45 AM", gate: "08:30 AM", time: "09:00 AM - 10:00 AM (60 Mins)" },
+                    { shift: "Shift 2 (10+2 Level)", rep: "11:15 AM", gate: "12:00 PM", time: "12:30 PM - 01:30 PM (60 Mins)" },
+                    { shift: "Shift 3 (Graduate Level)", rep: "02:45 PM", gate: "03:30 PM", time: "04:00 PM - 05:00 PM (60 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Intelligence", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "General Awareness", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Quantitative Aptitude (Basic Arithmetic)", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "English Language (Basic Knowledge)", q: "25", m: "50", time: "Composite 60 min" },
+                    { sec: "Total CBT Examination", q: "100 Qs", m: "200 Marks", time: "60 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Document Scrutiny (Hard Copy Verification)", q: "Postal", m: "Scrutiny", time: "Regional Directorate" },
+                    { sec: "Trade / Skill Test (Where Prescribed)", q: "Practical", m: "Qualifying", time: "Departmental Lab" }
+                ],
+                postsHierarchy: [
+                    { post: "Senior Technical Assistant", level: "Level 7", basic: "₹44,900 - ₹1,42,400", inhand: "₹72,000 - ₹82,000" },
+                    { post: "Technical Superintendent", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹64,000" },
+                    { post: "Junior Fishery Scientist / Assistant", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹40,000 - ₹44,000" },
+                    { post: "Laboratory Attendant / Driver", level: "Level 1 / 2", basic: "₹18,000 - ₹63,200", inhand: "₹29,000 - ₹34,000" }
+                ],
+                syllabus: [
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Similarities and Differences, Space Visualization, Spatial Orientation, Problem Solving, Analysis, Judgment, Decision Making, Visual Memory, Arithmetical Reasoning, Coding-Decoding." },
+                    { subject: "Quantitative Aptitude", topics: "Computation of Whole Numbers, Decimals, Fractions, Relationships between numbers, Percentages, Ratio & Proportion, Square roots, Averages, Interest, Profit and Loss, Discount, Time and Distance, Basic Algebra, Geometry." },
+                    { subject: "English Language", topics: "Spot the error, Fill in the blanks, Synonyms, Antonyms, Spelling/detecting misspelled words, Idioms & phrases, One word substitution, Improvement of sentences, Active/Passive Voice, Comprehension Passage." },
+                    { subject: "General Awareness", topics: "History, Culture, Geography, Economic Scene, General Polity, Indian Constitution, Scientific Research, National & International Current Affairs." }
+                ],
+                papers: [
+                    { title: "Matriculation Shift Papers", url: "papers.html?exam=ssc-selection-post&level=matric" },
+                    { title: "10+2 Intermediate Shift Papers", url: "papers.html?exam=ssc-selection-post&level=10plus2" },
+                    { title: "Graduate Level Shift Papers", url: "papers.html?exam=ssc-selection-post&level=graduate" }
+                ]
+            }
+        };
+
+        // Render Dynamic Canvas for Current SSC Exam
+        function renderExam(examKey) {
+            const data = SSC_DATABASE[examKey] || SSC_DATABASE.cgl;
+            const container = document.getElementById('dynamic-exam-canvas');
+
+            container.innerHTML = `
+                <!-- Architectural Hero Banner -->
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-amber-600/30 bg-amber-500/10 text-amber-900 text-xs font-extrabold uppercase tracking-wider">
+                        <i data-lucide="award" class="w-3.5 h-3.5 text-amber-600"></i> ${data.badge}
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-serif text-slate-900 tracking-tight leading-tight">
+                        ${data.title}
+                    </h1>
+                    <p class="text-slate-600 max-w-4xl text-sm sm:text-base leading-relaxed">
+                        ${data.heroDesc}
+                    </p>
+                </div>
+
+                <!-- 3D HUD TELEMETRY RAIL (Continuous dimensional slab instead of mini cards) -->
+                <div class="hud-slab rounded-2xl p-6 sm:p-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-amber-900/15">
+                        <div class="px-2 pt-2 md:pt-0">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Pay Matrix Range</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-slate-900 block">${data.payScale.split('(')[0]}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">7th CPC Central Pay Scales</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Selection Sequence</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-slate-900 block">${data.selectionRounds}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">Progressive Evaluation</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Negative Marking</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-rose-700 block">${data.negMarking}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">For incorrect objective answers</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Interview Status</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-amber-800 block">${data.interviewStatus}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">100% Written Merit Selection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D SELECTION PIPELINE (Connected continuous track instead of card boxes) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Selection Process Pipeline</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Sequential evaluation stages determining final appointment.</p>
+                    </div>
+
+                    <div class="relative pl-6 border-l-2 border-amber-600/30 space-y-8 my-4">
+                        ${data.stages.map(st => `
+                            <div class="relative group">
+                                <span class="absolute -left-[37px] top-0.5 w-7 h-7 rounded-full bg-amber-600 text-white font-bold text-xs flex items-center justify-center node-3d">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                </span>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-3">
+                                        <h3 class="font-serif font-bold text-slate-900 text-lg">${st.title}</h3>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${st.nature}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed max-w-3xl">${st.desc}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <!-- EXAM TIMETABLE & SHIFT REPORTING SCHEDULE -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Official Exam Timetable &amp; Reporting Schedule</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Gate closes strictly 30 minutes before exam commencement. Biometric verification mandatory.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                <tr>
+                                    <th class="py-3">Shift Designation</th>
+                                    <th class="py-3 text-center">Reporting Time</th>
+                                    <th class="py-3 text-center">Gate Closing</th>
+                                    <th class="py-3 text-right">Exam Timing (Duration)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-amber-900/10 text-slate-700">
+                                ${data.shiftTimings.map(sh => `
+                                    <tr>
+                                        <td class="py-3 font-semibold text-slate-900">${sh.shift}</td>
+                                        <td class="py-3 text-center font-medium">${sh.rep}</td>
+                                        <td class="py-3 text-center font-bold text-rose-700">${sh.gate}</td>
+                                        <td class="py-3 text-right font-bold text-amber-800">${sh.time}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- EXAM PATTERN & MARKING SCHEME -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Official Exam Pattern &amp; Structure</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Detailed question distribution, marks weightage and timings.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Stage 1 / Tier 1 -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Stage 1 Examination</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-600 text-white shadow-sm">Written CBT</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Subject / Section</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time Allowed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternPrelims.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 2 / Tier 2 / Physical -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Stage 2 / Mains / Skill</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-slate-800 text-white shadow-sm">Merit / Qualifying</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Section / Module</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time Allowed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternMains.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- POSTS, CADRES & 7TH CPC SALARY MATRIX -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Post Designations &amp; In-Hand Salary Scale</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">7th CPC pay level breakdown and approximate monthly in-hand compensation.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                <tr>
+                                    <th class="py-3">Designation / Cadre</th>
+                                    <th class="py-3 text-center">7th CPC Level</th>
+                                    <th class="py-3 text-center">Basic Pay Scale</th>
+                                    <th class="py-3 text-right">In-Hand Salary Range</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-amber-900/10 text-slate-700">
+                                ${data.postsHierarchy.map(ps => `
+                                    <tr>
+                                        <td class="py-3 font-semibold text-slate-900">${ps.post}</td>
+                                        <td class="py-3 text-center font-bold text-amber-800">${ps.level}</td>
+                                        <td class="py-3 text-center font-mono text-xs">${ps.basic}</td>
+                                        <td class="py-3 text-right font-bold text-emerald-800">${ps.inhand}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3D INTERACTIVE SYLLABUS DRAWERS -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Curriculum Breakdown &amp; High-Yield Topics</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Core subject-wise topics tested in the examination.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 sm:p-8 space-y-4">
+                        ${data.syllabus.map((s, idx) => `
+                            <div class="drawer-3d py-3">
+                                <div class="flex items-start gap-4">
+                                    <span class="w-8 h-8 rounded-xl bg-amber-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5" style="box-shadow: 0 2px 0 #92400e;">
+                                        ${idx + 1}
+                                    </span>
+                                    <div>
+                                        <h3 class="font-serif font-bold text-slate-900 text-base mb-1">${s.subject}</h3>
+                                        <p class="text-xs text-slate-600 leading-relaxed">${s.topics}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+
+            // Update bottom paper action buttons
+            const papersContainer = document.getElementById('papers-actions');
+            papersContainer.innerHTML = data.papers.map(p => `
+                <a href="${p.url}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-amber-900/20 text-amber-900 text-xs font-bold hover:border-amber-600 hover:shadow-md transition-all">
+                    <span>${p.title}</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-amber-600"></i>
+                </a>
+            `).join('');
+
+            // Re-render Lucide icons
+            lucide.createIcons();
+        }
+
+        // Navigate between exams & update URL hash
+        function navigateTo(examKey) {
+            if (!SSC_DATABASE[examKey]) examKey = 'cgl';
+            
+            // Set URL Hash (e.g. #cgl, #chsl, #cpo, #mts, #gd, #steno, #selection-post)
+            window.location.hash = examKey;
+
+            // Update dock button states
+            document.querySelectorAll('.dock-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === examKey) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Render current exam content
+            renderExam(examKey);
+        }
+
+        // Listen for browser back/forward or direct hash URL changes
+        window.addEventListener('hashchange', () => {
+            const currentHash = window.location.hash.replace('#', '');
+            if (currentHash && SSC_DATABASE[currentHash]) {
+                navigateTo(currentHash);
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && SSC_DATABASE[initialHash]) {
+                navigateTo(initialHash);
+            } else {
+                navigateTo('cgl');
+            }
+        });
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

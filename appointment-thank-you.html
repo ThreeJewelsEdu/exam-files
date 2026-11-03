@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FAF7F2">
+<title>Appointment Request Received | TRIRATNA</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --cream:#FAF7F2;
+  --gold:#D97706;
+  --navy:#0F172A;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--cream);
+  color:#1e293b;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+h1,h2,.serif {
+  font-family:'Playfair Display',serif;
+}
+
+.glass {
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(217,119,6,.17);
+  box-shadow:0 24px 70px rgba(120,53,15,.08);
+}
+
+.ambient {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.orb {
+  position:absolute;
+  border-radius:999px;
+  opacity:.45;
+  animation:float 9s ease-in-out infinite;
+}
+
+.orb.one {
+  width:280px;
+  height:280px;
+  top:12%;
+  left:-120px;
+  background:radial-gradient(circle,#FDE68A,transparent 70%);
+}
+
+.orb.two {
+  width:360px;
+  height:360px;
+  right:-150px;
+  bottom:2%;
+  background:radial-gradient(circle,#FDBA74,transparent 70%);
+  animation-delay:-4s;
+}
+
+@keyframes float {
+  0%,100% { transform:translateY(0) translateX(0); }
+  50% { transform:translateY(-22px) translateX(12px); }
+}
+
+@keyframes pop {
+  from { opacity:0; transform:translateY(18px) scale(.96); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+@keyframes ring {
+  0% { transform:scale(.7); opacity:0; }
+  55% { transform:scale(1.08); opacity:1; }
+  100% { transform:scale(1); opacity:1; }
+}
+
+@keyframes checkdraw {
+  to { stroke-dashoffset:0; }
+}
+
+@keyframes confetti-fall {
+  to {
+    transform:translateY(110vh) rotate(760deg);
+    opacity:0;
+  }
+}
+
+.page-in { animation:pop .75s ease both; }
+
+.success-ring { animation:ring .65s ease both; }
+
+.check-path {
+  stroke-dasharray:48;
+  stroke-dashoffset:48;
+  animation:checkdraw .55s .45s ease forwards;
+}
+
+.confetti {
+  position:fixed;
+  top:-14px;
+  width:8px;
+  height:12px;
+  z-index:50;
+  pointer-events:none;
+  animation:confetti-fall linear forwards;
+}
+
+.action {
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+
+.action:hover { transform:translateY(-2px); }
+.action:active { transform:scale(.98); }
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+</div>
+
+<header class="sticky top-0 z-20 border-b border-amber-900/10 bg-[#FAF7F2]/85 backdrop-blur-xl">
+  <div class="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-4 sm:px-6">
+
+    <a href="index.html" class="flex items-center gap-3 no-underline">
+      <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-600 to-amber-400 text-white shadow-lg">
+        <i data-lucide="sparkles" class="h-5 w-5"></i>
+      </span>
+
+      <span>
+        <strong class="serif block text-xl text-slate-900 sm:text-2xl">TRIRATNA</strong>
+        <span class="text-[9px] font-extrabold uppercase tracking-[.22em] text-amber-700">
+          Coaching Institute
+        </span>
+      </span>
+    </a>
+
+    <a href="index.html"
+       class="action inline-flex items-center gap-2 rounded-full border border-amber-900/15 bg-white/70 px-4 py-2.5 text-xs font-bold text-slate-700 shadow-sm sm:text-sm">
+      <i data-lucide="house" class="h-4 w-4"></i>
+      Home
+    </a>
+  </div>
+</header>
+
+<main class="relative mx-auto flex min-h-[calc(100svh-150px)] max-w-6xl items-center justify-center px-4 py-10 sm:px-6 sm:py-14">
+
+  <section class="page-in w-full max-w-3xl text-center">
+
+    <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/90 px-4 py-2 text-xs font-extrabold tracking-wide text-emerald-800 shadow-sm">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
+        <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+      </span>
+      REQUEST RECEIVED
+    </div>
+
+    <div class="glass rounded-[30px] px-5 py-8 sm:rounded-[36px] sm:px-12 sm:py-12">
+
+      <div class="success-ring relative mx-auto mb-7 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-emerald-100 to-emerald-50 ring-1 ring-emerald-200 shadow-lg sm:h-28 sm:w-28">
+
+        <div class="absolute inset-2 rounded-full border border-emerald-200/80"></div>
+
+        <svg viewBox="0 0 48 48" class="h-12 w-12 sm:h-14 sm:w-14" fill="none" aria-hidden="true">
+          <path class="check-path"
+            d="M11 25.5L20 34L37 15"
+            stroke="#059669"
+            stroke-width="4.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+
+        <span class="absolute -right-1 -top-1 flex h-8 w-8 items-center justify-center rounded-full border-4 border-[#FAF7F2] bg-amber-400 text-white">
+          <i data-lucide="sparkles" class="h-4 w-4"></i>
+        </span>
+      </div>
+
+      <p class="mb-3 text-[11px] font-extrabold uppercase tracking-[.25em] text-amber-700 sm:text-xs">
+        Your next step starts here
+      </p>
+
+      <h1 class="serif text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-6xl">
+        Thank you<span class="text-amber-600">!</span>
+      </h1>
+
+      <p id="personalGreeting" class="mx-auto mt-4 max-w-xl text-lg font-semibold text-slate-700 sm:text-xl">
+        Your appointment request has been received.
+      </p>
+
+      <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500 sm:text-base">
+        The TRIRATNA team can now review your request.
+        We’ll need to contact you to discuss a suitable time,
+        so please keep your phone available.
+      </p>
+
+      <div class="mx-auto mt-8 grid max-w-xl gap-3 text-left sm:grid-cols-3">
+
+        <div class="rounded-2xl border border-amber-100 bg-white/75 p-4 transition hover:-translate-y-1 hover:shadow-md">
+          <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
+            <i data-lucide="clipboard-check" class="h-5 w-5"></i>
+          </span>
+          <p class="text-sm font-extrabold text-slate-800">01 · Request</p>
+          <p class="mt-1 text-xs leading-5 text-slate-500">Your details are ready for review.</p>
+        </div>
+
+        <div class="rounded-2xl border border-amber-100 bg-white/75 p-4 transition hover:-translate-y-1 hover:shadow-md">
+          <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
+            <i data-lucide="phone-call" class="h-5 w-5"></i>
+          </span>
+          <p class="text-sm font-extrabold text-slate-800">02 · Contact</p>
+          <p class="mt-1 text-xs leading-5 text-slate-500">Keep your contact number handy.</p>
+        </div>
+
+        <div class="rounded-2xl border border-amber-100 bg-white/75 p-4 transition hover:-translate-y-1 hover:shadow-md">
+          <span class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
+            <i data-lucide="calendar-check" class="h-5 w-5"></i>
+          </span>
+          <p class="text-sm font-extrabold text-slate-800">03 · Schedule</p>
+          <p class="mt-1 text-xs leading-5 text-slate-500">Time is confirmed after contact.</p>
+        </div>
+
+      </div>
+
+      <div class="mx-auto mt-7 max-w-xl rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50/90 to-orange-50/70 p-4 text-left sm:flex sm:items-start sm:gap-3 sm:p-5">
+
+        <span class="mb-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-amber-700 shadow-sm sm:mb-0">
+          <i data-lucide="lightbulb" class="h-5 w-5"></i>
+        </span>
+
+        <div>
+          <p class="text-sm font-extrabold text-amber-950">While you wait…</p>
+          <p class="mt-1 text-sm leading-6 text-amber-900/80">
+            You can explore exam programs or prepare any questions
+            you’d like to discuss during your counselling session.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+
+        <a href="index.html"
+           class="action inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-4 text-sm font-extrabold text-white shadow-lg hover:bg-amber-700">
+          <i data-lucide="house" class="h-4 w-4"></i>
+          Back to Home
+        </a>
+
+        <button id="celebrateBtn" type="button"
+          class="action inline-flex items-center justify-center gap-2 rounded-xl border border-amber-300 bg-white/80 px-6 py-4 text-sm font-extrabold text-amber-800 hover:bg-amber-50">
+          <i data-lucide="party-popper" class="h-4 w-4"></i>
+          Celebrate this step
+        </button>
+
+      </div>
+
+      <p class="mt-5 text-[11px] leading-5 text-slate-400">
+        This page confirms receipt of your request—not a confirmed appointment time.
+      </p>
+
+    </div>
+
+    <p class="mt-6 text-xs font-medium text-slate-500">
+      TRIRATNA Coaching Institute
+      <span class="mx-1 text-amber-500">✦</span>
+      Compassionate Learning for Success
+    </p>
+
+  </section>
+</main>
+
+<script>
+if (window.lucide) {
+  lucide.createIcons();
+}
+
+// Optional: appointment-thank-you.html?name=Riya
+const params = new URLSearchParams(window.location.search);
+const studentName = (params.get('name') || '').trim().slice(0, 70);
+
+if (studentName) {
+  document.getElementById('personalGreeting').textContent =
+    `Thank you, ${studentName}! Your appointment request has been received.`;
+}
+
+function celebrate() {
+  const colors = ['#D97706','#F59E0B','#FCD34D','#10B981','#FB923C'];
+
+  for (let i = 0; i < 65; i++) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.backgroundColor =
+      colors[Math.floor(Math.random() * colors.length)];
+    piece.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    piece.style.animationDuration = (2.2 + Math.random() * 2.2) + 's';
+    piece.style.animationDelay = (Math.random() * .45) + 's';
+
+    document.body.appendChild(piece);
+    piece.addEventListener('animationend', () => piece.remove(), {once:true});
+  }
+}
+
+document.getElementById('celebrateBtn').addEventListener('click', celebrate);
+
+window.addEventListener('load', () => {
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setTimeout(celebrate, 550);
+  }
+});
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

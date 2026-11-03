@@ -1,0 +1,2046 @@
+
+
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway (RRB) Mock Tests & CBT Portal | Triratna Coaching Institute</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A',
+                        neutralBorder: '#E2E8F0'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & KaTeX CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        .warm-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .warm-card:hover {
+            border-color: rgba(217, 119, 6, 0.45);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px -6px rgba(180, 83, 9, 0.12);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .katex { font-size: 1.05em; }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-[#0F172A] font-sans min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- ================= 1. CRASH RECOVERY RESUME BANNER ================= -->
+    <div id="crash-resume-banner" class="hidden w-full bg-[#0F172A] text-white border-b-2 border-amber-500 px-4 py-3 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+            <div>
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block sm:inline">Active Exam Session Detected</span>
+                <span class="text-xs text-slate-300 sm:ml-2" id="resume-banner-text">You have an in-progress Railway test. Would you like to resume where you left off?</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="discard-session-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">Discard</button>
+            <button id="resume-session-btn" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#D97706] hover:bg-amber-600 text-white shadow transition">Resume Test</button>
+        </div>
+    </div>
+
+    <!-- ================= 2. TOP HEADER ================= -->
+    <header class="border-b border-[#E2E8F0] bg-[#FAF7F2]/95 sticky top-0 z-30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#D97706] to-amber-400 flex items-center justify-center text-white shadow-md shadow-amber-600/20 shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A] font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-[#B45309] font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="past-papers.html" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#B45309] transition">
+                    <svg class="w-4 h-4 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <span>Past Papers</span>
+                </a>
+                <a href="banking-practice.html" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#B45309] transition">
+                    <svg class="w-4 h-4 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
+                    <span>Banking Practice</span>
+                </a>
+                <a href="railway-practice.html" class="text-xs font-bold text-[#B45309] flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span>Railway Practice</span>
+                </a>
+                <button onclick="showToast('Admissions Helpline: +91 98765 43210')" class="px-4 py-2 rounded-full bg-[#0F172A] hover:bg-[#D97706] text-white text-xs font-bold transition shadow-sm">
+                    Counseling
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= 3. PAGE BANNER ================= -->
+    <section class="border-b border-[#E2E8F0] bg-gradient-to-b from-white/80 to-transparent py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-50 text-amber-800 text-xs font-bold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Universal TCS iON & RRB CBT Simulator Engine
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-bold font-serif text-[#0F172A]">Railway Practice & Mock Tests</h1>
+                <p class="text-slate-600 text-xs sm:text-sm mt-2 max-w-2xl font-serif italic">
+                    "Official TCS iON RRB environment, 5-state palette, 1/3rd negative marking, composite & sectional timers, bilingual instant toggle, and detailed step-by-step solutions."
+                </p>
+            </div>
+            <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-sm w-fit">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-[#B45309] flex items-center justify-center font-bold shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-500 font-bold">Official RRB Pattern</div>
+                    <div class="text-sm font-bold text-[#0F172A]">Exact 1/3rd Negative Marking</div>
+                    <span class="text-xs text-[#B45309] font-semibold">Offline Memory Execution</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= 4. MAIN REPOSITORY SECTION ================= -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full">
+
+        <!-- LEVEL 1: ALL 8 RAILWAY SUB-EXAMS -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#E2E8F0] no-scrollbar" id="railway-sub-pills">
+            <button data-exam="all" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-[#0F172A] text-white shadow-sm">All Railway Exams</button>
+            <button data-exam="RRB NTPC" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RRB NTPC</button>
+            <button data-exam="RRB Group D" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RRB Group D</button>
+            <button data-exam="RRB ALP" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RRB ALP</button>
+            <button data-exam="RRB Technician" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RRB Technician</button>
+            <button data-exam="RRB JE" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RRB JE (Engg)</button>
+            <button data-exam="RPF SI" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RPF Sub-Inspector</button>
+            <button data-exam="RPF Constable" class="sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]">RPF Constable</button>
+        </div>
+
+        <!-- LEVEL 2: TEST TYPE TABS -->
+        <div class="mt-6 flex flex-wrap gap-3" id="test-type-tabs">
+            <button data-type="full" class="type-tab-btn px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all bg-[#D97706] text-white shadow-md shadow-amber-600/20 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>Full Length Mock Tests</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-800/80 text-white ml-1">Comprehensive Papers</span>
+            </button>
+            <button data-type="sectional" class="type-tab-btn px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706] flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                <span>Sectional & Subject Drills</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 ml-1">Subject Mastery</span>
+            </button>
+        </div>
+
+        <!-- LEVEL 3: STAGE & SEARCH -->
+        <div class="mt-6 bg-white p-4 rounded-2xl warm-card flex flex-col sm:flex-row gap-4 justify-between items-center shadow-sm">
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:inline">Stage:</span>
+                <div class="flex bg-amber-50/70 p-1.5 rounded-xl border border-amber-200/60 w-full sm:w-auto" id="stage-filter-container">
+                    <button data-stage="all" class="stage-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition bg-white text-[#0F172A] shadow-sm">All Stages</button>
+                    <button data-stage="CBT-1" class="stage-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">CBT-1 / Prelims</button>
+                    <button data-stage="CBT-2" class="stage-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">CBT-2 / Mains</button>
+                </div>
+            </div>
+            <div class="relative w-full sm:w-80">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0118 0z"/></svg>
+                <input type="text" id="search-filter" placeholder="Search test title, subject, code..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:border-[#D97706]">
+            </div>
+        </div>
+
+        <!-- TESTS GRID -->
+        <div class="mt-8">
+            <div id="loading-spinner" class="hidden text-center py-16 bg-white rounded-2xl warm-card p-8">
+                <div class="w-8 h-8 border-4 border-[#D97706] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                <p class="text-xs font-bold text-slate-700">Connecting to Railway Google Sheet engine...</p>
+                <p class="text-[11px] text-slate-400 mt-1">Fetching metadata on-demand (&lt; 15 KB payload)</p>
+            </div>
+
+            <div id="tests-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+            <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl warm-card p-8">
+                <div class="w-12 h-12 rounded-full bg-amber-50 text-[#D97706] flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <h4 class="text-base font-bold font-serif text-[#0F172A]" id="empty-title">No Practice Tests Found</h4>
+                <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto" id="empty-desc">Try switching between CBT-1 / CBT-2 or changing your exam filter.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= 5. TCS iON COMPLIANT CBT SIMULATOR ================= -->
+    <div id="cbtModal" class="fixed inset-0 z-50 bg-[#0F172A] hidden flex flex-col justify-between select-none">
+        
+        <!-- 1. Top Exam Bar -->
+        <div class="bg-[#0F172A] text-white px-3 sm:px-6 py-2.5 flex items-center justify-between border-b border-slate-700 shrink-0">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <span class="font-bold font-serif text-amber-400 text-xs sm:text-base tracking-wide truncate max-w-[180px] sm:max-w-md" id="cbt-modal-exam-title">Railway CBT Engine</span>
+                <span class="hidden md:inline-block text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-slate-700" id="cbt-timer-mode-tag">OVERALL TIMER</span>
+            </div>
+
+            <!-- Central Helpers & Anti-Cheat Countdown -->
+            <div class="flex items-center gap-1.5 sm:gap-3">
+                <button id="open-instructions-btn" class="hidden sm:inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white px-2 py-1 rounded border border-slate-700 hover:border-slate-500 transition">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Instructions</span>
+                </button>
+                <button id="open-question-paper-btn" class="hidden sm:inline-flex items-center gap-1 text-xs text-slate-300 hover:text-white px-2 py-1 rounded border border-slate-700 hover:border-slate-500 transition">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>Question Paper</span>
+                </button>
+
+                <!-- Timer Display -->
+                <div class="flex items-center gap-1.5 bg-amber-950/80 border border-amber-500/50 px-2.5 sm:px-3 py-1.5 rounded-xl text-amber-400 font-mono font-bold text-xs sm:text-sm">
+                    <svg class="w-3.5 h-3.5 animate-spin text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="hidden sm:inline" id="cbt-timer-label">Time Left:</span>
+                    <span id="cbt-timer-display">90:00</span>
+                </div>
+
+                <button id="cbt-exit-btn" class="text-xs text-slate-400 hover:text-white px-2 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 transition">Exit</button>
+            </div>
+        </div>
+
+        <!-- 2. Section Tabs Strip -->
+        <div class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2 flex items-center justify-between overflow-x-auto no-scrollbar shrink-0">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="cbt-section-badges-container">
+                <!-- Injected dynamically -->
+            </div>
+            
+            <div class="flex items-center gap-2 shrink-0 ml-2">
+                <!-- Mobile Reference / Context Toggle Button -->
+                <button id="mobile-passage-toggle-btn" class="lg:hidden text-xs bg-amber-600 hover:bg-amber-700 text-white font-semibold px-2.5 py-1 rounded-lg transition flex items-center gap-1 hidden">
+                    <span>📖 Context</span>
+                </button>
+                
+                <!-- Palette Toggle Arrow Button -->
+                <button id="toggle-palette-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold px-2.5 py-1 rounded-lg border border-slate-700 flex items-center gap-1 transition">
+                    <span id="toggle-palette-text" class="hidden sm:inline">Hide Palette</span>
+                    <span id="toggle-palette-arrow">▶</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Working Workspace (Split-Screen Context Aware) -->
+        <div class="flex-1 max-w-7xl mx-auto w-full p-2.5 sm:p-4 grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 overflow-hidden h-[calc(100vh-125px)]">
+            
+            <!-- Left: Question & Options -->
+            <div id="cbt-question-col" class="lg:col-span-3 bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col justify-between overflow-hidden transition-all duration-300">
+                
+                <!-- Top Question Ribbon -->
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200 shrink-0">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase tracking-wider" id="cbt-q-number">Question 1</span>
+                        <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200" id="cbt-q-section">General Science</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 hidden" id="cbt-q-qualifying-badge">Qualifying Module</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-semibold text-slate-600 font-mono" id="cbt-q-marks">+1.00 | -0.33</span>
+                        <!-- Working Bilingual Switcher (Supports ||| and ||) -->
+                        <div class="flex items-center gap-1 text-xs text-slate-700 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">
+                            <span class="text-[11px] font-semibold">Lang:</span>
+                            <select id="cbt-lang-switch" class="bg-transparent font-bold text-slate-900 focus:outline-none cursor-pointer">
+                                <option value="en">English</option>
+                                <option value="hi">हिन्दी</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Area -->
+                <div class="flex-1 overflow-y-auto my-3 pr-1" id="cbt-content-scrollable">
+                    <div id="cbt-split-layout" class="grid grid-cols-1 lg:grid-cols-1 gap-5">
+                        
+                        <!-- Reference Context Panel -->
+                        <div id="cbt-passage-panel" class="hidden bg-amber-50/50 p-4 rounded-xl border border-amber-200/70 text-slate-800 text-sm leading-relaxed overflow-y-auto max-h-60 lg:max-h-full">
+                            <div class="text-xs font-bold uppercase tracking-wider text-amber-900 mb-2 flex items-center gap-1.5">
+                                <span>📖 Reference Context / Directions</span>
+                            </div>
+                            <div id="cbt-passage-content" class="smart-content text-xs sm:text-sm"></div>
+                        </div>
+
+                        <!-- Question Body & Options -->
+                        <div id="cbt-question-panel" class="flex flex-col justify-between">
+                            <div class="text-[#0F172A] text-base sm:text-lg font-medium leading-relaxed smart-content" id="cbt-q-text">
+                                Loading question...
+                            </div>
+
+                            <!-- Options Container -->
+                            <div class="mt-5 space-y-2.5" id="cbt-options-container"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Bottom Action Controls -->
+                <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                    <div class="flex items-center gap-2">
+                        <button id="cbt-clear-btn" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-300 transition">Clear</button>
+                        <button id="cbt-mark-review-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                            <span>Mark for Review & Next</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button id="cbt-prev-btn" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">Previous</button>
+                        <button id="cbt-next-btn" class="px-5 py-2 rounded-xl text-xs font-bold bg-[#D97706] hover:bg-amber-700 text-white shadow transition">Save & Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Candidate Card, TCS iON 5-State Palette -->
+            <div id="cbt-palette-col" class="bg-white rounded-2xl p-4 shadow-lg flex flex-col justify-between overflow-y-auto transition-all duration-300">
+                <div>
+                    <!-- Dynamic Candidate Profile Card -->
+                    <div class="flex items-center gap-2.5 p-2.5 bg-slate-50 rounded-xl border border-slate-200 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-amber-400 text-white flex items-center justify-center font-bold text-xs shadow shrink-0" id="cbt-user-badge">
+                            RRB
+                        </div>
+                        <div class="overflow-hidden">
+                            <div class="text-xs font-bold text-slate-900 truncate">Railway Aspirant</div>
+                            <div class="text-[10px] text-slate-500 font-mono" id="cbt-system-tag">TCS-iON-LIVE-MOCK</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600">Question Palette</h4>
+                        <span class="text-[10px] font-bold text-amber-800 truncate max-w-[120px]" id="cbt-palette-sec-title">All Questions</span>
+                    </div>
+
+                    <!-- 5-State Grid -->
+                    <div class="grid grid-cols-5 gap-1.5 max-h-48 overflow-y-auto p-1 border border-slate-100 rounded-lg" id="cbt-palette-grid"></div>
+
+                    <!-- TCS iON Official Legend -->
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 space-y-1 text-[10px] text-slate-600">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-600 inline-block shrink-0"></span><span>Answered</span></div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block shrink-0"></span><span>Not Answered</span></div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-600 inline-block shrink-0"></span><span>Marked for Review</span></div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded bg-purple-600 relative inline-block shrink-0">
+                                <span class="w-1 h-1 bg-emerald-400 rounded-full absolute -top-0.5 -right-0.5"></span>
+                            </span>
+                            <span>Ans & Review (Evaluated)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-100 border border-slate-300 inline-block shrink-0"></span><span>Not Visited</span></div>
+                    </div>
+                </div>
+
+                <!-- Section Submission & Exam Final Submit Buttons -->
+                <div class="mt-4 pt-3 border-t border-slate-200 space-y-2">
+                    <!-- Intermediate Submit Section Button (for Sectional Timers like ALP Part A/B) -->
+                    <button id="cbt-submit-section-btn" class="hidden w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs uppercase tracking-wider transition shadow flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <span>Lock & Submit Section</span>
+                    </button>
+
+                    <!-- Final Exam Submit Button -->
+                    <button id="cbt-submit-btn" class="w-full py-2.5 rounded-xl bg-[#0F172A] hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span id="cbt-submit-text">Submit Exam</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-slate-950 text-slate-400 text-[10px] px-4 py-1 text-center shrink-0">
+            TCS iON Examination Engine • Zero Frontend Lag • Anti-Tamper Timestamp Safeguards Active
+        </div>
+    </div>
+
+    <!-- ================= 6. SUBMIT CONFIRMATION & EXAM SUMMARY MODAL ================= -->
+    <div id="examSummaryModal" class="fixed inset-0 z-50 bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-amber-200 shadow-2xl text-center">
+            <h3 class="text-lg font-bold font-serif text-[#0F172A]" id="summary-modal-title">Exam Summary</h3>
+            <p class="text-xs text-slate-500 mt-1" id="summary-modal-desc">Please review your question attempts before final submission.</p>
+
+            <div class="grid grid-cols-2 gap-3 my-5 text-left text-xs">
+                <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Answered</span>
+                    <span class="text-base font-bold text-emerald-700" id="sum-answered">0</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-rose-50 border border-rose-200">
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Not Answered</span>
+                    <span class="text-base font-bold text-rose-700" id="sum-not-answered">0</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200">
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Marked for Review</span>
+                    <span class="text-base font-bold text-purple-700" id="sum-marked">0</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="text-slate-500 block text-[10px] uppercase font-bold">Not Visited</span>
+                    <span class="text-base font-bold text-slate-700" id="sum-not-visited">0</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="close-summary-btn" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">Resume Test</button>
+                <button id="confirm-final-submit-btn" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow">Confirm Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 7. NON-BLOCKING EARLY SECTION CONFIRMATION MODAL ================= -->
+    <div id="sectionConfirmModal" class="fixed inset-0 z-50 bg-[#0F172A]/75 backdrop-blur-sm hidden flex items-center justify-center p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 border border-amber-200 shadow-2xl">
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+            
+            <h3 class="text-xl font-bold font-serif text-[#0F172A]" id="sec-confirm-title">Lock Section Early?</h3>
+            
+            <div class="my-4 bg-amber-50 p-3.5 rounded-xl border border-amber-200/80 text-xs text-amber-900 leading-relaxed">
+                <p class="font-bold flex items-center gap-1.5 mb-1">
+                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Time Remaining: <span id="sec-confirm-time" class="font-mono font-bold text-amber-900">00:00</span></span>
+                </p>
+                <p>
+                    Once you submit <strong id="sec-confirm-name">this section</strong>, it will be <strong>permanently locked</strong> as per Railway guidelines. You cannot return to edit answers.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-3 mt-6">
+                <button id="cancel-section-submit" class="flex-1 py-3 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-100 transition">
+                    Keep Reviewing
+                </button>
+                <button id="confirm-section-submit" class="flex-1 py-3 rounded-xl bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold transition shadow-md">
+                    Yes, Lock & Next
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 8. QUESTION PAPER OVERVIEW MODAL ================= -->
+    <div id="questionPaperModal" class="fixed inset-0 z-50 bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-7 border border-amber-200 shadow-2xl max-h-[88vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
+                <div>
+                    <h3 class="text-base sm:text-lg font-bold font-serif text-[#0F172A]">Complete Question Paper Overview</h3>
+                    <p class="text-xs text-slate-500" id="qp-exam-title">Paper Preview</p>
+                </div>
+                <button id="close-qp-btn" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">Close</button>
+            </div>
+            <div class="flex-1 overflow-y-auto my-4 space-y-5 pr-2" id="qp-questions-container"></div>
+        </div>
+    </div>
+
+    <!-- ================= 9. GENERAL INSTRUCTIONS MODAL ================= -->
+    <div id="instructionsModal" class="fixed inset-0 z-50 bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-amber-200 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                <h3 class="text-lg font-bold font-serif text-[#0F172A]">Exam Instructions & TCS iON Railway Pattern</h3>
+                <button id="close-inst-btn" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">Close</button>
+            </div>
+            <div class="text-xs text-slate-700 space-y-3 mt-4 leading-relaxed font-sans">
+                <p><strong>1. Examination Structure:</strong> Clock shows time remaining. In Overall Timer mode (standard for NTPC, Group D, and RPF), candidates can navigate freely across all subjects. In Sectional Timer mode (such as ALP Part A & B), modules run in a fixed sequence and lock permanently once expired or submitted.</p>
+                <p><strong>2. Exact 1/3rd Negative Marking:</strong> Follows official Railway rules. For each wrong answer, exactly <strong>1/3rd (one-third)</strong> of the marks assigned to that question will be deducted (i.e. -0.33 for 1-mark questions, -0.67 for 2-mark questions).</p>
+                <p><strong>3. Official 5-Color TCS iON Legend:</strong></p>
+                <ul class="list-disc pl-5 space-y-1.5">
+                    <li><span class="text-emerald-700 font-bold">Green:</span> You have answered the question.</li>
+                    <li><span class="text-rose-600 font-bold">Red:</span> You have visited but not answered the question.</li>
+                    <li><span class="text-purple-700 font-bold">Purple:</span> Marked for Review (Unanswered).</li>
+                    <li><span class="text-purple-700 font-bold">Purple with Green Dot:</span> Answered & Marked for Review. <em>This will be evaluated in the final merit!</em></li>
+                    <li><span class="text-slate-500 font-bold">Gray:</span> You have not visited the question yet.</li>
+                </ul>
+                <p><strong>4. Qualifying Modules:</strong> Sections marked with a "Qualifying Module" badge (e.g. RRB ALP Part B Trade Test) have a qualifying cut-off (e.g. 35%) and are excluded from the Grand Merit calculation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 10. SCORECARD MODAL ================= -->
+    <div id="resultModal" class="fixed inset-0 z-50 bg-[#0F172A]/70 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 select-none">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-5 sm:p-7 border border-amber-200 shadow-2xl text-center max-h-[90vh] overflow-y-auto">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-[#B45309] flex items-center justify-center mx-auto mb-2 font-bold text-2xl font-serif">🚂</div>
+            <h3 class="text-2xl font-bold font-serif text-[#0F172A]">Exam Performance Analysis</h3>
+            <p class="text-xs text-slate-500 mt-0.5" id="res-test-title">Official Scorecard</p>
+
+            <!-- Merit Score Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-4">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <div class="text-[9px] uppercase font-bold text-slate-400">Grand Merit Score</div>
+                    <div class="text-base font-bold text-amber-700" id="res-score">0.00</div>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                    <div class="text-[9px] uppercase font-bold text-emerald-800">Correct</div>
+                    <div class="text-base font-bold text-emerald-700" id="res-correct">0</div>
+                </div>
+                <div class="bg-rose-50 p-3 rounded-xl border border-rose-200">
+                    <div class="text-[9px] uppercase font-bold text-rose-800">Wrong Penalty</div>
+                    <div class="text-base font-bold text-rose-700" id="res-wrong">0</div>
+                </div>
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-200">
+                    <div class="text-[9px] uppercase font-bold text-blue-800">Merit Accuracy</div>
+                    <div class="text-base font-bold text-blue-700" id="res-accuracy">0%</div>
+                </div>
+            </div>
+
+            <p id="res-tab-switches" class="text-[11px] font-semibold text-slate-500 mb-1">Tab switches: 0</p>
+
+            <!-- Qualifying Modules Section -->
+            <div id="res-qualifying-container" class="hidden text-left my-3 bg-amber-50/70 p-3 rounded-xl border border-amber-200">
+                <h5 class="text-[11px] font-bold uppercase tracking-wider text-amber-900 mb-1.5">Qualifying Modules Status (Excluded from Merit)</h5>
+                <div id="res-qualifying-list" class="space-y-1.5"></div>
+            </div>
+
+            <!-- Subject Performance Table -->
+            <div class="text-left my-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Subject Performance Breakdown</h4>
+                <div class="border border-slate-200 rounded-xl overflow-hidden text-xs">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                            <tr>
+                                <th class="p-2 sm:p-2.5">Subject</th>
+                                <th class="p-2 sm:p-2.5 text-center">Correct</th>
+                                <th class="p-2 sm:p-2.5 text-center">Wrong</th>
+                                <th class="p-2 sm:p-2.5 text-right">Marks</th>
+                                <th class="p-2 sm:p-2.5 text-right">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="res-sections-tbody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p id="res-time-summary" class="text-xs text-slate-500 text-center -mt-2 mb-1"></p>
+
+            <div class="space-y-2 mt-5">
+                <button id="view-solutions-btn" class="w-full py-3 rounded-xl bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold transition shadow flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    <span>View Detailed Step Solutions (On-Screen)</span>
+                </button>
+                <button id="close-result-btn" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">Return to Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 11. ON-SCREEN DETAILED SOLUTIONS MODAL ================= -->
+    <div id="solutionModal" class="fixed inset-0 z-50 bg-[#0F172A]/95 backdrop-blur-md hidden flex flex-col justify-between select-none">
+        
+        <div class="bg-[#0F172A] text-white px-4 sm:px-6 py-2.5 flex items-center justify-between border-b border-slate-700">
+            <div class="flex items-center gap-2">
+                <span class="font-bold font-serif text-amber-400 text-sm sm:text-base">Railway Detailed Solutions & Explanations</span>
+                <span class="text-[10px] bg-emerald-950 border border-emerald-500/50 text-emerald-400 px-2 py-0.5 rounded font-mono">TCS iON Post-Exam Review</span>
+            </div>
+            <button id="close-solution-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-600 transition">Exit Solutions</button>
+        </div>
+
+        <div class="flex-1 max-w-7xl mx-auto w-full p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-4 gap-4 overflow-hidden h-[calc(100vh-60px)]">
+            
+            <!-- Solution Main View -->
+            <div class="lg:col-span-3 bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold text-amber-800 uppercase tracking-wider" id="sol-q-number">Question 1</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600" id="sol-q-section">Subject</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="sol-q-time-badge" class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300">Time spent: 0s</span>
+                            <span id="sol-q-status-badge" class="text-xs font-bold px-2.5 py-0.5 rounded">Status</span>
+                        </div>
+                    </div>
+
+                    <!-- Context in Solutions -->
+                    <div id="sol-passage-box" class="hidden mt-4 p-4 rounded-xl bg-amber-50/60 border border-amber-200 text-slate-800 text-xs sm:text-sm smart-content"></div>
+
+                    <div class="mt-4 text-[#0F172A] text-base sm:text-lg font-medium leading-relaxed smart-content" id="sol-q-text">Question text...</div>
+                    <div class="mt-5 space-y-2.5" id="sol-options-container"></div>
+
+                    <!-- Step-by-Step Explanation Box -->
+                    <div class="mt-6 bg-amber-50/80 border border-amber-300 rounded-2xl p-4 sm:p-5">
+                        <div class="flex items-center gap-1.5 text-xs font-bold text-amber-900 uppercase tracking-wider mb-2">
+                            <svg class="w-4 h-4 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Detailed Step-by-Step Solution & Analysis</span>
+                        </div>
+                        <div class="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans smart-content" id="sol-explanation-text"></div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-3 border-t border-slate-200 flex items-center justify-between">
+                    <button id="sol-prev-btn" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">Previous Question</button>
+                    <button id="sol-next-btn" class="px-5 py-2 rounded-xl text-xs font-bold bg-[#D97706] hover:bg-amber-700 text-white shadow transition">Next Question</button>
+                </div>
+            </div>
+
+            <!-- Solution Palette -->
+            <div class="bg-white rounded-2xl p-4 shadow-lg flex flex-col justify-between h-fit">
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2.5">Question Navigation</h4>
+                    <div class="grid grid-cols-5 gap-1.5 max-h-72 overflow-y-auto p-1" id="sol-palette-grid"></div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600">
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span><span>Correct Response</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-rose-600 inline-block"></span><span>Incorrect Response</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-slate-300 inline-block"></span><span>Skipped / Unattempted</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-[#0F172A] text-white text-xs px-5 py-3.5 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition duration-300 z-50 flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        <span id="toast-text">Notification</span>
+    </div>
+
+    <!-- ================= 12. JAVASCRIPT RAILWAY CBT ENGINE ================= -->
+    <script>
+    (function() {
+        /* ================= 1. CONFIGURATION ================= */
+        const GOOGLE_APPS_SCRIPT_URL = "";
+        const SPREADSHEET_ID = "";
+
+        const EXAM_SUB_TABS = [
+            "all", "RRB NTPC", "RRB Group D", "RRB ALP", 
+            "RRB Technician", "RRB JE", "RPF SI", "RPF Constable"
+        ];
+
+        /* ================= 2. UNIVERSAL 21-COLUMN SCHEMA BUILT-IN DATA ================= */
+        const BUILTIN_FALLBACK_TESTS = [
+            {
+                id: "RRB-NTPC-01",
+                exam: "RRB NTPC",
+                type: "full",
+                stage: "CBT-1",
+                title: "RRB NTPC CBT-1 All-India Mock 01",
+                totalDuration: 90,
+                timerMode: "overall",
+                pdfUrl: "https://example.com/rrb-ntpc-paper.pdf",
+                questions: [
+                    {
+                        testId: "RRB-NTPC-01", exam: "RRB NTPC", type: "full", stage: "CBT-1", title: "RRB NTPC CBT-1 All-India Mock 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Science", isQualifying: "NO",
+                        passage: "",
+                        q: "What is the SI unit of universal gravitational constant ($G$)? || सार्वत्रिक गुरुत्वाकर्षण नियतांक ($G$) का SI मात्रक क्या है?",
+                        optA: "$\\text{N}\\cdot\\text{m}^2/\\text{kg}^2$",
+                        optB: "$\\text{N}\\cdot\\text{m}/\\text{kg}$",
+                        optC: "$\\text{N}/\\text{kg}^2$",
+                        optD: "$\\text{m}/\\text{s}^2$",
+                        ans: "A",
+                        exp: "From Newton's Law of Gravitation: $F = \\frac{G m_1 m_2}{r^2} \\implies G = \\frac{F r^2}{m_1 m_2}$. Thus, the SI unit is $\\text{N}\\cdot\\text{m}^2/\\text{kg}^2$."
+                    },
+                    {
+                        testId: "RRB-NTPC-01", exam: "RRB NTPC", type: "full", stage: "CBT-1", title: "RRB NTPC CBT-1 All-India Mock 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Science", isQualifying: "NO",
+                        passage: "",
+                        q: "Which element has atomic number 17 and belongs to the halogen family? || किस तत्व की परमाणु संख्या 17 है और वह हैलोजन समूह से संबंधित है?",
+                        optA: "Fluorine || फ्लोरीन",
+                        optB: "Chlorine || क्लोरीन",
+                        optC: "Bromine || ब्रोमीन",
+                        optD: "Iodine || आयोडीन",
+                        ans: "B",
+                        exp: "Chlorine has atomic number 17 with electronic configuration 2, 8, 7. It belongs to Group 17 (halogens)."
+                    },
+                    {
+                        testId: "RRB-NTPC-01", exam: "RRB NTPC", type: "full", stage: "CBT-1", title: "RRB NTPC CBT-1 All-India Mock 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "Mathematics", isQualifying: "NO",
+                        passage: "",
+                        q: "Find the value of $x$: $$\\sqrt{1 + \\frac{27}{169}} = 1 + \\frac{x}{13}$$ || $x$ का मान ज्ञात कीजिए: $$\\sqrt{1 + \\frac{27}{169}} = 1 + \\frac{x}{13}$$",
+                        optA: "1", optB: "3", optC: "2", optD: "4",
+                        ans: "A",
+                        exp: "$\\sqrt{\\frac{196}{169}} = \\frac{14}{13} = 1 + \\frac{1}{13}$. Comparing with $1 + \\frac{x}{13}$, we get $x = 1$."
+                    },
+                    {
+                        testId: "RRB-NTPC-01", exam: "RRB NTPC", type: "full", stage: "CBT-1", title: "RRB NTPC CBT-1 All-India Mock 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Awareness", isQualifying: "NO",
+                        passage: "",
+                        q: "In which year was the first passenger train run between Bori Bunder (Bombay) and Thane in India? || भारत में पहली यात्री ट्रेन बोरी बंदर (बॉम्बे) और ठाणे के बीच किस वर्ष चलाई गई थी?",
+                        optA: "1853", optB: "1857", optC: "1862", optD: "1849",
+                        ans: "A",
+                        exp: "The first passenger train in India ran between Bori Bunder (Bombay) and Thane on 16th April 1853 covering 34 km."
+                    }
+                ]
+            },
+            {
+                id: "RRB-ALP-CBT2-01",
+                exam: "RRB ALP",
+                type: "full",
+                stage: "CBT-2",
+                title: "RRB ALP CBT-2 Combined (Part A + Qualifying Part B)",
+                totalDuration: 150,
+                timerMode: "sectional",
+                pdfUrl: "https://example.com/rrb-alp-cbt2.pdf",
+                questions: [
+                    {
+                        testId: "RRB-ALP-CBT2-01", exam: "RRB ALP", type: "full", stage: "CBT-2", title: "RRB ALP CBT-2 Combined (Part A + Qualifying Part B)",
+                        secDuration: 90, timerMode: "sectional", posMarks: 1.0, negMarks: 1/3, section: "Part A - Basic Science & Engg", isQualifying: "NO",
+                        passage: "<strong>Directions:</strong> Questions in Part A determine the merit rank for Assistant Loco Pilot posts. Unequal section timing active.",
+                        q: "A body of mass $2\\text{ kg}$ is dropped from a height of $20\\text{ m}$. What is its kinetic energy just before hitting the ground? ($g = 10\\text{ m/s}^2$) || $2\\text{ kg}$ द्रव्यमान का एक पिंड $20\\text{ m}$ की ऊंचाई से गिराया जाता है। जमीन से टकराने से ठीक पहले इसकी गतिज ऊर्जा क्या होगी?",
+                        optA: "400 J", optB: "200 J", optC: "100 J", optD: "50 J",
+                        ans: "A",
+                        exp: "By conservation of energy, $\\text{KE} = \\text{PE} = mgh = 2 \\times 10 \\times 20 = 400\\text{ Joules}$."
+                    },
+                    {
+                        testId: "RRB-ALP-CBT2-01", exam: "RRB ALP", type: "full", stage: "CBT-2", title: "RRB ALP CBT-2 Combined (Part A + Qualifying Part B)",
+                        secDuration: 90, timerMode: "sectional", posMarks: 1.0, negMarks: 1/3, section: "Part A - Basic Science & Engg", isQualifying: "NO",
+                        passage: "",
+                        q: "An electric bulb is rated $220\\text{ V}$ and $100\\text{ W}$. When operated on $110\\text{ V}$, what will be the power consumed? || एक बिजली के बल्ब की रेटिंग $220\\text{ V}$ और $100\\text{ W}$ है। जब इसे $110\\text{ V}$ पर संचालित किया जाता है, तो खपत होने वाली शक्ति क्या होगी?",
+                        optA: "25 W", optB: "50 W", optC: "75 W", optD: "100 W",
+                        ans: "A",
+                        exp: "Resistance $R = \\frac{V^2}{P} = \\frac{220^2}{100} = 484\\;\\Omega$. When voltage is $110\\text{ V}$, $P' = \\frac{110^2}{484} = 25\\text{ W}$."
+                    },
+                    {
+                        testId: "RRB-ALP-CBT2-01", exam: "RRB ALP", type: "full", stage: "CBT-2", title: "RRB ALP CBT-2 Combined (Part A + Qualifying Part B)",
+                        secDuration: 60, timerMode: "sectional", posMarks: 1.0, negMarks: 1/3, section: "Part B - Trade Test (Electrical)", isQualifying: "YES", qualifyingCutoff: 35,
+                        passage: "<strong>Notice:</strong> Part B is strictly qualifying with a minimum 35% cutoff. Marks are excluded from Grand Merit.",
+                        q: "Which instrument is used to measure very high electrical insulation resistance? || अत्यधिक उच्च विद्युत रोधन (इंसुलेशन) प्रतिरोध मापने के लिए किस उपकरण का उपयोग किया जाता है?",
+                        optA: "Megger || मेगर", optB: "Multimeter || मल्टीमीटर", optC: "Voltmeter || वोल्टमीटर", optD: "Ammeter || एमीटर",
+                        ans: "A",
+                        exp: "A Megger is specifically designed to measure high electrical insulation resistance."
+                    }
+                ]
+            },
+            {
+                id: "RRB-GROUPD-01",
+                exam: "RRB Group D",
+                type: "full",
+                stage: "CBT-1",
+                title: "RRB Group D Speed & Accuracy Sprint 01",
+                totalDuration: 90,
+                timerMode: "overall",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        testId: "RRB-GROUPD-01", exam: "RRB Group D", type: "full", stage: "CBT-1", title: "RRB Group D Speed & Accuracy Sprint 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "Mathematics", isQualifying: "NO",
+                        passage: "",
+                        q: "If the simple interest on a certain sum for 3 years at 8% p.a. is ₹1,200, find the principal: || यदि किसी निश्चित धनराशि पर 8% वार्षिक दर से 3 वर्ष का साधारण ब्याज ₹1,200 है, तो मूलधन ज्ञात कीजिए:",
+                        optA: "₹5,000", optB: "₹4,500", optC: "₹6,000", optD: "₹5,500",
+                        ans: "A",
+                        exp: "$\\text{SI} = \\frac{P \\times R \\times T}{100} \\implies 1200 = \\frac{P \\times 8 \\times 3}{100} \\implies P = \\frac{1200 \\times 100}{24} = \\text{₹}5,000$."
+                    }
+                ]
+            },
+            {
+                id: "RRB-JE-01",
+                exam: "RRB JE",
+                type: "sectional",
+                stage: "CBT-2",
+                title: "RRB JE Technical: Civil & Mechanical Mechanics",
+                totalDuration: 45,
+                timerMode: "overall",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        testId: "RRB-JE-01", exam: "RRB JE", type: "sectional", stage: "CBT-2", title: "RRB JE Technical: Civil & Mechanical Mechanics",
+                        secDuration: 45, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "Technical Abilities", isQualifying: "NO",
+                        passage: "",
+                        q: "What is Young's Modulus of elasticity for structural steel approximately? || संरचनात्मक स्टील के लिए यंग का प्रत्यास्थता गुणांक लगभग कितना होता है?",
+                        optA: "$200\\text{ GPa}$", optB: "$100\\text{ GPa}$", optC: "$350\\text{ GPa}$", optD: "$50\\text{ GPa}$",
+                        ans: "A",
+                        exp: "For structural steel, Young's Modulus of Elasticity $E \\approx 200\\text{ GPa}$ ($2 \\times 10^5\\text{ N/mm}^2$)."
+                    }
+                ]
+            },
+            {
+                id: "RRB-TECH-01",
+                exam: "RRB Technician",
+                type: "full",
+                stage: "CBT-1",
+                title: "RRB Technician Grade III All-India Drill",
+                totalDuration: 90,
+                timerMode: "overall",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        testId: "RRB-TECH-01", exam: "RRB Technician", type: "full", stage: "CBT-1", title: "RRB Technician Grade III All-India Drill",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Science", isQualifying: "NO",
+                        passage: "",
+                        q: "Which mirror is used as a rear-view mirror in motor vehicles? || मोटर वाहनों में साइड/रियर-व्यू मिरर के रूप में किस दर्पण का उपयोग किया जाता है?",
+                        optA: "Convex mirror || उत्तल दर्पण", optB: "Concave mirror || अवतल दर्पण", optC: "Plane mirror || समतल दर्पण", optD: "Cylindrical mirror || बेलनाकार दर्पण",
+                        ans: "A",
+                        exp: "Convex mirrors produce virtual, erect, and diminished images, providing a wider field of view."
+                    }
+                ]
+            },
+            {
+                id: "RPF-SI-01",
+                exam: "RPF SI",
+                type: "full",
+                stage: "CBT-1",
+                title: "RPF Sub-Inspector Standard Mock 01",
+                totalDuration: 90,
+                timerMode: "overall",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        testId: "RPF-SI-01", exam: "RPF SI", type: "full", stage: "CBT-1", title: "RPF Sub-Inspector Standard Mock 01",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Intelligence & Reasoning", isQualifying: "NO",
+                        passage: "",
+                        q: "Select the related pair: <strong>Ohm : Resistance :: Pascal : ?</strong> || संबंधित युग्म का चयन करें: <strong>ओम : प्रतिरोध :: पास्कल : ?</strong>",
+                        optA: "Pressure || दाब", optB: "Temperature || तापमान", optC: "Current || विद्युत धारा", optD: "Force || बल",
+                        ans: "A",
+                        exp: "Ohm is the SI unit of Resistance. Pascal is the SI unit of Pressure."
+                    }
+                ]
+            },
+            {
+                id: "RPF-CONST-01",
+                exam: "RPF Constable",
+                type: "full",
+                stage: "CBT-1",
+                title: "RPF Constable All-India Speed Drill",
+                totalDuration: 90,
+                timerMode: "overall",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        testId: "RPF-CONST-01", exam: "RPF Constable", type: "full", stage: "CBT-1", title: "RPF Constable All-India Speed Drill",
+                        secDuration: 90, timerMode: "overall", posMarks: 1.0, negMarks: 1/3, section: "General Awareness", isQualifying: "NO",
+                        passage: "",
+                        q: "Which constitutional amendment added Fundamental Duties to the Indian Constitution? || किस संविधान संशोधन द्वारा भारतीय संविधान में मौलिक कर्तव्यों को जोड़ा गया?",
+                        optA: "42nd Amendment || 42वां संशोधन", optB: "44th Amendment || 44वां संशोधन", optC: "86th Amendment || 86वां संशोधन", optD: "52nd Amendment || 52वां संशोधन",
+                        ans: "A",
+                        exp: "The 42nd Constitutional Amendment Act, 1976 introduced Part IV-A and Article 51A upon recommendation of the Swaran Singh Committee."
+                    }
+                ]
+            }
+        ];
+
+        /* ================= 3. STATE & NAVIGATION ================= */
+        let activeExamFilter = "all";
+        let activeType = "full";
+        let activeStage = "all";
+        let currentLanguage = "en";
+
+        let TEST_CARDS_METADATA = [];
+        const loadedQuestionsCache = {};
+
+        const testsGrid = document.getElementById('tests-grid');
+        const emptyState = document.getElementById('empty-state');
+        const emptyTitle = document.getElementById('empty-title');
+        const emptyDesc = document.getElementById('empty-desc');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const searchInput = document.getElementById('search-filter');
+
+        /* ================= 4. UNIVERSAL SMART CELL RENDERER ================= */
+        function renderSmartCell(rawContent, lang = currentLanguage) {
+            if (!rawContent) return "";
+            let content = String(rawContent).trim();
+
+            if (content.includes("|||") || content.includes("||")) {
+                const parts = content.split(content.includes("|||") ? "|||" : "||");
+                content = (lang === "hi" && parts[1]) ? parts[1].trim() : parts[0].trim();
+            }
+
+            const lower = content.toLowerCase();
+            const isImage = (content.startsWith("http://") || content.startsWith("https://")) &&
+                (lower.endsWith(".png") || lower.endsWith(".jpg") || lower.endsWith(".jpeg") || 
+                 lower.endsWith(".webp") || lower.endsWith(".svg") || lower.includes("drive.google.com") || lower.includes("imgur.com"));
+
+            if (isImage) {
+                return `<img src="${content}" alt="Figure" class="max-h-64 rounded-lg my-2 object-contain mx-auto border border-slate-200">`;
+            }
+
+            return content;
+        }
+
+        function triggerKaTeX(domElement) {
+            if (window.renderMathInElement && domElement) {
+                renderMathInElement(domElement, {
+                    delimiters: [
+                        { left: '$$', right: '$$', display: true },
+                        { left: '$', right: '$', display: false },
+                        { left: '\\(', right: '\\)', display: false },
+                        { left: '\\[', right: '\\]', display: true }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        /* ================= 5. STAGE ALIASING & METADATA LOADER ================= */
+        function normalizeStage(stageStr) {
+            const s = (stageStr || "").toLowerCase().trim();
+            if (s.includes("cbt-1") || s.includes("cbt 1") || s.includes("tier-1") || s.includes("prelim") || s.includes("stage-1")) {
+                return "CBT-1";
+            }
+            if (s.includes("cbt-2") || s.includes("cbt 2") || s.includes("tier-2") || s.includes("main") || s.includes("stage-2")) {
+                return "CBT-2";
+            }
+            return stageStr;
+        }
+
+        function computeSectionTotal(questions) {
+            const seen = {};
+            let total = 0;
+            (questions || []).forEach(q => {
+                const sName = q.section || "General";
+                if (!(sName in seen)) {
+                    seen[sName] = true;
+                    total += parseFloat(q.secDuration) || 30;
+                }
+            });
+            return total;
+        }
+
+        async function fetchTestsMetadata() {
+            if (GOOGLE_APPS_SCRIPT_URL) {
+                try {
+                    loadingSpinner.classList.remove('hidden');
+                    const res = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getTests`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (Array.isArray(data) && data.length > 0) {
+                            TEST_CARDS_METADATA = data;
+                            loadingSpinner.classList.add('hidden');
+                            renderTestCards();
+                            return;
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Could not reach Google Apps Script web app. Falling back to local data.", err);
+                }
+            }
+
+            TEST_CARDS_METADATA = BUILTIN_FALLBACK_TESTS.map(t => ({
+                id: t.id,
+                exam: t.exam,
+                type: t.type,
+                stage: normalizeStage(t.stage),
+                title: t.title,
+                totalDuration: (t.timerMode === "sectional" ? computeSectionTotal(t.questions) : 0) || t.totalDuration,
+                timerMode: t.timerMode,
+                qCount: t.questions.length,
+                pdfUrl: t.pdfUrl || "#"
+            }));
+
+            BUILTIN_FALLBACK_TESTS.forEach(t => {
+                loadedQuestionsCache[t.id] = t.questions;
+            });
+
+            loadingSpinner.classList.add('hidden');
+            renderTestCards();
+        }
+
+        /* ================= 6. RENDER TEST CARDS ================= */
+        function renderTestCards() {
+            const query = searchInput.value.toLowerCase().trim();
+
+            const filtered = TEST_CARDS_METADATA.filter(t => {
+                const matchExam = (activeExamFilter === "all" || t.exam === activeExamFilter);
+                const matchType = (t.type === activeType);
+                const normStage = normalizeStage(t.stage);
+                const matchStage = (activeStage === "all" || normStage === activeStage);
+                const matchQuery = (query === "" || 
+                    t.title.toLowerCase().includes(query) || 
+                    t.exam.toLowerCase().includes(query) || 
+                    t.id.toLowerCase().includes(query));
+
+                return matchExam && matchType && matchStage && matchQuery;
+            });
+
+            if (filtered.length === 0) {
+                testsGrid.innerHTML = "";
+                emptyState.classList.remove('hidden');
+                emptyTitle.textContent = "No Practice Tests Found";
+                emptyDesc.textContent = "Try switching between CBT-1 / CBT-2 or changing your exam filter.";
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            testsGrid.innerHTML = filtered.map(item => `
+                <div class="warm-card rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md ${normalizeStage(item.stage) === 'CBT-1' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'}">
+                                ${item.stage}
+                            </span>
+                            <span class="text-xs font-bold text-[#B45309] font-serif">${item.exam}</span>
+                            <span class="text-[11px] font-semibold text-slate-500 ml-auto flex items-center gap-1 font-mono">
+                                <svg class="w-3.5 h-3.5 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>${item.totalDuration} Mins</span>
+                            </span>
+                        </div>
+
+                        <h3 class="text-base font-bold font-serif text-[#0F172A] leading-snug">${item.title}</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Official recruitment pattern with exact 1/3rd negative marking, KaTeX formulas, bilingual toggle, and TCS iON simulator.</p>
+
+                        <div class="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-600 font-semibold bg-amber-50/60 p-2.5 rounded-xl border border-amber-200/50">
+                            <span>📝 ${item.qCount} Questions</span>
+                            <span>•</span>
+                            <span class="uppercase">⏱️ ${item.timerMode} Timer</span>
+                            <span>•</span>
+                            <span>🛡️ 1/3rd Negative</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center gap-2">
+                        <button onclick="requestStartCBT('${item.id}')" class="flex-1 bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Start CBT Test</span>
+                        </button>
+                        ${item.pdfUrl && item.pdfUrl !== '#' ? `
+                            <a href="${item.pdfUrl}" target="_blank" class="p-3 bg-white hover:bg-amber-50 text-slate-700 border border-[#E2E8F0] rounded-xl transition" title="Download Question Paper PDF">
+                                <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            triggerKaTeX(testsGrid);
+        }
+
+        /* ================= 7. NAVIGATION LISTENERS ================= */
+        document.getElementById('railway-sub-pills').addEventListener('click', (e) => {
+            const pill = e.target.closest('.sub-pill');
+            if (!pill) return;
+            activeExamFilter = pill.getAttribute('data-exam');
+            document.querySelectorAll('#railway-sub-pills .sub-pill').forEach(p => {
+                p.className = "sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]";
+            });
+            pill.className = "sub-pill shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-[#0F172A] text-white shadow-sm";
+            renderTestCards();
+        });
+
+        document.getElementById('test-type-tabs').addEventListener('click', (e) => {
+            const btn = e.target.closest('.type-tab-btn');
+            if (!btn) return;
+            activeType = btn.getAttribute('data-type');
+            document.querySelectorAll('.type-tab-btn').forEach(b => {
+                b.className = "type-tab-btn px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706] flex items-center gap-2";
+            });
+            btn.className = "type-tab-btn px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all bg-[#D97706] text-white shadow-md shadow-amber-600/20 flex items-center gap-2";
+            renderTestCards();
+        });
+
+        document.getElementById('stage-filter-container').addEventListener('click', (e) => {
+            const btn = e.target.closest('.stage-btn');
+            if (!btn) return;
+            activeStage = btn.getAttribute('data-stage');
+            document.querySelectorAll('.stage-btn').forEach(b => {
+                b.className = "stage-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900";
+            });
+            btn.className = "stage-btn flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition bg-white text-[#0F172A] shadow-sm";
+            renderTestCards();
+        });
+
+        searchInput.addEventListener('input', renderTestCards);
+
+        /* ================= 8. CBT CONTROLLER ================= */
+        const STORAGE_KEY = "TRIRATNA_ACTIVE_RRB_CBT_STATE_V1";
+        let activeTest = null;
+        let activeQuestions = [];
+        let currentQIndex = 0;
+        let userAnswers = {};
+        let questionStatus = {};
+        let sectionSequence = [];
+        let currentSectionIndex = 0;
+        let completedSections = new Set();
+        let targetEndTime = 0;
+        let timerTickInterval = null;
+        let isPaletteHidden = false;
+        let tabSwitchCount = 0;
+        let pendingLockSection = null;
+        let questionTimes = {};
+        let timeTrackIdx = null;
+        let timeTrackStart = 0;
+
+        function stopQuestionTimer() {
+            if (timeTrackIdx !== null) {
+                questionTimes[timeTrackIdx] = (questionTimes[timeTrackIdx] || 0) + (Date.now() - timeTrackStart) / 1000;
+                timeTrackIdx = null;
+            }
+        }
+        function startQuestionTimer(idx) {
+            stopQuestionTimer();
+            timeTrackIdx = idx;
+            timeTrackStart = Date.now();
+        }
+        function formatTime(sec) {
+            sec = Math.round(sec || 0);
+            const m = Math.floor(sec / 60);
+            const r = sec % 60;
+            return m > 0 ? `${m}m ${String(r).padStart(2, '0')}s` : `${r}s`;
+        }
+
+        window.requestStartCBT = async function(testId) {
+            try {
+                let questions = loadedQuestionsCache[testId];
+                if (!questions && GOOGLE_APPS_SCRIPT_URL) {
+                    if (!navigator.onLine) {
+                        showToast("⚠️ Network unavailable. Please check your internet connection.");
+                        return;
+                    }
+                    showToast("Downloading questions on-demand (< 60 KB)...");
+                    const res = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getQuestions&testId=${encodeURIComponent(testId)}`);
+                    if (!res.ok) throw new Error("Network response not ok");
+                    questions = await res.json();
+                    loadedQuestionsCache[testId] = questions;
+                }
+
+                if (!questions || questions.length === 0) {
+                    showToast("Error: No questions found for this test.");
+                    return;
+                }
+
+                const meta = TEST_CARDS_METADATA.find(t => t.id === testId);
+                if (meta && meta.timerMode === "sectional") {
+                    const secTotal = computeSectionTotal(questions);
+                    if (secTotal && meta.totalDuration !== secTotal) {
+                        meta.totalDuration = secTotal;
+                        renderTestCards();
+                    }
+                }
+                initializeCBTWorkspace(meta, questions);
+
+            } catch (err) {
+                showToast("⚠️ Failed to load test. Check connection & try again.");
+                console.error(err);
+            }
+        };
+
+        function initializeCBTWorkspace(testMeta, questions, restoredState = null) {
+            activeTest = testMeta;
+            activeQuestions = questions;
+
+            sectionSequence = [];
+            questions.forEach(q => {
+                const sName = q.section || "General";
+                if (!sectionSequence.includes(sName)) {
+                    sectionSequence.push(sName);
+                }
+            });
+
+            if (restoredState) {
+                currentQIndex = restoredState.currentQIndex || 0;
+                userAnswers = restoredState.userAnswers || {};
+                questionStatus = restoredState.questionStatus || {};
+                currentSectionIndex = restoredState.currentSectionIndex || 0;
+                completedSections = new Set(restoredState.completedSections || []);
+                targetEndTime = restoredState.targetEndTime || (Date.now() + 60000);
+                tabSwitchCount = restoredState.tabSwitches || 0;
+                questionTimes = restoredState.questionTimes || {};
+                timeTrackIdx = null;
+            } else {
+                currentQIndex = 0;
+                userAnswers = {};
+                questionStatus = {};
+                completedSections.clear();
+                questionTimes = {};
+                timeTrackIdx = null;
+                tabSwitchCount = 0;
+                currentSectionIndex = 0;
+
+                let durationMins = activeTest.totalDuration || 90;
+                if (activeTest.timerMode === "sectional") {
+                    const firstSec = sectionSequence[0];
+                    const firstQInSec = questions.find(q => (q.section || "General") === firstSec);
+                    durationMins = firstQInSec ? (firstQInSec.secDuration || 30) : 30;
+                }
+                targetEndTime = Date.now() + (durationMins * 60 * 1000);
+                saveStateToStorage();
+            }
+
+            document.getElementById('cbt-modal-exam-title').textContent = `${activeTest.exam}: ${activeTest.title}`;
+            document.getElementById('cbt-timer-mode-tag').textContent = `${activeTest.timerMode.toUpperCase()} TIMER`;
+
+            // Dynamic User Profile Avatar (RRB vs RPF)
+            const badgeEl = document.getElementById('cbt-user-badge');
+            badgeEl.textContent = (activeTest.exam || "RRB").startsWith("RPF") ? "RPF" : "RRB";
+
+            document.getElementById('cbtModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            renderSectionStrip();
+            startTimestampTimer();
+            loadQuestion(currentQIndex);
+        }
+
+        /* ================= 9. DUAL-TIMER WITH TIMESTAMP ANTI-CHEAT ================= */
+        function startTimestampTimer() {
+            clearInterval(timerTickInterval);
+            updateTimerDisplay();
+
+            timerTickInterval = setInterval(() => {
+                const remainingSeconds = Math.max(0, Math.round((targetEndTime - Date.now()) / 1000));
+                updateTimerDisplay(remainingSeconds);
+
+                if (remainingSeconds <= 0) {
+                    handleTimerExpired();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(remainingSeconds = Math.max(0, Math.round((targetEndTime - Date.now()) / 1000))) {
+            const h = Math.floor(remainingSeconds / 3600);
+            const m = Math.floor((remainingSeconds % 3600) / 60);
+            const s = remainingSeconds % 60;
+
+            const displayStr = h > 0 
+                ? `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+                : `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            document.getElementById('cbt-timer-display').textContent = displayStr;
+        }
+
+        function closeTimerPopups() {
+            document.getElementById('sectionConfirmModal').classList.add('hidden');
+            document.getElementById('examSummaryModal').classList.add('hidden');
+        }
+
+        function handleTimerExpired() {
+            closeTimerPopups();
+            if (activeTest.timerMode === "sectional") {
+                const currentSec = sectionSequence[currentSectionIndex];
+                completedSections.add(currentSec);
+                showToast(`Section "${currentSec}" time expired and has been locked!`);
+
+                if (currentSectionIndex < sectionSequence.length - 1) {
+                    advanceToNextSection();
+                } else {
+                    clearInterval(timerTickInterval);
+                    finalizeExam();
+                }
+            } else {
+                clearInterval(timerTickInterval);
+                showToast("Examination time expired. Submitting your test automatically...");
+                finalizeExam();
+            }
+        }
+
+        function advanceToNextSection() {
+            currentSectionIndex++;
+            const nextSec = sectionSequence[currentSectionIndex];
+            const nextQIndex = activeQuestions.findIndex(q => (q.section || "General") === nextSec);
+            
+            const qObj = activeQuestions[nextQIndex];
+            const secMins = qObj ? (qObj.secDuration || 30) : 30;
+            targetEndTime = Date.now() + (secMins * 60 * 1000);
+
+            saveStateToStorage();
+            renderSectionStrip();
+            loadQuestion(nextQIndex >= 0 ? nextQIndex : 0);
+            startTimestampTimer();
+        }
+
+        /* ================= 10. SECTION STRIP & LOCK INDICATORS ================= */
+        function renderSectionStrip() {
+            const container = document.getElementById('cbt-section-badges-container');
+            const submitSectionBtn = document.getElementById('cbt-submit-section-btn');
+            const submitExamBtn = document.getElementById('cbt-submit-btn');
+
+            if (activeTest.timerMode === "sectional") {
+                submitSectionBtn.classList.remove('hidden');
+                if (currentSectionIndex === sectionSequence.length - 1) {
+                    submitSectionBtn.classList.add('hidden');
+                    submitExamBtn.classList.remove('hidden');
+                } else {
+                    submitExamBtn.classList.add('hidden');
+                }
+            } else {
+                submitSectionBtn.classList.add('hidden');
+                submitExamBtn.classList.remove('hidden');
+            }
+
+            container.innerHTML = sectionSequence.map((secName, idx) => {
+                const isLocked = completedSections.has(secName);
+                const isActive = (idx === currentSectionIndex);
+
+                let badgeClass = "bg-slate-800 text-slate-300 border-slate-700";
+                let lockIcon = "";
+
+                if (isLocked) {
+                    badgeClass = "bg-slate-950 text-slate-500 border-slate-800 cursor-not-allowed";
+                    lockIcon = "🔒 ";
+                } else if (isActive) {
+                    badgeClass = "bg-amber-500/20 text-amber-300 border-amber-500 font-bold";
+                }
+
+                return `
+                    <button onclick="handleSectionBadgeClick(${idx})" class="sec-badge px-3 py-1 rounded text-xs transition border flex items-center gap-1 ${badgeClass}" data-sec="${secName}">
+                        <span>${lockIcon}${secName}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        window.handleSectionBadgeClick = function(secIdx) {
+            const secName = sectionSequence[secIdx];
+            if (activeTest.timerMode === "sectional") {
+                if (completedSections.has(secName)) {
+                    showToast("🔒 This section is locked. You cannot navigate back to completed sections.");
+                    return;
+                }
+                if (secIdx !== currentSectionIndex) {
+                    showToast("Section locked. You must complete the active section first.");
+                    return;
+                }
+            }
+
+            const targetQIdx = activeQuestions.findIndex(q => (q.section || "General") === secName);
+            if (targetQIdx >= 0) loadQuestion(targetQIdx);
+        };
+
+        // Non-blocking early section submit modal trigger
+        document.getElementById('cbt-submit-section-btn').addEventListener('click', () => {
+            const m = Math.floor(Math.max(0, Math.round((targetEndTime - Date.now()) / 1000)) / 60);
+            const s = Math.max(0, Math.round((targetEndTime - Date.now()) / 1000)) % 60;
+            const currentSecName = sectionSequence[currentSectionIndex];
+
+            document.getElementById('sec-confirm-time').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            document.getElementById('sec-confirm-name').textContent = `"${currentSecName}"`;
+            
+            pendingLockSection = currentSecName;
+            document.getElementById('sectionConfirmModal').classList.remove('hidden');
+        });
+
+        document.getElementById('cancel-section-submit').addEventListener('click', () => {
+            pendingLockSection = null;
+            document.getElementById('sectionConfirmModal').classList.add('hidden');
+        });
+
+        document.getElementById('confirm-section-submit').addEventListener('click', () => {
+            document.getElementById('sectionConfirmModal').classList.add('hidden');
+            const currentSec = sectionSequence[currentSectionIndex];
+            if (pendingLockSection !== currentSec || currentSectionIndex >= sectionSequence.length - 1) {
+                pendingLockSection = null;
+                showToast("That section has already ended. Continue with your current section.");
+                return;
+            }
+            pendingLockSection = null;
+            completedSections.add(currentSec);
+            advanceToNextSection();
+        });
+
+        /* ================= 11. QUESTION PALETTE & WORKSPACE RENDERER ================= */
+        function loadQuestion(idx) {
+            currentQIndex = idx;
+            startQuestionTimer(idx);
+            const q = activeQuestions[idx];
+
+            if (!questionStatus[idx] || questionStatus[idx] === 'not_visited') {
+                questionStatus[idx] = 'not_answered';
+            }
+
+            const qSec = q.section || "General";
+            const secIdx = sectionSequence.indexOf(qSec);
+            if (secIdx >= 0 && activeTest.timerMode === "overall") {
+                currentSectionIndex = secIdx;
+            }
+
+            const pos = parseFloat(q.posMarks || 1.0);
+            const neg = q.negMarks !== undefined ? parseFloat(q.negMarks) : (pos / 3);
+
+            document.getElementById('cbt-q-number').textContent = `Question ${idx + 1} of ${activeQuestions.length}`;
+            document.getElementById('cbt-q-section').textContent = qSec;
+            document.getElementById('cbt-palette-sec-title').textContent = qSec;
+            document.getElementById('cbt-q-marks').textContent = `Marks: +${pos.toFixed(2)} | -${neg.toFixed(2)}`;
+
+            const qualBadge = document.getElementById('cbt-q-qualifying-badge');
+            if (String(q.isQualifying).toUpperCase() === 'YES') {
+                qualBadge.classList.remove('hidden');
+            } else {
+                qualBadge.classList.add('hidden');
+            }
+
+            const passagePanel = document.getElementById('cbt-passage-panel');
+            const splitLayout = document.getElementById('cbt-split-layout');
+            const mobilePassageBtn = document.getElementById('mobile-passage-toggle-btn');
+
+            if (q.passage && q.passage.trim() !== '') {
+                passagePanel.classList.remove('hidden');
+                splitLayout.className = "grid grid-cols-1 lg:grid-cols-2 gap-5";
+                document.getElementById('cbt-passage-content').innerHTML = renderSmartCell(q.passage, currentLanguage);
+                mobilePassageBtn.classList.remove('hidden');
+            } else {
+                passagePanel.classList.add('hidden');
+                splitLayout.className = "grid grid-cols-1 lg:grid-cols-1 gap-5";
+                mobilePassageBtn.classList.add('hidden');
+            }
+
+            const qTextEl = document.getElementById('cbt-q-text');
+            qTextEl.innerHTML = renderSmartCell(q.q, currentLanguage);
+
+            const optionsContainer = document.getElementById('cbt-options-container');
+            const alphabet = ['A', 'B', 'C', 'D', 'E'];
+            const optionKeys = ['optA', 'optB', 'optC', 'optD'];
+            if (q.optE && String(q.optE).trim() !== '') {
+                optionKeys.push('optE');
+            }
+
+            optionsContainer.innerHTML = optionKeys.map((key, oIdx) => {
+                const optLetter = alphabet[oIdx];
+                const rawOptValue = q[key];
+                const isSelected = (userAnswers[idx] === optLetter);
+
+                return `
+                    <label class="flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition ${isSelected ? 'bg-amber-50 border-amber-600 font-semibold ring-1 ring-amber-500' : 'bg-slate-50/60 border-slate-200 hover:border-amber-400'}">
+                        <input type="radio" name="cbt-choice" value="${optLetter}" ${isSelected ? 'checked' : ''} onchange="selectOption('${optLetter}')" class="accent-amber-600 w-4 h-4">
+                        <span class="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">${optLetter}</span>
+                        <div class="text-sm text-[#0F172A] smart-content">${renderSmartCell(rawOptValue, currentLanguage)}</div>
+                    </label>
+                `;
+            }).join('');
+
+            triggerKaTeX(document.getElementById('cbt-content-scrollable'));
+            renderSectionStrip();
+            renderQuestionPalette();
+            saveStateToStorage();
+        }
+
+        window.selectOption = function(optLetter) {
+            userAnswers[currentQIndex] = optLetter;
+            if (questionStatus[currentQIndex] === 'review' || questionStatus[currentQIndex] === 'answered_review') {
+                questionStatus[currentQIndex] = 'answered_review';
+            } else {
+                questionStatus[currentQIndex] = 'answered';
+            }
+            renderQuestionPalette();
+            saveStateToStorage();
+        };
+
+        document.getElementById('cbt-clear-btn').addEventListener('click', () => {
+            delete userAnswers[currentQIndex];
+            questionStatus[currentQIndex] = 'not_answered';
+            loadQuestion(currentQIndex);
+        });
+
+        document.getElementById('cbt-mark-review-btn').addEventListener('click', () => {
+            if (userAnswers[currentQIndex]) {
+                questionStatus[currentQIndex] = 'answered_review';
+            } else {
+                questionStatus[currentQIndex] = 'review';
+            }
+
+            if (currentQIndex < activeQuestions.length - 1) {
+                if (activeTest.timerMode === "sectional") {
+                    const nextQSec = activeQuestions[currentQIndex + 1].section || "General";
+                    const currSec = activeQuestions[currentQIndex].section || "General";
+                    if (nextQSec !== currSec) {
+                        showToast("Reached end of active section. Click 'Lock & Submit Section' to proceed.");
+                        renderQuestionPalette();
+                        saveStateToStorage();
+                        return;
+                    }
+                }
+                loadQuestion(currentQIndex + 1);
+            } else {
+                renderQuestionPalette();
+            }
+        });
+
+        document.getElementById('cbt-next-btn').addEventListener('click', () => {
+            const st = questionStatus[currentQIndex];
+            if (st !== 'review' && st !== 'answered_review') {
+                questionStatus[currentQIndex] = userAnswers[currentQIndex] ? 'answered' : 'not_answered';
+            }
+
+            if (currentQIndex < activeQuestions.length - 1) {
+                if (activeTest.timerMode === "sectional") {
+                    const nextQSec = activeQuestions[currentQIndex + 1].section || "General";
+                    const currSec = activeQuestions[currentQIndex].section || "General";
+                    if (nextQSec !== currSec) {
+                        showToast("Reached end of active section. Click 'Lock & Submit Section' to proceed.");
+                        renderQuestionPalette();
+                        return;
+                    }
+                }
+                loadQuestion(currentQIndex + 1);
+            } else {
+                showToast("You are on the last question of the examination.");
+            }
+        });
+
+        document.getElementById('cbt-prev-btn').addEventListener('click', () => {
+            if (currentQIndex > 0) {
+                if (activeTest.timerMode === "sectional") {
+                    const prevQSec = activeQuestions[currentQIndex - 1].section || "General";
+                    const currSec = activeQuestions[currentQIndex].section || "General";
+                    if (prevQSec !== currSec) {
+                        showToast("Cannot navigate to previous locked section.");
+                        return;
+                    }
+                }
+                loadQuestion(currentQIndex - 1);
+            }
+        });
+
+        window.jumpToQuestion = function(idx) {
+            if (activeTest.timerMode === "sectional") {
+                const targetSec = activeQuestions[idx].section || "General";
+                const currentSec = sectionSequence[currentSectionIndex];
+                if (targetSec !== currentSec) {
+                    showToast("Section locked. Navigate questions within your active section only.");
+                    return;
+                }
+            }
+            loadQuestion(idx);
+        };
+
+        function renderQuestionPalette() {
+            const grid = document.getElementById('cbt-palette-grid');
+            grid.innerHTML = activeQuestions.map((_, idx) => {
+                const status = questionStatus[idx] || 'not_visited';
+                let btnClass = "bg-slate-100 text-slate-700 border-slate-300";
+                let dot = "";
+
+                if (status === 'answered') {
+                    btnClass = "bg-emerald-600 text-white border-emerald-700 font-bold";
+                } else if (status === 'not_answered') {
+                    btnClass = "bg-rose-500 text-white border-rose-600 font-bold";
+                } else if (status === 'review') {
+                    btnClass = "bg-purple-600 text-white border-purple-700 font-bold";
+                } else if (status === 'answered_review') {
+                    btnClass = "bg-purple-600 text-white border-purple-700 font-bold relative";
+                    dot = `<span class="w-2 h-2 bg-emerald-400 rounded-full absolute -top-0.5 -right-0.5 border border-white"></span>`;
+                }
+
+                return `<button onclick="jumpToQuestion(${idx})" id="pal-btn-${idx}" class="w-7 h-7 rounded-lg text-[11px] flex items-center justify-center transition border ${btnClass}">${idx + 1}${dot}</button>`;
+            }).join('');
+        }
+
+        /* ================= 12. BILINGUAL SWITCHER & COLLAPSIBLE PALETTE ================= */
+        document.getElementById('cbt-lang-switch').addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            loadQuestion(currentQIndex);
+            showToast(`Language toggled to ${currentLanguage === 'hi' ? 'Hindi (हिन्दी)' : 'English'}`);
+        });
+
+        document.getElementById('toggle-palette-btn').addEventListener('click', () => {
+            isPaletteHidden = !isPaletteHidden;
+            const palCol = document.getElementById('cbt-palette-col');
+            const qCol = document.getElementById('cbt-question-col');
+
+            if (isPaletteHidden) {
+                palCol.classList.add('hidden');
+                qCol.classList.replace('lg:col-span-3', 'lg:col-span-4');
+                document.getElementById('toggle-palette-text').textContent = "Show Palette";
+                document.getElementById('toggle-palette-arrow').textContent = "◀";
+            } else {
+                palCol.classList.remove('hidden');
+                qCol.classList.replace('lg:col-span-4', 'lg:col-span-3');
+                document.getElementById('toggle-palette-text').textContent = "Hide Palette";
+                document.getElementById('toggle-palette-arrow').textContent = "▶";
+            }
+        });
+
+        document.getElementById('mobile-passage-toggle-btn').addEventListener('click', () => {
+            const pPanel = document.getElementById('cbt-passage-panel');
+            pPanel.classList.toggle('hidden');
+        });
+
+        /* ================= 13. QUESTION PAPER & INSTRUCTIONS MODALS ================= */
+        document.getElementById('open-question-paper-btn').addEventListener('click', () => {
+            document.getElementById('qp-exam-title').textContent = `${activeTest.title} (${activeQuestions.length} Questions)`;
+            const container = document.getElementById('qp-questions-container');
+
+            container.innerHTML = activeQuestions.map((q, idx) => {
+                const alphabet = ['A', 'B', 'C', 'D', 'E'];
+                const opts = [q.optA, q.optB, q.optC, q.optD];
+                if (q.optE && String(q.optE).trim() !== '') opts.push(q.optE);
+
+                return `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="text-xs font-bold text-amber-800 uppercase">Q${idx + 1}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">${q.section || 'General'}</span>
+                        </div>
+                        ${q.passage ? `<div class="p-3 bg-amber-50/80 rounded-lg text-xs text-slate-800 mb-2 border border-amber-200/60 smart-content">${renderSmartCell(q.passage, currentLanguage)}</div>` : ''}
+                        <div class="text-sm font-medium text-slate-900 smart-content">${renderSmartCell(q.q, currentLanguage)}</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 text-xs text-slate-700">
+                            ${opts.map((opt, oIdx) => `
+                                <div class="p-2 bg-white rounded-lg border border-slate-200 smart-content">
+                                    <strong>${alphabet[oIdx]}.</strong> ${renderSmartCell(opt, currentLanguage)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            triggerKaTeX(container);
+            document.getElementById('questionPaperModal').classList.remove('hidden');
+        });
+
+        document.getElementById('close-qp-btn').addEventListener('click', () => {
+            document.getElementById('questionPaperModal').classList.add('hidden');
+        });
+
+        document.getElementById('open-instructions-btn').addEventListener('click', () => {
+            document.getElementById('instructionsModal').classList.remove('hidden');
+        });
+
+        document.getElementById('close-inst-btn').addEventListener('click', () => {
+            document.getElementById('instructionsModal').classList.add('hidden');
+        });
+
+        /* ================= 14. EXAM SUMMARY SUBMISSION MODAL ================= */
+        document.getElementById('cbt-submit-btn').addEventListener('click', () => {
+            let answered = 0, notAnswered = 0, marked = 0, notVisited = 0;
+            activeQuestions.forEach((_, idx) => {
+                const st = questionStatus[idx] || 'not_visited';
+                if (st === 'answered') answered++;
+                else if (st === 'not_answered') notAnswered++;
+                else if (st === 'review' || st === 'answered_review') marked++;
+                else notVisited++;
+            });
+
+            document.getElementById('sum-answered').textContent = answered;
+            document.getElementById('sum-not-answered').textContent = notAnswered;
+            document.getElementById('sum-marked').textContent = marked;
+            document.getElementById('sum-not-visited').textContent = notVisited;
+
+            document.getElementById('examSummaryModal').classList.remove('hidden');
+        });
+
+        document.getElementById('close-summary-btn').addEventListener('click', () => {
+            document.getElementById('examSummaryModal').classList.add('hidden');
+        });
+
+        document.getElementById('confirm-final-submit-btn').addEventListener('click', () => {
+            document.getElementById('examSummaryModal').classList.add('hidden');
+            finalizeExam();
+        });
+
+        document.getElementById('cbt-exit-btn').addEventListener('click', () => {
+            if (confirm("Exit examination? Your progress will be discarded.")) {
+                purgeStorage();
+                clearInterval(timerTickInterval);
+                document.getElementById('cbtModal').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        /* ================= 15. SCORECARD & EXACT 1/3rd CALCULATION ================= */
+        let solutionsReviewData = [];
+
+        function finalizeExam() {
+            stopQuestionTimer();
+            closeTimerPopups();
+            clearInterval(timerTickInterval);
+            purgeStorage();
+            document.getElementById('cbtModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+
+            let grandMeritScore = 0;
+            let grandMeritMax = 0;
+            let grandCorrect = 0;
+            let grandWrong = 0;
+            solutionsReviewData = [];
+
+            const sectionSummary = {};
+            const qualifyingSummary = {};
+            const sectionTime = {};
+
+            activeQuestions.forEach((q, idx) => {
+                const sec = q.section || "General";
+                sectionTime[sec] = (sectionTime[sec] || 0) + (questionTimes[idx] || 0);
+                const isQualifying = (String(q.isQualifying).toUpperCase() === 'YES');
+                
+                // Official Railway Rule: Deduct exactly 1/3rd of the question's positive mark
+                const pos = parseFloat(q.posMarks || 1.0);
+                const neg = q.negMarks !== undefined ? parseFloat(q.negMarks) : (pos / 3);
+
+                const userPick = userAnswers[idx];
+                const status = questionStatus[idx];
+                const isEvaluated = (status === 'answered' || status === 'answered_review') && userPick !== undefined;
+
+                const isCorrect = (isEvaluated && userPick === q.ans);
+                const isWrong = (isEvaluated && userPick !== q.ans);
+
+                solutionsReviewData.push({
+                    q: q.q,
+                    passage: q.passage,
+                    section: sec,
+                    optA: q.optA, optB: q.optB, optC: q.optC, optD: q.optD, optE: q.optE,
+                    ans: q.ans,
+                    exp: q.exp,
+                    userPick: isEvaluated ? userPick : undefined,
+                    timeSpent: questionTimes[idx] || 0,
+                    posMarks: pos,
+                    negMarks: neg
+                });
+
+                if (isQualifying) {
+                    if (!qualifyingSummary[sec]) {
+                        qualifyingSummary[sec] = { correct: 0, wrong: 0, marks: 0, max: 0, cutoff: 35 };
+                    }
+                    qualifyingSummary[sec].max += pos;
+                    const cutoffVal = parseFloat(q.qualifyingCutoff);
+                    if (!isNaN(cutoffVal)) qualifyingSummary[sec].cutoff = cutoffVal;
+                    if (isCorrect) {
+                        qualifyingSummary[sec].correct++;
+                        qualifyingSummary[sec].marks += pos;
+                    } else if (isWrong) {
+                        qualifyingSummary[sec].wrong++;
+                        qualifyingSummary[sec].marks -= neg;
+                    }
+                } else {
+                    if (!sectionSummary[sec]) {
+                        sectionSummary[sec] = { correct: 0, wrong: 0, marks: 0 };
+                    }
+                    grandMeritMax += pos;
+                    if (isCorrect) {
+                        grandCorrect++;
+                        grandMeritScore += pos;
+                        sectionSummary[sec].correct++;
+                        sectionSummary[sec].marks += pos;
+                    } else if (isWrong) {
+                        grandWrong++;
+                        grandMeritScore -= neg;
+                        sectionSummary[sec].wrong++;
+                        sectionSummary[sec].marks -= neg;
+                    }
+                }
+            });
+
+            const attempted = grandCorrect + grandWrong;
+            const accuracy = attempted > 0 ? ((grandCorrect / attempted) * 100).toFixed(1) : 0;
+
+            document.getElementById('res-test-title').textContent = activeTest.title;
+            document.getElementById('res-score').textContent = `${grandMeritScore.toFixed(2)} / ${grandMeritMax.toFixed(2)}`;
+            document.getElementById('res-correct').textContent = `${grandCorrect}`;
+            document.getElementById('res-wrong').textContent = `${grandWrong}`;
+            document.getElementById('res-accuracy').textContent = `${accuracy}%`;
+            document.getElementById('res-tab-switches').textContent = `Tab switches: ${tabSwitchCount}`;
+
+            let timedCount = 0, totalTime = 0, longestIdx = -1, longestVal = 0;
+            activeQuestions.forEach((_, i) => {
+                const t = questionTimes[i] || 0;
+                if (t > 0) { timedCount++; totalTime += t; }
+                if (t > longestVal) { longestVal = t; longestIdx = i; }
+            });
+            document.getElementById('res-time-summary').textContent = timedCount > 0
+                ? `Total time: ${formatTime(totalTime)} • Average per question: ${formatTime(totalTime / timedCount)} • Longest: Q${longestIdx + 1} (${formatTime(longestVal)})`
+                : "";
+
+            // Render Qualifying Container (ALP Trade Test, etc.)
+            const qContainer = document.getElementById('res-qualifying-container');
+            const qList = document.getElementById('res-qualifying-list');
+            const qualEntries = Object.entries(qualifyingSummary);
+
+            if (qualEntries.length > 0) {
+                qContainer.classList.remove('hidden');
+                qList.innerHTML = qualEntries.map(([sName, data]) => {
+                    const pct = data.max > 0 ? (data.marks / data.max) * 100 : 0;
+                    const isQualified = pct >= data.cutoff;
+                    return `
+                        <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-white border border-amber-200">
+                            <div>
+                                <span class="font-bold text-slate-800">${sName}</span>
+                                <span class="text-[10px] text-slate-500 block">Score: ${data.marks.toFixed(2)} / ${data.max.toFixed(2)} (${pct.toFixed(1)}%) • Cut-off ${data.cutoff}% • Time ${formatTime(sectionTime[sName])}</span>
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isQualified ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-rose-100 text-rose-800 border border-rose-300'}">
+                                ${isQualified ? 'QUALIFIED ✓' : 'NOT QUALIFIED ✗'}
+                            </span>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                qContainer.classList.add('hidden');
+            }
+
+            // Subject Performance Table
+            const tbody = document.getElementById('res-sections-tbody');
+            tbody.innerHTML = Object.entries(sectionSummary).map(([sName, data]) => `
+                <tr class="hover:bg-slate-50/80">
+                    <td class="p-2 sm:p-2.5 font-semibold text-slate-800">${sName}</td>
+                    <td class="p-2 sm:p-2.5 text-center text-emerald-700 font-bold">${data.correct}</td>
+                    <td class="p-2 sm:p-2.5 text-center text-rose-700 font-bold">${data.wrong}</td>
+                    <td class="p-2 sm:p-2.5 text-right font-mono font-bold text-amber-700">${data.marks.toFixed(2)}</td>
+                    <td class="p-2 sm:p-2.5 text-right font-mono text-slate-600">${formatTime(sectionTime[sName])}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('resultModal').classList.remove('hidden');
+        }
+
+        document.getElementById('close-result-btn').addEventListener('click', () => {
+            document.getElementById('resultModal').classList.add('hidden');
+        });
+
+        /* ================= 16. DETAILED SOLUTIONS REVIEW ================= */
+        let solCurrentIndex = 0;
+
+        document.getElementById('view-solutions-btn').addEventListener('click', () => {
+            document.getElementById('resultModal').classList.add('hidden');
+            document.getElementById('solutionModal').classList.remove('hidden');
+            renderSolutionPalette();
+            loadSolutionQuestion(0);
+        });
+
+        document.getElementById('close-solution-btn').addEventListener('click', () => {
+            document.getElementById('solutionModal').classList.add('hidden');
+        });
+
+        function renderSolutionPalette() {
+            const grid = document.getElementById('sol-palette-grid');
+            grid.innerHTML = solutionsReviewData.map((item, idx) => {
+                let colorClass = "bg-slate-200 text-slate-700";
+                if (item.userPick !== undefined) {
+                    colorClass = (item.userPick === item.ans) ? "bg-emerald-600 text-white font-bold" : "bg-rose-600 text-white font-bold";
+                }
+                return `<button onclick="loadSolutionQuestion(${idx})" id="sol-pal-${idx}" class="w-7 h-7 rounded-lg text-[11px] flex items-center justify-center transition ${colorClass}">${idx + 1}</button>`;
+            }).join('');
+        }
+
+        window.loadSolutionQuestion = loadSolutionQuestion;
+
+        function loadSolutionQuestion(idx) {
+            solCurrentIndex = idx;
+            const q = solutionsReviewData[idx];
+
+            document.getElementById('sol-q-number').innerText = `Question ${idx + 1} of ${solutionsReviewData.length}`;
+            document.getElementById('sol-q-section').innerText = q.section;
+            document.getElementById('sol-q-time-badge').innerText = `Time spent: ${formatTime(q.timeSpent)}`;
+
+            const passageBox = document.getElementById('sol-passage-box');
+            if (q.passage && q.passage.trim() !== '') {
+                passageBox.classList.remove('hidden');
+                passageBox.innerHTML = `<strong>Reference Context:</strong><br>${renderSmartCell(q.passage, currentLanguage)}`;
+            } else {
+                passageBox.classList.add('hidden');
+            }
+
+            document.getElementById('sol-q-text').innerHTML = renderSmartCell(q.q, currentLanguage);
+
+            const badge = document.getElementById('sol-q-status-badge');
+            if (q.userPick === undefined) {
+                badge.className = "text-xs font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300";
+                badge.innerText = "Skipped / Unattempted (0.00)";
+            } else if (q.userPick === q.ans) {
+                badge.className = "text-xs font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300";
+                badge.innerText = `Correct (+${q.posMarks.toFixed(2)})`;
+            } else {
+                badge.className = "text-xs font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300";
+                badge.innerText = `Wrong (-${q.negMarks.toFixed(2)})`;
+            }
+
+            const alphabet = ['A', 'B', 'C', 'D', 'E'];
+            const optionKeys = ['optA', 'optB', 'optC', 'optD'];
+            if (q.optE && String(q.optE).trim() !== '') optionKeys.push('optE');
+
+            const container = document.getElementById('sol-options-container');
+            container.innerHTML = optionKeys.map((key, oIdx) => {
+                const optLetter = alphabet[oIdx];
+                const rawOpt = q[key];
+                const isCorrect = (optLetter === q.ans);
+                const isUserChoice = (q.userPick === optLetter);
+
+                let optClass = "border-slate-200 bg-white";
+                let tag = "";
+
+                if (isCorrect) {
+                    optClass = "border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold ring-1 ring-emerald-500";
+                    tag = `<span class="ml-auto text-[11px] font-bold text-emerald-700 bg-emerald-200/70 px-2 py-0.5 rounded">Correct Answer ✓</span>`;
+                } else if (isUserChoice && !isCorrect) {
+                    optClass = "border-rose-500 bg-rose-50 text-rose-950 font-semibold ring-1 ring-rose-500";
+                    tag = `<span class="ml-auto text-[11px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded">Your Choice ✗</span>`;
+                }
+
+                return `
+                    <div class="flex items-center gap-3 p-3 rounded-xl border ${optClass}">
+                        <span class="w-6 h-6 rounded-lg ${isCorrect ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'} font-bold text-xs flex items-center justify-center shrink-0">${optLetter}</span>
+                        <div class="text-sm smart-content">${renderSmartCell(rawOpt, currentLanguage)}</div>
+                        ${tag}
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('sol-explanation-text').innerHTML = renderSmartCell(q.exp, currentLanguage) || "Detailed explanation provided in official answer key.";
+
+            triggerKaTeX(document.getElementById('solutionModal'));
+        }
+
+        document.getElementById('sol-next-btn').addEventListener('click', () => {
+            if (solCurrentIndex < solutionsReviewData.length - 1) loadSolutionQuestion(solCurrentIndex + 1);
+        });
+
+        document.getElementById('sol-prev-btn').addEventListener('click', () => {
+            if (solCurrentIndex > 0) loadSolutionQuestion(solCurrentIndex - 1);
+        });
+
+        /* ================= 17. CRASH RECOVERY AUTO-SAVE & RESUME BANNER ================= */
+        function saveStateToStorage() {
+            if (!activeTest) return;
+            const timesSnapshot = Object.assign({}, questionTimes);
+            if (timeTrackIdx !== null) {
+                timesSnapshot[timeTrackIdx] = (timesSnapshot[timeTrackIdx] || 0) + (Date.now() - timeTrackStart) / 1000;
+            }
+            const state = {
+                activeTestMeta: activeTest,
+                questions: activeQuestions.map(q => { const c = Object.assign({}, q); delete c.ans; delete c.exp; return c; }),
+                currentQIndex: currentQIndex,
+                userAnswers: userAnswers,
+                questionStatus: questionStatus,
+                currentSectionIndex: currentSectionIndex,
+                completedSections: Array.from(completedSections),
+                tabSwitches: tabSwitchCount,
+                questionTimes: timesSnapshot,
+                targetEndTime: targetEndTime
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.warn("Storage quota exceeded", e);
+            }
+        }
+
+        function purgeStorage() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+            } catch (e) {}
+        }
+
+        async function getFullQuestionsForSaved(state) {
+            const id = state.activeTestMeta.id;
+            let full = loadedQuestionsCache[id];
+            if (!full && GOOGLE_APPS_SCRIPT_URL) {
+                const res = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getQuestions&testId=${encodeURIComponent(id)}`);
+                if (!res.ok) throw new Error("Network response not ok");
+                full = await res.json();
+                loadedQuestionsCache[id] = full;
+            }
+            return full || null;
+        }
+
+        function checkCrashRecoverySession() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (!saved) return;
+                const state = JSON.parse(saved);
+                if (!state || !state.activeTestMeta) { purgeStorage(); return; }
+
+                const meta = state.activeTestMeta;
+                const banner = document.getElementById('crash-resume-banner');
+                const bannerText = document.getElementById('resume-banner-text');
+                const resumeBtn = document.getElementById('resume-session-btn');
+                const discardBtn = document.getElementById('discard-session-btn');
+                const expired = !(state.targetEndTime > Date.now());
+
+                discardBtn.onclick = () => {
+                    purgeStorage();
+                    banner.classList.add('hidden');
+                    showToast("Previous exam session discarded.");
+                };
+
+                if (!expired) {
+                    bannerText.textContent = `In-progress Railway exam: "${meta.title}". Click Resume to continue test.`;
+                    banner.classList.remove('hidden');
+                    resumeBtn.onclick = async () => {
+                        try {
+                            const full = await getFullQuestionsForSaved(state);
+                            if (!full || full.length === 0) throw new Error("No questions");
+                            banner.classList.add('hidden');
+                            initializeCBTWorkspace(meta, full, state);
+                        } catch (err) {
+                            showToast("⚠️ Could not restore the test. Check your connection and try again.");
+                        }
+                    };
+                    return;
+                }
+
+                getFullQuestionsForSaved(state).then(full => {
+                    if (!full || full.length === 0) { purgeStorage(); return; }
+
+                    const seq = [];
+                    full.forEach(q => {
+                        const n = q.section || "General";
+                        if (!seq.includes(n)) seq.push(n);
+                    });
+                    const secIdx = state.currentSectionIndex || 0;
+                    const isSectional = (meta.timerMode === "sectional");
+
+                    if (isSectional && secIdx < seq.length - 1) {
+                        const lockedSet = new Set(state.completedSections || []);
+                        lockedSet.add(seq[secIdx]);
+                        const nextSec = seq[secIdx + 1];
+                        const nextQIdx = full.findIndex(q => (q.section || "General") === nextSec);
+                        const secMins = nextQIdx >= 0 ? (parseFloat(full[nextQIdx].secDuration) || 30) : 30;
+
+                        bannerText.textContent = `Time for "${seq[secIdx]}" ran out while you were away, so it is now locked. Continue from "${nextSec}"?`;
+                        resumeBtn.textContent = "Continue";
+                        banner.classList.remove('hidden');
+                        resumeBtn.onclick = () => {
+                            banner.classList.add('hidden');
+                            const adjusted = Object.assign({}, state, {
+                                completedSections: Array.from(lockedSet),
+                                currentSectionIndex: secIdx + 1,
+                                currentQIndex: nextQIdx >= 0 ? nextQIdx : 0,
+                                targetEndTime: Date.now() + (secMins * 60 * 1000)
+                            });
+                            initializeCBTWorkspace(meta, full, adjusted);
+                        };
+                    } else {
+                        activeTest = meta;
+                        activeQuestions = full;
+                        userAnswers = state.userAnswers || {};
+                        questionStatus = state.questionStatus || {};
+                        tabSwitchCount = state.tabSwitches || 0;
+                        questionTimes = state.questionTimes || {};
+                        showToast("Your previous exam time had expired. Showing your result.");
+                        finalizeExam();
+                    }
+                }).catch(() => {
+                    showToast("⚠️ Could not load your previous exam. Check your connection and reload.");
+                });
+            } catch (e) {}
+        }
+
+        /* ================= 18. TAB-SWITCH MALPRACTICE GUARD ================= */
+        document.addEventListener('visibilitychange', () => {
+            const examOpen = !document.getElementById('cbtModal').classList.contains('hidden');
+            if (!examOpen || !activeTest) return;
+            if (document.hidden) {
+                stopQuestionTimer();
+                tabSwitchCount++;
+                saveStateToStorage();
+            } else {
+                timeTrackIdx = currentQIndex;
+                timeTrackStart = Date.now();
+                showToast(`⚠️ Tab switch detected (${tabSwitchCount} so far). Please stay on the exam screen.`);
+            }
+        });
+
+        /* ================= 19. TOAST NOTIFIER ================= */
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3200);
+        }
+
+        /* ================= 20. BOOTSTRAP INITIALIZATION ================= */
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchTestsMetadata();
+            checkCrashRecoverySession();
+            setTimeout(() => triggerKaTeX(document.body), 400);
+        });
+
+    })();
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>
+```

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Recruitment Boards (RRB) Master Portal | Triratna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF7F2;
+            background-image: 
+                radial-gradient(at 12% 12%, rgba(217, 119, 6, 0.04) 0px, transparent 50%),
+                radial-gradient(at 88% 88%, rgba(180, 83, 9, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* --- 3D ARCHITECTURAL SPEC SYSTEM (NO CARDS / NO FLAT DOORMATA) --- */
+        .dock-3d {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(217, 119, 6, 0.18);
+            box-shadow: 
+                0 1px 2px rgba(0,0,0,0.02),
+                0 10px 25px -5px rgba(180, 83, 9, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .dock-btn {
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .dock-btn:hover:not(.active) {
+            transform: translateY(-2px);
+            color: #92400e;
+        }
+
+        .dock-btn.active {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff !important;
+            box-shadow: 
+                0 4px 14px rgba(180, 83, 9, 0.38),
+                0 2px 0 #78350f,
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Continuous 3D HUD Telemetry Rail (replaces isolated mini boxes) */
+        .hud-slab {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF5EE 100%);
+            border: 1px solid rgba(217, 119, 6, 0.22);
+            border-bottom: 3px solid rgba(180, 83, 9, 0.35);
+            box-shadow: 
+                0 15px 35px -10px rgba(120, 53, 15, 0.08),
+                0 1px 3px rgba(0,0,0,0.02),
+                inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        }
+
+        .node-3d {
+            box-shadow: 
+                0 4px 10px rgba(180, 83, 9, 0.25),
+                0 2px 0 #92400e,
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        /* 3D Perspective Curriculum Drawer */
+        .drawer-3d {
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid rgba(217, 119, 6, 0.16);
+        }
+        .drawer-3d:hover {
+            background: rgba(255, 255, 255, 0.75);
+            padding-left: 0.6rem;
+        }
+
+        .content-swap {
+            animation: stageReveal 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes stageReveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.995);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Primary Architectural Header -->
+    <header class="border-b border-amber-900/10 bg-[#FAF7F2]/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform" style="box-shadow: 0 4px 0 #92400e, 0 8px 16px rgba(180,83,9,0.3);">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif block leading-tight">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-extrabold">Railway Recruitment Portal</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="#papers-section" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 text-white text-xs font-bold hover:bg-amber-700 shadow-sm transition-all" style="box-shadow: 0 3px 0 #92400e, 0 6px 12px rgba(180,83,9,0.25);">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Papers Archive</span>
+                </a>
+                <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-amber-800 flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING 3D NAVIGATION DOCK (Controls deep links for all 7 RRB exams) -->
+    <nav class="sticky top-20 z-40 py-3 bg-[#FAF7F2]/85 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="dock-3d p-2 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                <button onclick="navigateTo('ntpc')" data-target="ntpc" class="dock-btn active px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="briefcase" class="w-3.5 h-3.5"></i> RRB NTPC
+                </button>
+                <button onclick="navigateTo('groupd')" data-target="groupd" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="hard-hat" class="w-3.5 h-3.5"></i> RRB Group D
+                </button>
+                <button onclick="navigateTo('alp')" data-target="alp" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="gauge" class="w-3.5 h-3.5"></i> RRB ALP
+                </button>
+                <button onclick="navigateTo('technician')" data-target="technician" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="wrench" class="w-3.5 h-3.5"></i> RRB Technician
+                </button>
+                <button onclick="navigateTo('je')" data-target="je" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i> RRB JE
+                </button>
+                <button onclick="navigateTo('rpf-si')" data-target="rpf-si" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="shield" class="w-3.5 h-3.5"></i> RPF SI
+                </button>
+                <button onclick="navigateTo('rpf-constable')" data-target="rpf-constable" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> RPF Constable
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN DYNAMIC STAGE (No cards, pure architectural canvas) -->
+    <main class="max-w-7xl mx-auto px-6 py-6 flex-grow w-full space-y-16">
+
+        <div id="dynamic-exam-canvas" class="content-swap space-y-16">
+            <!-- Content dynamically rendered via JavaScript from URL hash -->
+        </div>
+
+        <!-- SHARED TEST PAPERS ARCHIVE (Full-width sleek continuous section) -->
+        <section id="papers-section" class="scroll-mt-32 pt-8">
+            <div class="hud-slab p-10 rounded-3xl relative overflow-hidden">
+                <div class="max-w-3xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-600 text-white text-xs font-bold" style="box-shadow: 0 2px 0 #92400e;">
+                        <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i> Triratna Railway Question Paper Vault
+                    </div>
+                    <h2 class="text-3xl font-serif font-bold text-slate-900">
+                        Official RRB Previous Year Shift Papers &amp; Test Simulators
+                    </h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Practice authentic shift-wise question papers conducted by TCS with live calculators, negative penalty deductions, bilingual English/Hindi solutions, and all-India percentile reports.
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4" id="papers-actions">
+                        <!-- Dynamic paper links injected per exam -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Editorial Footer -->
+    <footer class="border-t border-amber-900/10 py-8 text-center text-xs text-slate-500 bg-[#FAF7F2] mt-16">
+        <p class="font-serif font-semibold text-slate-800 text-sm mb-1">TRIRATNA COACHING INSTITUTE</p>
+        <p>"Compassionate Learning for Success." &bull; Railway Recruitment Boards (RRB) Master Portal</p>
+    </footer>
+
+    <!-- LOGIC & DATABASE FOR ALL 7 RRB EXAMS -->
+    <script>
+        const RRB_DATABASE = {
+            ntpc: {
+                title: "RRB NTPC (Non-Technical Popular Categories)",
+                badge: "Indian Railways &bull; Graduate &amp; Undergraduate Cadres",
+                heroDesc: "Premier non-technical executive recruitment across Indian Railways zones. Encompasses Station Master, Goods Train Manager, Commercial Apprentice, and Clerical typists. Selection is 100% merit-based across 4 stages with zero viva interview.",
+                payScale: "Level 2, 3, 5 & 6 (₹19,900 - ₹35,400 Basic)",
+                selectionRounds: "CBT-1 &rarr; CBT-2 &rarr; CBAT/Typing &rarr; DV",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (100% Abolished)",
+                qual: "Undergraduate: 12th Pass (50%) | Graduate: Bachelor's Degree in any discipline",
+                meritBasis: "CBT-2 Normalized Marks (or 70% CBT-2 + 30% CBAT for SM/TA)",
+                stages: [
+                    { title: "Stage 1: CBT-1 (Common Screening Prelims)", nature: "Qualifying Only (100 Qs / 100 Marks / 90 Min)", desc: "General Awareness 40, Maths 30, Reasoning 30. Shortlists candidates at a ratio of 1:20 times vacancies for CBT-2. CBT-1 marks are NEVER added into the final merit rank." },
+                    { title: "Stage 2: CBT-2 (Level-Wise Mains Exam)", nature: "Core Merit Determinant (120 Qs / 120 Marks / 90 Min)", desc: "Conducted separately for each Pay Level (Level 2, 3, 4, 5, 6). GA 50, Maths 35, Reasoning 35. For non-skill posts, 100% of appointment merit comes solely from this score." },
+                    { title: "Stage 3: Skill Test / Aptitude Test (Post-Specific)", nature: "CBAT (Aptitude) OR Typing Skill Test", desc: "Station Master & Traffic Assistant appear in CBAT (5 batteries, min 42 T-score, 30% weightage). Clerical posts require Typing Test (30 wpm English / 25 wpm Hindi, qualifying only). Other posts proceed directly to DV." },
+                    { title: "Stage 4: Document Verification (DV) & Medical Fitness", nature: "Strict 1:1 Vacancy Ratio", desc: "Verification of original academic and caste certificates followed by post-specific medical fitness (A-2 for Station Master, A-3 for Goods Guard, B-2 for Commercial Clerks)." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:15 PM", time: "12:45 PM - 02:15 PM (90 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:00 PM", gate: "04:00 PM", time: "04:30 PM - 06:00 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Awareness", q: "40", m: "40", time: "Composite 90 min" },
+                    { sec: "Mathematics", q: "30", m: "30", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "30", m: "30", time: "Composite 90 min" },
+                    { sec: "Total CBT-1", q: "100 Qs", m: "100 Marks", time: "90 Mins (120 PwBD)", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "General Awareness", q: "50", m: "50", time: "Composite 90 min" },
+                    { sec: "Mathematics", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "Final Merit Base Total (CBT-2)", q: "120 Qs", m: "120 Marks", time: "90 Mins (120 PwBD)", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Station Master (SM)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹55,000 - ₹64,000 (Medical: A-2)" },
+                    { post: "Commercial Apprentice (CA)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹55,000 - ₹62,000 (Medical: B-2)" },
+                    { post: "Goods Train Manager (Goods Guard)", level: "Level 5", basic: "₹29,200 - ₹92,300", inhand: "₹48,000 - ₹58,000 (Medical: A-2)" },
+                    { post: "Senior Commercial cum Ticket Clerk", level: "Level 5", basic: "₹29,200 - ₹92,300", inhand: "₹45,000 - ₹52,000 (Medical: B-2)" },
+                    { post: "Commercial cum Ticket Clerk (12th Pass)", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹34,000 - ₹38,000 (Medical: B-2)" },
+                    { post: "Junior Clerk cum Typist (12th Pass)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,000 - ₹35,000 (Medical: C-2)" }
+                ],
+                syllabus: [
+                    { subject: "General Awareness (High Weightage &bull; 40-50 Qs)", topics: "Current Affairs (National/International), Games & Sports, Art & Culture of India, Indian Literature, Monuments and Places of India, General Science & Life Science (up to 10th CBSE), History of India & Freedom Struggle, Physical, Social and Economic Geography, Indian Polity & Constitution, Indian Economy, Environmental Issues, Basics of Computers." },
+                    { subject: "Mathematics (30-35 Qs)", topics: "Number System, Decimals, Fractions, LCM, HCF, Ratio & Proportions, Percentage, Mensuration, Time & Work, Time & Distance, Simple and Compound Interest, Profit & Loss, Elementary Algebra, Geometry & Trigonometry, Elementary Statistics." },
+                    { subject: "General Intelligence & Reasoning (30-35 Qs)", topics: "Analogies, Completion of Number and Alphabetical Series, Coding & Decoding, Mathematical Operations, Similarities & Differences, Relationships, Analytical Reasoning, Syllogism, Jumbling, Venn Diagrams, Puzzle, Data Sufficiency, Statement-Conclusion, Statement-Courses of Action, Decision Making." }
+                ],
+                papers: [
+                    { title: "RRB NTPC CBT-1 Shift Papers (133 Sets)", url: "papers-rrb-ntpc-cbt1.html" },
+                    { title: "RRB NTPC CBT-2 Level 2, 3, 5, 6 Papers", url: "papers-rrb-ntpc-cbt2.html" },
+                    { title: "CBAT (Psycho) 5-Battery Simulator", url: "papers-rrb-ntpc-cbat.html" }
+                ]
+            },
+
+            groupd: {
+                title: "RRB Group D (RRC Level-1 Posts)",
+                badge: "Indian Railways &bull; Track Maintainer, Pointsman &amp; Assistants",
+                heroDesc: "Massive national recruitment for foundational operating posts across all railway zones: Track Maintainer Grade IV, Pointsman, and Technical Assistants in Mechanical, Electrical, Signal & Telecom, and Engineering workshops. Single CBT + physical test.",
+                payScale: "Level 1 (₹18,000 Basic + Allowances | In-Hand ₹28,000 - ₹34,000)",
+                selectionRounds: "Single CBT &rarr; PET &rarr; DV &amp; Medical",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "10th pass (Matriculation) OR ITI from NCVT/SCVT OR NAC granted by NCVT",
+                meritBasis: "100% on Single CBT Normalized Score (100 Marks)",
+                stages: [
+                    { title: "Stage 1: Computer Based Test (CBT)", nature: "100% Final Merit Decider (100 Qs / 100 Marks / 90 Min)", desc: "Science 25, Maths 25, Reasoning 30, Current Affairs 20. Entire merit rank is prepared on normalized marks from this single exam. Shortlists candidates at 1:3 for PET." },
+                    { title: "Stage 2: Physical Efficiency Test (PET)", nature: "Mandatory Qualifying Test (Pass/Fail)", desc: "Male: Carry 35 kg for 100m in 2 min + Run 1000m in 4 min 15 sec. Female: Carry 20 kg for 100m in 2 min + Run 1000m in 5 min 40 sec. Exempted for PwBD candidates." },
+                    { title: "Stage 3: Document Verification (DV)", nature: "Strict 1:1 Ratio", desc: "Candidates qualifying PET are called in order of CBT merit for original educational and community certificate verification." },
+                    { title: "Stage 4: Railway Medical Examination", nature: "Hospital Board Fitness", desc: "Comprehensive physical and eyesight check according to the post medical standard (A-2, A-3, B-1, B-2, C-1 as per post allotted)." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:15 PM", time: "12:45 PM - 02:15 PM (90 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:00 PM", gate: "04:00 PM", time: "04:30 PM - 06:00 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Science (10th CBSE)", q: "25", m: "25", time: "Composite 90 min" },
+                    { sec: "Mathematics", q: "25", m: "25", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "30", m: "30", time: "Composite 90 min" },
+                    { sec: "General Awareness & Current Affairs", q: "20", m: "20", time: "Composite 90 min" },
+                    { sec: "Total Single CBT", q: "100 Qs", m: "100 Marks", time: "90 Mins (120 PwBD)", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Weight Carrying PET (Male: 35 kg | Female: 20 kg)", q: "100 Metres", m: "Qualifying", time: "2 Minutes (1 Chance)" },
+                    { sec: "Running PET (1000 Metres Run)", q: "1000 Metres", m: "Qualifying", time: "M: 4m 15s | F: 5m 40s" }
+                ],
+                postsHierarchy: [
+                    { post: "Track Maintainer Grade IV (Engineering)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹29,000 - ₹34,000 (+ Risk Allowance)" },
+                    { post: "Pointsman-B (Traffic Operating)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹28,000 - ₹33,000" },
+                    { post: "Assistant C&W / Loco Shed (Mechanical)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹28,000 - ₹32,000" },
+                    { post: "Assistant Signal & Telecommunication (S&T)", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹28,000 - ₹32,000" },
+                    { post: "Assistant Workshop / Electrical TRD", level: "Level 1", basic: "₹18,000 - ₹56,900", inhand: "₹28,000 - ₹32,000" }
+                ],
+                syllabus: [
+                    { subject: "General Science (10th CBSE Curriculum)", topics: "Physics: Motion, Force, Gravitation, Work & Energy, Sound, Light (Reflection & Refraction), Electricity, Magnetic Effects. Chemistry: Chemical Reactions, Acids Bases & Salts, Metals & Non-metals, Periodic Table. Life Sciences: Life processes, Control & Coordination, Reproduction, Heredity, Human body systems." },
+                    { subject: "Mathematics", topics: "Number system, BODMAS, Decimals, Fractions, LCM & HCF, Ratio & Proportion, Percentages, Mensuration, Time & Work, Time & Distance, Simple & Compound Interest, Profit & Loss, Algebra, Geometry, Trigonometry, Elementary Statistics, Square root, Age calculations, Calendar & Clock, Pipes & Cistern." },
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Alphabetical and Number Series, Coding & Decoding, Mathematical operations, Relationships, Syllogism, Jumbling, Venn Diagrams, Data Interpretation, Conclusions & Decision making, Similarities & Differences, Analytical reasoning, Classification, Directions, Statement-Arguments." },
+                    { subject: "General Awareness on Current Affairs", topics: "Science & Technology, Sports, Culture, Personalities, Economics, Politics and any other subject of contemporary national and international importance." }
+                ],
+                papers: [
+                    { title: "RRB Group D Shift Question Papers", url: "papers-rrb-group-d-shift.html" },
+                    { title: "Science Booster 2000+ MCQs", url: "papers-rrb-group-d-science.html" },
+                    { title: "Full 90-Minute Timed Mocks", url: "papers-rrb-group-d-mock.html" }
+                ]
+            },
+
+            alp: {
+                title: "RRB Assistant Loco Pilot (ALP)",
+                badge: "Indian Railways &bull; Technical Running Cadre (Loco Pilot)",
+                heroDesc: "Direct recruitment for train driving operators in Indian Railways. Multi-stage selection featuring CBT-1, CBT-2 (Part A core merit + Part B ITI trade qualification), Computer Based Aptitude Test (CBAT), and mandatory A-1 Medical fitness (6/6 vision without glasses).",
+                payScale: "Level 2 (₹19,900 Basic + Heavy Running Allowance | Gross ₹45,000 - ₹60,000+)",
+                selectionRounds: "CBT-1 &rarr; CBT-2 (A+B) &rarr; CBAT &rarr; DV &amp; Medical",
+                negMarking: "1/3rd in CBT-1 &amp; CBT-2 | Zero Negative in CBAT",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Matriculation + ITI (specified trades) OR 3-Yr Diploma/Degree in Mech, Elect, Electronics, Auto Engg",
+                meritBasis: "70% Weightage of CBT-2 Part A + 30% Weightage of CBAT T-Score",
+                stages: [
+                    { title: "Stage 1: CBT-1 (Screening Test)", nature: "Qualifying Only (75 Qs / 75 Marks / 60 Min)", desc: "Maths 20, Reasoning 25, Science 20, GA 10. Shortlists candidates at 1:15 ratio for CBT-2. CBT-1 marks are not counted in the final merit." },
+                    { title: "Stage 2: CBT-2 Part A (Core Merit Decider)", nature: "Core Merit Contributor (100 Qs / 100 Marks / 90 Min)", desc: "Maths 25, Reasoning 25, Basic Science & Engineering 40, Current Affairs 10. Forms 70% of final selection score." },
+                    { title: "Stage 2: CBT-2 Part B (Trade Test)", nature: "Mandatory Qualifying (75 Qs / 60 Min)", desc: "Questions based on DGT ITI trade syllabus. Every candidate must score at least 35% marks. Marks are not added to merit, but failure disqualifies candidate." },
+                    { title: "Stage 3: Computer Based Aptitude Test (CBAT)", nature: "30% Merit Weightage (5 Test Batteries)", desc: "Assesses alertness, spatial vision, and concentration. Minimum T-Score of 42 is compulsory in each battery. Contributes 30% to final merit." },
+                    { title: "Stage 4: Strict Medical Fitness Category A-1", nature: "Crucial Fitness Check", desc: "Distant Vision: 6/6, 6/6 without glasses. Must pass color, binocular, field of vision, and night tests. Absolutely NO LASIK or refractive surgery permitted." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:00 AM (CBT-1: 60 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:30 AM", gate: "12:30 PM", time: "01:00 PM - 02:00 PM (CBT-1: 60 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:30 PM", gate: "04:30 PM", time: "05:00 PM - 06:00 PM (CBT-1: 60 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "Mathematics", q: "20", m: "20", time: "Composite 60 min" },
+                    { sec: "General Intelligence & Reasoning", q: "25", m: "25", time: "Composite 60 min" },
+                    { sec: "General Science (10th CBSE)", q: "20", m: "20", time: "Composite 60 min" },
+                    { sec: "General Awareness on Current Affairs", q: "10", m: "10", time: "Composite 60 min" },
+                    { sec: "Total CBT-1", q: "75 Qs", m: "75 Marks", time: "60 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Part A: Mathematics", q: "25", m: "25", time: "Part A: 90 Min" },
+                    { sec: "Part A: General Intelligence & Reasoning", q: "25", m: "25", time: "Part A: 90 Min" },
+                    { sec: "Part A: Basic Science & Engineering", q: "40", m: "40", time: "Part A: 90 Min" },
+                    { sec: "Part A: General Awareness", q: "10", m: "10", time: "Part A: 90 Min" },
+                    { sec: "Part B: DGT Trade Syllabus (Qualifying)", q: "75", m: "75", time: "Part B: 60 Min" },
+                    { sec: "Total CBT-2 (Combined)", q: "175 Qs", m: "175 Marks", time: "2 Hr 30 Min", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Assistant Loco Pilot (Electric / Diesel)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹45,000 - ₹60,000+ (With Kilometre Running Allowance)" },
+                    { post: "Senior Assistant Loco Pilot (Promotion)", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹55,000 - ₹72,000+" },
+                    { post: "Loco Pilot Shunting", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹58,000 - ₹75,000+" },
+                    { post: "Loco Pilot Goods (Freight Trains)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹75,000 - ₹95,000+" },
+                    { post: "Loco Pilot Passenger / Mail Express", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹85,000 - ₹1,15,000+" }
+                ],
+                syllabus: [
+                    { subject: "Basic Science & Engineering (Part A Decider &bull; 40 Marks)", topics: "Engineering Drawing (Projections, Views, Drawing Instruments, Lines, Geometric Figures, Symbolic Representation), Units and Measurements, Mass, Weight and Density, Work Power and Energy, Speed and Velocity, Heat and Temperature, Basic Electricity, Levers and Simple Machines, Occupational Safety and Health, Environment Education, IT Literacy." },
+                    { subject: "Mathematics (CBT-1 & CBT-2 Part A)", topics: "Number system, BODMAS, Decimals, Fractions, LCM and HCF, Ratio and Proportion, Percentages, Mensuration, Time and Work, Time and Distance, Simple and Compound Interest, Profit and Loss, Algebra, Geometry and Trigonometry, Elementary Statistics, Square Root, Age Calculations, Calendar & Clock, Pipes & Cistern." },
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Alphabetical and Number Series, Coding and Decoding, Mathematical Operations, Relationships, Syllogism, Jumbling, Venn Diagram, Data Interpretation and Sufficiency, Conclusions and Decision making, Similarities and Differences, Analytical reasoning, Classification, Directions, Statement-Arguments." },
+                    { subject: "Part B: Trade Syllabus (Compulsory 35% Pass)", topics: "DGT National Trade Certificate syllabus for Electrician, Fitter, Wireman, Machinist, Turner, Mechanic Diesel, Electronics Mechanic, Instrument Mechanic, RAC Mechanic, Heat Engine, Motor Vehicle Mechanic." }
+                ],
+                papers: [
+                    { title: "RRB ALP CBT-1 Shift Papers", url: "papers-rrb-alp-cbt1.html" },
+                    { title: "Basic Science & Engineering Module", url: "papers-rrb-alp-engineering.html" },
+                    { title: "CBAT Psycho 5-Battery Simulator", url: "papers-rrb-alp-cbat.html" }
+                ]
+            },
+
+            technician: {
+                title: "RRB Technician (Grade-I Signal & Grade-III)",
+                badge: "Indian Railways &bull; CEN 02/2024 Standalone Cadre",
+                heroDesc: "Dedicated technical cadre recruitment separated from ALP. Appoints Technician Grade-I Signal (Executive Supervisory Level 5) and Technician Grade-III across various railway workshops and maintenance sheds (Level 2). Single-stage CBT with NO psycho test (CBAT).",
+                payScale: "Grade-I: Level 5 (₹29,200) | Grade-III: Level 2 (₹19,900)",
+                selectionRounds: "Single CBT &rarr; Document Verification &rarr; Medical",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Grade-I: B.Sc. (Physics/Electronics/CS/IT) OR Diploma/B.Tech in Engg | Grade-III: 10th + ITI in relevant trade",
+                meritBasis: "100% on Single CBT Score (100 Marks)",
+                stages: [
+                    { title: "Stage 1: Single Computer Based Test (CBT)", nature: "100% Merit Determinant (100 Qs / 100 Marks / 90 Min)", desc: "Separate CBTs for Technician Grade-I Signal and Technician Grade-III. Entire selection merit is calculated directly from normalized marks of this single exam. No second stage CBT." },
+                    { title: "NO CBAT (Psycho Test Abolished for Tech)", nature: "Not Applicable", desc: "Unlike ALP, Technician candidates DO NOT appear in any Computer Based Aptitude Test (CBAT). Candidates proceed straight to DV based on CBT score." },
+                    { title: "Stage 2: Document Verification (DV)", nature: "Strict 1:1 Ratio", desc: "Validation of NCVT/SCVT trade certificates, B.Sc./Diploma/Degree certificates, matriculation age proofs, and reserved category certificates." },
+                    { title: "Stage 3: Railway Medical Examination", nature: "Post-Wise Medical Fitness", desc: "Medical categories (A-3, B-1, B-2, C-1) depend strictly on the trade and workshop unit allocated. Eyesight standards are checked accordingly." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:15 PM", time: "12:45 PM - 02:15 PM (90 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:00 PM", gate: "04:00 PM", time: "04:30 PM - 06:00 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "Technician Gr I: General Awareness", q: "10", m: "10", time: "Composite 90 min" },
+                    { sec: "Technician Gr I: General Intelligence & Reasoning", q: "15", m: "15", time: "Composite 90 min" },
+                    { sec: "Technician Gr I: Basics of Computers & Applications", q: "20", m: "20", time: "Composite 90 min" },
+                    { sec: "Technician Gr I: Mathematics", q: "20", m: "20", time: "Composite 90 min" },
+                    { sec: "Technician Gr I: Basic Science & Engineering", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "Total CBT (Technician Grade-I Signal)", q: "100 Qs", m: "100 Marks", time: "90 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Technician Gr III: Mathematics", q: "25", m: "25", time: "Composite 90 min" },
+                    { sec: "Technician Gr III: General Intelligence & Reasoning", q: "25", m: "25", time: "Composite 90 min" },
+                    { sec: "Technician Gr III: General Science (Physics, Chem, Bio)", q: "40", m: "40", time: "Composite 90 min" },
+                    { sec: "Technician Gr III: General Awareness", q: "10", m: "10", time: "Composite 90 min" },
+                    { sec: "Total CBT (Technician Grade-III All Trades)", q: "100 Qs", m: "100 Marks", time: "90 Mins", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Technician Grade-I Signal (Supervisory)", level: "Level 5", basic: "₹29,200 - ₹92,300", inhand: "₹45,000 - ₹52,000" },
+                    { post: "Technician Gr III (Electrical / Workshop / TRD)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,000 - ₹36,000" },
+                    { post: "Technician Gr III (Fitter / Welder / Machinist)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,000 - ₹36,000" },
+                    { post: "Technician Gr III (Diesel Mechanical / Electrical)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,000 - ₹36,000" },
+                    { post: "Technician Gr III (Track Machine / Carriage & Wagon)", level: "Level 2", basic: "₹19,900 - ₹63,200", inhand: "₹32,000 - ₹36,000" }
+                ],
+                syllabus: [
+                    { subject: "Technician Grade-I Signal Core Syllabus", topics: "Basic Science & Engineering: Physics fundamentals, Units, Dimensions, Vectors, Kinematics, Energy, Electricity & Magnetism, Semiconductors, Digital Electronics. Computers: Architecture, OS, MS Office, Networking, Data representation. Mathematics: Number systems, Sets, Matrices, Trigonometry, Calculus, Coordinate Geometry, Statistics." },
+                    { subject: "Technician Grade-III General Science (40 Marks)", topics: "Physics, Chemistry, and Life Sciences of 10th standard CBSE level. Focus on Mechanics, Optics, Electricity circuits, Chemical formulas, Periodic table, and Human Biology." },
+                    { subject: "Mathematics (Grade-III)", topics: "Number system, BODMAS, Decimals, Fractions, LCM/HCF, Ratio, Percentages, Mensuration, Time & Work, Time & Distance, SI/CI, Profit & Loss, Algebra, Geometry, Trigonometry, Elementary Statistics." },
+                    { subject: "General Intelligence & Reasoning", topics: "Analogies, Alphabetical & Number Series, Coding-Decoding, Mathematical Operations, Blood Relations, Syllogisms, Venn Diagrams, Data Interpretation, Directions, Analytical Reasoning." }
+                ],
+                papers: [
+                    { title: "Technician Grade-I Signal Shift Papers", url: "papers-rrb-tech-grade1.html" },
+                    { title: "Technician Grade-III Full Shift Tests", url: "papers-rrb-tech-grade3.html" },
+                    { title: "Science 40-Mark Booster Tests", url: "papers-rrb-tech-science.html" }
+                ]
+            },
+
+            je: {
+                title: "RRB Junior Engineer (JE / DMS / CMA)",
+                badge: "Indian Railways &bull; Technical Supervisory Engineering Cadre",
+                heroDesc: "Direct supervisory recruitment for Diploma & Engineering graduates: Junior Engineer (Civil, Mechanical, Electrical, Electronics, S&T, IT), Depot Material Superintendent (DMS), and Chemical & Metallurgical Assistant (CMA). CBT-2 technical test with on-screen virtual calculator.",
+                payScale: "Level 6 (₹35,400 Basic | In-Hand ₹58,000 - ₹66,000)",
+                selectionRounds: "CBT-1 (Non-Tech) &rarr; CBT-2 (Technical) &rarr; DV &amp; Medical",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Diploma or Degree in relevant Engineering stream (Civil, Mech, Elect, Electronics, IT) | CMA: B.Sc. (Physics & Chem)",
+                meritBasis: "100% on CBT-2 Marks (150 Marks)",
+                stages: [
+                    { title: "Stage 1: CBT-1 (Non-Technical Screening)", nature: "Qualifying Only (100 Qs / 100 Marks / 90 Min)", desc: "Maths 30, Reasoning 25, Science 30, GA 15. Shortlists candidates at a ratio of 1:15 for Stage 2 CBT. CBT-1 marks are not added to the final merit." },
+                    { title: "Stage 2: CBT-2 (Technical Domain Exam)", nature: "100% Final Merit Decider (150 Qs / 150 Marks / 120 Min)", desc: "100 questions from core Engineering discipline + 50 general technical questions (GA 15, Physics/Chemistry 15, Computers 10, Environment 10). On-screen virtual calculator provided." },
+                    { title: "Stage 3: Document Verification (DV)", nature: "Strict 1:1 Vacancy Ratio", desc: "Original diploma/degree marksheets, date of birth, category certificates, and apprentice documentation checked in order of CBT-2 merit." },
+                    { title: "Stage 4: Railway Medical Board Fitness", nature: "Post-Specific Medical Exam", desc: "Eyesight and physical fitness as per post allotted (B-1, B-2 for most JE posts; C-1 for DMS, B-1 for CMA)." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "12:30 PM", gate: "01:30 PM", time: "02:00 PM - 03:30 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "Mathematics", q: "30", m: "30", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "25", m: "25", time: "Composite 90 min" },
+                    { sec: "General Awareness", q: "15", m: "15", time: "Composite 90 min" },
+                    { sec: "General Science (10th CBSE)", q: "30", m: "30", time: "Composite 90 min" },
+                    { sec: "Total CBT-1 (Screening)", q: "100 Qs", m: "100 Marks", time: "90 Mins (120 PwBD)", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "General Awareness", q: "15", m: "15", time: "Composite 120 min" },
+                    { sec: "Physics & Chemistry (10th CBSE)", q: "15", m: "15", time: "Composite 120 min" },
+                    { sec: "Basics of Computers & Applications", q: "10", m: "10", time: "Composite 120 min" },
+                    { sec: "Basics of Environment & Pollution Control", q: "10", m: "10", time: "Composite 120 min" },
+                    { sec: "Technical Abilities (Engineering Discipline)", q: "100", m: "100", time: "Composite 120 min" },
+                    { sec: "Final Merit Total Base (CBT-2)", q: "150 Qs", m: "150 Marks", time: "120 Mins (160 PwBD)", isTotal: true }
+                ],
+                postsHierarchy: [
+                    { post: "Junior Engineer (Civil Engineering)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹65,000" },
+                    { post: "Junior Engineer (Mechanical Workshop / C&W)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹64,000" },
+                    { post: "Junior Engineer (Electrical TRD / Loco Shed)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹65,000" },
+                    { post: "Junior Engineer (Signal & Telecommunication)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹65,000" },
+                    { post: "Depot Material Superintendent (DMS)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹63,000 (Medical: C-1)" },
+                    { post: "Chemical & Metallurgical Assistant (CMA)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹58,000 - ₹64,000 (Medical: B-1)" }
+                ],
+                syllabus: [
+                    { subject: "Technical Abilities (100 Marks in CBT-2)", topics: "Civil: Building Materials, Surveying, Estimating, SOM, Hydraulics, RCC, Steel Structures. Mechanical: Thermodynamics, Fluid Mechanics, Theory of Machines, Machine Design, Heat Transfer, Production. Electrical: Basic Concepts, Circuit Law, AC Fundamentals, Electrical Machines, Transmission. Electronics: Electronic Devices, Digital Circuits, Microprocessors, Communication. IT: Programming, DBMS, Networks, OS." },
+                    { subject: "CBT-2 General Science & Technology (50 Marks)", topics: "Basics of Computers (Architecture, OS, MS Office, Networking, Cyber Security). Environment & Pollution Control (Air/Water pollution, Global warming, Ozone layer, Waste management). Physics & Chemistry (10th standard applied). General Awareness (Current events, Geography, Polity)." },
+                    { subject: "CBT-1 Mathematics & General Science (60 Marks)", topics: "Arithmetic, Algebra, Geometry, Trigonometry, Statistics (30 Marks). Class 10 CBSE Physics, Chemistry, Biology (30 Marks)." }
+                ],
+                papers: [
+                    { title: "RRB JE CBT-1 Non-Tech Papers", url: "papers-rrb-je-cbt1.html" },
+                    { title: "Discipline-Wise CBT-2 Technical Tests", url: "papers-rrb-je-cbt2.html" },
+                    { title: "Computer & Environment Score Booster", url: "papers-rrb-je-computers.html" }
+                ]
+            },
+
+            'rpf-si': {
+                title: "RPF Sub-Inspector (Executive)",
+                badge: "Railway Protection Force &bull; CEN RPF 01/2024 Uniform Cadre",
+                heroDesc: "Direct executive two-star officer appointment in Railway Protection Force (RPF) and Special Railway Protection Force (RPSF). Level 6 central pay scale. Online CBT followed by physical endurance test (1600m run, long jump, high jump) and strict physical measurements.",
+                payScale: "Level 6 (₹35,400 Basic | In-Hand ₹62,000 - ₹68,000)",
+                selectionRounds: "Computer Based Test &rarr; Physical PET/PST &rarr; DV &amp; Medical",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Graduation (Bachelor's Degree) in any discipline from a recognized University",
+                meritBasis: "100% on Written CBT Score (120 Marks)",
+                stages: [
+                    { title: "Stage 1: Computer Based Test (CBT)", nature: "100% Final Merit Decider (120 Qs / 120 Marks / 90 Min)", desc: "General Awareness 50, Arithmetic 35, General Intelligence & Reasoning 35. Entire merit is prepared from this single test score. 1/3rd negative marking." },
+                    { title: "Stage 2: Physical Measurement Test (PST)", nature: "Mandatory Qualifying Standards", desc: "Height: Male 165 cm (ST 160 cm), Female 157 cm (ST 152 cm). Chest (Male only): 80 cm unexpanded / 85 cm expanded (min 5 cm expansion)." },
+                    { title: "Stage 3: Physical Efficiency Test (PET)", nature: "Mandatory Track Events (Pass/Fail)", desc: "Male: 1600m run in 6 min 30 sec, Long Jump 12 ft, High Jump 3 ft 9 in. Female: 800m run in 4 min, Long Jump 9 ft, High Jump 3 ft." },
+                    { title: "Stage 4: Document Verification & Medical Exam", nature: "Final Appointment Stage", desc: "Shortlisted candidates equal to vacancies undergo certificate verification and strict Railway Medical Category B-1 examination." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:15 PM", time: "12:45 PM - 02:15 PM (90 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:00 PM", gate: "04:00 PM", time: "04:30 PM - 06:00 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Awareness", q: "50", m: "50", time: "Composite 90 min" },
+                    { sec: "Arithmetic", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "Total Single CBT", q: "120 Qs", m: "120 Marks", time: "90 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Physical Endurance Test (1600m Run Male)", q: "1600m", m: "Qualifying", time: "6 Min 30 Sec (1 Chance)" },
+                    { sec: "Physical Endurance Test (800m Run Female)", q: "800m", m: "Qualifying", time: "4 Min 00 Sec (1 Chance)" },
+                    { sec: "Long Jump (Male: 12 ft | Female: 9 ft)", q: "Jump", m: "Qualifying", time: "2 Chances Allowed" },
+                    { sec: "High Jump (Male: 3 ft 9 in | Female: 3 ft)", q: "Jump", m: "Qualifying", time: "2 Chances Allowed" }
+                ],
+                postsHierarchy: [
+                    { post: "Sub-Inspector (Executive) RPF / RPSF", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹62,000 - ₹68,000" },
+                    { post: "Inspector (Executive) - Promotion", level: "Level 7", basic: "₹44,900 - ₹1,42,400", inhand: "₹74,000 - ₹82,000" },
+                    { post: "Assistant Security Commissioner (ASC) - Group A", level: "Level 10", basic: "₹56,100 - ₹1,77,500", inhand: "₹92,000 - ₹1,05,000" }
+                ],
+                syllabus: [
+                    { subject: "General Awareness (50 Marks)", topics: "Indian History, Art & Culture, Geography, Economics, General Polity, Indian Constitution, Sports, General Science, Current Affairs, Railways-related general awareness." },
+                    { subject: "Arithmetic (35 Marks)", topics: "Number systems, Whole numbers, Decimal & Fractions, Relationships between numbers, Fundamental arithmetical operations, Percentages, Ratio & Proportion, Averages, Interest (Simple & Compound), Profit & Loss, Discount, Mensuration, Time & Distance, Ratio & Proportion." },
+                    { subject: "General Intelligence & Reasoning (35 Marks)", topics: "Analogies, Spatial visualization, Spatial orientation, Problem-solving analysis, Judgment, Decision making, Visual memory, Discriminating observation, Relationship concepts, Arithmetical reasoning, Verbal & figure classification, Arithmetic number series, Non-verbal series, Coding-Decoding, Statement-Conclusion, Syllogisms." },
+                    { subject: "Physical Standards (PST Measurements)", topics: "Male: Height 165 cm (ST 160 cm, Garhwalis/Gorkhas 163 cm), Chest 80 cm unexpanded / 85 cm expanded. Female: Height 157 cm (ST 152 cm, Garhwalis/Gorkhas 155 cm)." }
+                ],
+                papers: [
+                    { title: "RPF SI Shift Question Papers", url: "papers-rpf-si-shift.html" },
+                    { title: "RPF SI Full-Length CBT Mocks", url: "papers-rpf-si-mock.html" },
+                    { title: "Arithmetic & Reasoning Speed Drills", url: "papers-rpf-speed-drills.html" }
+                ]
+            },
+
+            'rpf-constable': {
+                title: "RPF Constable (Executive)",
+                badge: "Railway Protection Force &bull; CEN RPF 02/2024 Uniform Cadre",
+                heroDesc: "Premier uniformed security cadre for 10th pass candidates across Indian Railways network. Provides escort to passenger trains, security to station premises, and railway property protection. High-stamina 1600m run (5 min 45 sec). No interview.",
+                payScale: "Level 3 (₹21,700 Basic | In-Hand ₹34,000 - ₹38,000)",
+                selectionRounds: "Computer Based Test &rarr; Physical PET/PST &rarr; DV &amp; Medical",
+                negMarking: "1/3rd Mark (-0.33 per wrong)",
+                interviewStatus: "No Interview (Abolished)",
+                qual: "Passed 10th Standard (Matriculation) from a recognized Board",
+                meritBasis: "100% on Written CBT Score (120 Marks)",
+                stages: [
+                    { title: "Stage 1: Computer Based Test (CBT)", nature: "100% Final Merit Decider (120 Qs / 120 Marks / 90 Min)", desc: "General Awareness 50, Arithmetic 35, General Intelligence & Reasoning 35. Merit list is prepared on normalized score. 1/3rd negative marking." },
+                    { title: "Stage 2: Strict Physical Efficiency Test (PET)", nature: "Rigorous Stamina Test (Pass/Fail)", desc: "Male: 1600m run in 5 min 45 sec (very strict!), Long Jump 14 ft, High Jump 4 ft. Female: 800m run in 3 min 40 sec, Long Jump 9 ft, High Jump 3 ft." },
+                    { title: "Stage 3: Physical Measurement Test (PST)", nature: "Qualifying Measurement", desc: "Male: Height 165 cm (ST 160 cm), Chest 80 cm unexpanded / 85 cm expanded. Female: Height 157 cm (ST 152 cm)." },
+                    { title: "Stage 4: Document Verification & Medical Exam", nature: "Final Stage", desc: "Scrutiny of original Class 10 marksheet, category certificates, followed by Medical Category B-1 fitness in Railway Hospital." }
+                ],
+                shiftTimings: [
+                    { shift: "Shift 1 (Morning)", rep: "07:30 AM", gate: "08:30 AM", time: "09:00 AM - 10:30 AM (90 Mins)" },
+                    { shift: "Shift 2 (Afternoon)", rep: "11:15 AM", gate: "12:15 PM", time: "12:45 PM - 02:15 PM (90 Mins)" },
+                    { shift: "Shift 3 (Evening)", rep: "03:00 PM", gate: "04:00 PM", time: "04:30 PM - 06:00 PM (90 Mins)" }
+                ],
+                patternPrelims: [
+                    { sec: "General Awareness", q: "50", m: "50", time: "Composite 90 min" },
+                    { sec: "Arithmetic", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "General Intelligence & Reasoning", q: "35", m: "35", time: "Composite 90 min" },
+                    { sec: "Total Single CBT", q: "120 Qs", m: "120 Marks", time: "90 Mins", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "High-Speed Run (Male: 1600m in 5m 45s)", q: "1600m", m: "Qualifying", time: "5 Min 45 Sec (1 Chance Only)" },
+                    { sec: "High-Speed Run (Female: 800m in 3m 40s)", q: "800m", m: "Qualifying", time: "3 Min 40 Sec (1 Chance Only)" },
+                    { sec: "Long Jump (Male: 14 ft | Female: 9 ft)", q: "Jump", m: "Qualifying", time: "2 Chances Allowed" },
+                    { sec: "High Jump (Male: 4 ft | Female: 3 ft)", q: "Jump", m: "Qualifying", time: "2 Chances Allowed" }
+                ],
+                postsHierarchy: [
+                    { post: "Constable (Executive) RPF / RPSF", level: "Level 3", basic: "₹21,700 - ₹69,100", inhand: "₹34,000 - ₹38,000" },
+                    { post: "Head Constable (Promotion)", level: "Level 4", basic: "₹25,500 - ₹81,100", inhand: "₹40,000 - ₹45,000" },
+                    { post: "Assistant Sub-Inspector (ASI)", level: "Level 5", basic: "₹29,200 - ₹92,300", inhand: "₹47,000 - ₹53,000" },
+                    { post: "Sub-Inspector (SI)", level: "Level 6", basic: "₹35,400 - ₹1,12,400", inhand: "₹60,000 - ₹66,000" }
+                ],
+                syllabus: [
+                    { subject: "General Awareness (50 Marks)", topics: "Current Events, Sports, Indian Culture & History, Geography, Economics, General Polity, Indian Constitution, General Science up to 10th level, Environmental issues." },
+                    { subject: "Arithmetic (35 Marks)", topics: "Number System, Whole Numbers, Decimal & Fractions, Percentages, Ratio & Proportion, Averages, Simple & Compound Interest, Profit & Loss, Discount, Mensuration 2D/3D, Time & Distance, Time & Work." },
+                    { subject: "General Intelligence & Reasoning (35 Marks)", topics: "Analogies, Similarities and Differences, Spatial Visualization, Spatial Orientation, Problem Solving, Visual Memory, Relationship Concepts, Arithmetical Reasoning, Figural Classification, Coding-Decoding, Syllogisms, Non-Verbal Series." },
+                    { subject: "Physical Standards (PST Measurements)", topics: "Male: Height 165 cm (ST 160 cm, Garhwalis/Gorkhas 163 cm), Chest 80 cm unexpanded / 85 cm expanded. Female: Height 157 cm (ST 152 cm, Garhwalis/Gorkhas 155 cm)." }
+                ],
+                papers: [
+                    { title: "RPF Constable Shift Papers", url: "papers-rpf-constable-shift.html" },
+                    { title: "RPF Constable Full Mocks", url: "papers-rpf-constable-mock.html" },
+                    { title: "Physical Standards & Run Guidelines", url: "papers-rpf-pet-guide.html" }
+                ]
+            }
+        };
+
+        // Render Dynamic Canvas for Current RRB Exam
+        function renderExam(examKey) {
+            const data = RRB_DATABASE[examKey] || RRB_DATABASE.ntpc;
+            const container = document.getElementById('dynamic-exam-canvas');
+
+            container.innerHTML = `
+                <!-- Architectural Hero Banner -->
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-amber-600/30 bg-amber-500/10 text-amber-900 text-xs font-extrabold uppercase tracking-wider">
+                        <i data-lucide="award" class="w-3.5 h-3.5 text-amber-600"></i> ${data.badge}
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-serif text-slate-900 tracking-tight leading-tight">
+                        ${data.title}
+                    </h1>
+                    <p class="text-slate-600 max-w-4xl text-sm sm:text-base leading-relaxed">
+                        ${data.heroDesc}
+                    </p>
+                </div>
+
+                <!-- 3D HUD TELEMETRY RAIL (Continuous dimensional slab instead of mini cards) -->
+                <div class="hud-slab rounded-2xl p-6 sm:p-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-amber-900/15">
+                        <div class="px-2 pt-2 md:pt-0">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Pay Matrix Level</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-slate-900 block">${data.payScale.split('(')[0]}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">7th CPC Central Pay Scales</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Selection Sequence</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-slate-900 block">${data.selectionRounds}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">Multi-Stage Roadmap</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Negative Marking</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-rose-700 block">${data.negMarking}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">Standard RRB 1/3rd penalty</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Interview Status</span>
+                            <span class="text-xl sm:text-2xl font-bold font-serif text-amber-800 block">${data.interviewStatus}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">100% Written Merit Selection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D SELECTION PIPELINE (Connected continuous track instead of card boxes) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Selection Process Pipeline</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Sequential evaluation stages determining final appointment in Indian Railways.</p>
+                    </div>
+
+                    <div class="relative pl-6 border-l-2 border-amber-600/30 space-y-8 my-4">
+                        ${data.stages.map(st => `
+                            <div class="relative group">
+                                <span class="absolute -left-[37px] top-0.5 w-7 h-7 rounded-full bg-amber-600 text-white font-bold text-xs flex items-center justify-center node-3d">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                </span>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-3">
+                                        <h3 class="font-serif font-bold text-slate-900 text-lg">${st.title}</h3>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${st.nature}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed max-w-3xl">${st.desc}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <!-- EXAM TIMETABLE & SHIFT REPORTING SCHEDULE -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Official Exam Timetable &amp; Reporting Schedule</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Gate closes strictly 30 minutes before exam commencement. Biometric verification is mandatory.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                <tr>
+                                    <th class="py-3">Shift Designation</th>
+                                    <th class="py-3 text-center">Reporting Time</th>
+                                    <th class="py-3 text-center">Gate Closing</th>
+                                    <th class="py-3 text-right">Exam Timing (Duration)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-amber-900/10 text-slate-700">
+                                ${data.shiftTimings.map(sh => `
+                                    <tr>
+                                        <td class="py-3 font-semibold text-slate-900">${sh.shift}</td>
+                                        <td class="py-3 text-center font-medium">${sh.rep}</td>
+                                        <td class="py-3 text-center font-bold text-rose-700">${sh.gate}</td>
+                                        <td class="py-3 text-right font-bold text-amber-800">${sh.time}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- EXAM PATTERN & MARKING SCHEME -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Official Exam Pattern &amp; Structure</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Detailed question distribution, marks weightage and timings.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Stage 1 / CBT-1 -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Stage 1 Examination</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-600 text-white shadow-sm">Online CBT</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Subject / Section</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time Allowed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternPrelims.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stage 2 / Mains / Skill / PET -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Stage 2 / Mains / Skill / PET</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-slate-800 text-white shadow-sm">Merit / Qualifying</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Section / Module</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time Allowed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternMains.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- POSTS, CADRES & 7TH CPC SALARY MATRIX -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Post Designations &amp; In-Hand Salary Scale</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">7th CPC pay level breakdown and approximate monthly in-hand compensation across Indian Railways.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                <tr>
+                                    <th class="py-3">Designation / Cadre</th>
+                                    <th class="py-3 text-center">7th CPC Level</th>
+                                    <th class="py-3 text-center">Basic Pay Scale</th>
+                                    <th class="py-3 text-right">In-Hand Salary Range</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-amber-900/10 text-slate-700">
+                                ${data.postsHierarchy.map(ps => `
+                                    <tr>
+                                        <td class="py-3 font-semibold text-slate-900">${ps.post}</td>
+                                        <td class="py-3 text-center font-bold text-amber-800">${ps.level}</td>
+                                        <td class="py-3 text-center font-mono text-xs">${ps.basic}</td>
+                                        <td class="py-3 text-right font-bold text-emerald-800">${ps.inhand}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3D INTERACTIVE SYLLABUS DRAWERS -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Curriculum Breakdown &amp; High-Yield Topics</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Core subject-wise topics tested in the examination.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 sm:p-8 space-y-4">
+                        ${data.syllabus.map((s, idx) => `
+                            <div class="drawer-3d py-3">
+                                <div class="flex items-start gap-4">
+                                    <span class="w-8 h-8 rounded-xl bg-amber-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5" style="box-shadow: 0 2px 0 #92400e;">
+                                        ${idx + 1}
+                                    </span>
+                                    <div>
+                                        <h3 class="font-serif font-bold text-slate-900 text-base mb-1">${s.subject}</h3>
+                                        <p class="text-xs text-slate-600 leading-relaxed">${s.topics}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+
+            // Update bottom paper action buttons
+            const papersContainer = document.getElementById('papers-actions');
+            papersContainer.innerHTML = data.papers.map(p => `
+                <a href="${p.url}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-amber-900/20 text-amber-900 text-xs font-bold hover:border-amber-600 hover:shadow-md transition-all">
+                    <span>${p.title}</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-amber-600"></i>
+                </a>
+            `).join('');
+
+            // Re-render Lucide icons
+            lucide.createIcons();
+        }
+
+        // Navigate between exams & update URL hash
+        function navigateTo(examKey) {
+            if (!RRB_DATABASE[examKey]) examKey = 'ntpc';
+            
+            // Set URL Hash (e.g. #ntpc, #groupd, #alp, #technician, #je, #rpf-si, #rpf-constable)
+            window.location.hash = examKey;
+
+            // Update dock button states
+            document.querySelectorAll('.dock-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === examKey) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Render current exam content
+            renderExam(examKey);
+        }
+
+        // Listen for browser back/forward or direct hash URL changes
+        window.addEventListener('hashchange', () => {
+            const currentHash = window.location.hash.replace('#', '');
+            if (currentHash && RRB_DATABASE[currentHash]) {
+                navigateTo(currentHash);
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && RRB_DATABASE[initialHash]) {
+                navigateTo(initialHash);
+            } else {
+                navigateTo('ntpc');
+            }
+        });
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

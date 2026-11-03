@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triratna | Compassionate Learning for Success</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN for Interactive 3D Visual -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        /* 3D tilt perspective */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            will-change: transform;
+        }
+
+        /* Warm glassmorphism */
+        .warm-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+        }
+        .warm-card:hover {
+            border-color: rgba(217, 119, 6, 0.4);
+        }
+
+        /* Ticker Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-ticker {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: marquee 32s linear infinite;
+        }
+        .animate-ticker:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-slate-800 font-sans selection:bg-amber-200 selection:text-amber-900 overflow-x-hidden min-h-screen">
+
+    <!-- Interactive 3D WebGL Canvas Layer -->
+    <canvas id="webgl-bg" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Top Navigation -->
+    <header class="relative z-20 border-b border-amber-900/10 bg-[#FAF7F2]/85 backdrop-blur-md sticky top-0">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-md shadow-amber-600/20">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </a>
+
+            <!-- Updated Navigation Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
+                <a href="#hero" class="hover:text-amber-700 transition-colors">Home</a>
+                <a href="#exams" class="hover:text-amber-700 transition-colors">Exams</a>
+                <a href="about-us.html" class="hover:text-amber-700 transition-colors">About Us</a>
+                <a href="ask-a-doubt.html" class="hover:text-amber-700 transition-colors flex items-center gap-1.5">
+                    <span>Doubt Desk</span>
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Support</span>
+                </a>
+            </nav>
+
+            <!-- Directly links to the real appointment page -->
+            <a href="book-appointment.html" class="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm flex items-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <span>Book an Appointment</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative z-10 py-14 lg:py-20">
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left: Institute Info -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                
+                <!-- Free Banner -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-50 text-amber-800 text-xs font-bold tracking-wide shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Special Initiative: For now, all mentorship & doubts are 100% free!
+                </div>
+
+                <div class="space-y-3">
+                    <h1 class="text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight font-serif text-slate-900">
+                        Triratna
+                    </h1>
+                    <p class="text-2xl sm:text-3xl font-serif italic text-amber-700 font-medium">
+                        "Compassionate Learning for Success"
+                    </p>
+                </div>
+
+                <p class="text-slate-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Sculpting future civil servants and government officers through conceptual clarity, uncompromising discipline, and personalized 1-on-1 mentorship.
+                </p>
+
+                <!-- Primary CTAs -->
+                <div class="pt-2 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+                    <a href="book-appointment.html" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-base shadow-lg shadow-amber-600/20 hover:scale-[1.02] active:scale-[0.98] transition flex items-center justify-center gap-2">
+                        <span>Book an Appointment</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+
+                    <a href="ask-a-doubt.html" class="w-full sm:w-auto px-7 py-4 rounded-xl warm-card text-slate-800 font-semibold text-base hover:text-amber-700 transition flex items-center justify-center gap-2">
+                        <i data-lucide="help-circle" class="w-5 h-5 text-amber-600"></i>
+                        <span>Ask a Doubt</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Right: Photo Placeholder with 3D Tilt -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="tilt-card w-full max-w-md p-4 rounded-3xl warm-card shadow-xl shadow-amber-900/5">
+                    <div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-amber-100/60 to-orange-50 border border-amber-200 flex flex-col items-center justify-center text-center p-6 space-y-3">
+                        <div class="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center text-amber-600 border border-amber-200">
+                            <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-base font-bold text-slate-800 font-serif">TRIRATNA Campus</p>
+                            <p class="text-xs text-slate-500 mt-1">Right Knowledge • Right Practice • Right Mentorship</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- LIVE EXAM TICKER (Option 1: Direct to Official Govt Portals)   -->
+    <!-- ============================================================== -->
+    <div class="relative z-10 bg-amber-900 text-amber-100 py-3 overflow-hidden border-y border-amber-700/30 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center">
+            
+            <div class="flex items-center gap-2 pr-4 bg-amber-900 z-10 flex-shrink-0 border-r border-amber-700/50">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping"></span>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-200 flex items-center gap-1">
+                    <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+                    Official Portals:
+                </span>
+            </div>
+
+            <div class="overflow-hidden w-full pl-4 text-xs font-medium">
+                <div class="animate-ticker space-x-8">
+                    <!-- Ticker Items (Repeated for seamless loop) -->
+                    <a href="https://upsc.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🏛️ UPSC CSE:</span> Official Annual Examination Portal & Notices
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://ssc.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">📜 SSC:</span> Staff Selection Commission Latest Notices & Calender
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://ibps.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🏦 Banking (IBPS):</span> Official Central Banking Recruitment Portal
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://indianrailways.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🚆 Railway (RRB):</span> Ministry of Railways Official Notices
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    
+                    <!-- Duplicated for smooth infinite scroll -->
+                    <a href="https://upsc.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🏛️ UPSC CSE:</span> Official Annual Examination Portal & Notices
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://ssc.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">📜 SSC:</span> Staff Selection Commission Latest Notices & Calender
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://ibps.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🏦 Banking (IBPS):</span> Official Central Banking Recruitment Portal
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                    <span>•</span>
+                    <a href="https://indianrailways.gov.in" target="_blank" rel="noopener noreferrer" class="hover:text-white transition inline-flex items-center gap-1.5">
+                        <span class="font-bold text-amber-300">🚆 Railway (RRB):</span> Ministry of Railways Official Notices
+                        <i data-lucide="external-link" class="w-3 h-3 text-amber-400"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- QUESTION OF THE DAY WIDGET (Real Internet Time + 5 Options)    -->
+    <!-- ============================================================== -->
+    <section class="relative z-10 py-16">
+        <div class="max-w-4xl mx-auto px-6">
+            
+            <div class="tilt-card p-6 sm:p-8 rounded-3xl warm-card shadow-xl shadow-amber-900/5 border border-amber-200">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-amber-200/80 gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                            <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-700">Daily Brain Drill</span>
+                            <h2 class="text-xl sm:text-2xl font-bold font-serif text-slate-900">Question of the Day</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span id="quizDateBadge" class="text-xs px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-semibold border border-amber-300/50">
+                            Syncing date...
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <div class="py-5">
+                    <p id="quizQuestion" class="text-base sm:text-lg font-medium text-slate-800 leading-relaxed">
+                        Loading today's question...
+                    </p>
+                </div>
+
+                <!-- 5 Options (A, B, C, D, E) -->
+                <div id="quizOptions" class="space-y-3">
+                    <!-- Dynamic Options rendered via JS -->
+                </div>
+
+                <!-- Instant Feedback & Explanation Box -->
+                <div id="quizFeedback" class="hidden mt-6 p-5 rounded-2xl border transition-all duration-300">
+                    <div class="flex items-center gap-2 mb-2 font-bold text-sm" id="feedbackTitle"></div>
+                    <p class="text-xs sm:text-sm leading-relaxed" id="feedbackExplanation"></p>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-amber-200/60 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+                    <span>💡 Challenge yourself every day. Master all 4 competitive exam verticals.</span>
+                    <a href="ask-a-doubt.html" class="font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                        Have a doubt in this? Ask on Doubt Desk →
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- COMPETITIVE EXAMS SECTION (4 Clean Categories - No Clutter)   -->
+    <!-- ============================================================== -->
+    <section id="exams" class="relative z-10 py-16 border-t border-amber-900/10 bg-white/70 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-amber-700">Comprehensive Pedagogy</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-slate-900">Our 4 Core Examination Verticals</h2>
+                <p class="text-slate-600 text-sm sm:text-base">
+                    Focused coaching frameworks designed strictly around the latest official exam patterns.
+                </p>
+            </div>
+
+            <!-- 4 Clean Gateway Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- 1. Bank Exam -->
+                <a href="about-us.html" class="tilt-card group block p-6 rounded-2xl warm-card shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i data-lucide="landmark" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Financial Sector</span>
+                    <h3 class="text-xl font-bold font-serif text-slate-900 group-hover:text-amber-700 transition-colors mt-2">Banking Exams</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">
+                        Speed calculation, complex reasoning puzzles, data interpretation, and modern banking awareness.
+                    </p>
+                    <div class="mt-6 flex items-center text-xs font-bold text-amber-700 gap-1 group-hover:gap-2 transition-all">
+                        <span>Explore Vertical</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- 2. SSC Exam -->
+                <a href="about-us.html" class="tilt-card group block p-6 rounded-2xl warm-card shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Central Services</span>
+                    <h3 class="text-xl font-bold font-serif text-slate-900 group-hover:text-amber-700 transition-colors mt-2">SSC Exams</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">
+                        Comprehensive General Studies, advanced quantitative mathematics, and high-accuracy English drills.
+                    </p>
+                    <div class="mt-6 flex items-center text-xs font-bold text-amber-700 gap-1 group-hover:gap-2 transition-all">
+                        <span>Explore Vertical</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- 3. Railway Exam -->
+                <a href="about-us.html" class="tilt-card group block p-6 rounded-2xl warm-card shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-5 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i data-lucide="train" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">National Railways</span>
+                    <h3 class="text-xl font-bold font-serif text-slate-900 group-hover:text-amber-700 transition-colors mt-2">Railway Exams</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">
+                        NCERT General Science mastery, non-verbal reasoning, and high-speed Computer-Based Test (CBT) modules.
+                    </p>
+                    <div class="mt-6 flex items-center text-xs font-bold text-amber-700 gap-1 group-hover:gap-2 transition-all">
+                        <span>Explore Vertical</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+                <!-- 4. UPSC CSE (Dedicated Single Exam) -->
+                <a href="about-us.html" class="tilt-card group block p-6 rounded-2xl warm-card shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-amber-300">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-500 text-white flex items-center justify-center mb-5 shadow-md shadow-amber-600/20">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-white bg-amber-700 px-2 py-0.5 rounded">Dedicated Single Exam</span>
+                    <h3 class="text-xl font-bold font-serif text-slate-900 group-hover:text-amber-700 transition-colors mt-2">UPSC Civil Services</h3>
+                    <p class="text-slate-500 text-xs mt-2 leading-relaxed">
+                        Exclusive single-exam focus on UPSC CSE (IAS/IPS/IFS) with integrated Prelims-cum-Mains and interview mentorship.
+                    </p>
+                    <div class="mt-6 flex items-center text-xs font-bold text-amber-700 gap-1 group-hover:gap-2 transition-all">
+                        <span>Explore Vertical</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- RETENTION TEASERS: DOUBT DESK & 1-ON-1 APPOINTMENT            -->
+    <!-- ============================================================== -->
+    <section class="relative z-10 py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+            
+            <!-- Doubt Desk Teaser -->
+            <div class="tilt-card p-8 rounded-3xl warm-card shadow-lg shadow-amber-900/5 border border-amber-200 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                        <i data-lucide="message-square-plus" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-serif text-slate-900">Stuck on a Tricky Question?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Never let a doubt halt your study momentum. Submit your question or problem details directly to our mentor desk for personal guidance.
+                    </p>
+                </div>
+                <div class="pt-6">
+                    <a href="ask-a-doubt.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition">
+                        <span>Submit a Doubt Now</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Appointment Teaser -->
+            <div class="tilt-card p-8 rounded-3xl warm-card shadow-lg shadow-amber-900/5 border border-amber-200 flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                        <i data-lucide="calendar-check-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-serif text-slate-900">Confused About Strategy?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Book a personal 1-on-1 counseling session with our senior faculty. Select your preferred date (minimum 4 days in advance) for a tailored session.
+                    </p>
+                </div>
+                <div class="pt-6">
+                    <a href="book-appointment.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition shadow-md shadow-amber-600/20">
+                        <span>Schedule 1-on-1 Session</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- INTERACTIVE FAQ ACCORDION (Dwell-Time Booster)                 -->
+    <!-- ============================================================== -->
+    <section class="relative z-10 py-16 bg-white/60 border-t border-amber-900/10">
+        <div class="max-w-4xl mx-auto px-6">
+            
+            <div class="text-center mb-10 space-y-2">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-amber-700">Need Clarification?</span>
+                <h2 class="text-3xl font-bold font-serif text-slate-900">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-3" id="faqAccordion">
+                
+                <div class="p-5 rounded-2xl warm-card border border-amber-200 cursor-pointer faq-item">
+                    <div class="flex items-center justify-between font-bold text-slate-800 text-sm sm:text-base">
+                        <span>Are the doubt sessions and mentorship really free right now?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-amber-700 transition-transform"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-3 hidden leading-relaxed">
+                        Yes! As part of TRIRATNA's compassionate learning initiative, our doubt-clearing desk and personal mentorship appointments are currently 100% free of charge for all serious aspirants.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl warm-card border border-amber-200 cursor-pointer faq-item">
+                    <div class="flex items-center justify-between font-bold text-slate-800 text-sm sm:text-base">
+                        <span>Why does the appointment require booking 4 days in advance?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-amber-700 transition-transform"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-3 hidden leading-relaxed">
+                        Our faculty members dedicate focused, uninterrupted time to every single student. The 4-day minimum window allows mentors to review your target exam requirements and prepare a personalized roadmap before meeting you.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl warm-card border border-amber-200 cursor-pointer faq-item">
+                    <div class="flex items-center justify-between font-bold text-slate-800 text-sm sm:text-base">
+                        <span>Which exams do you provide guidance for?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-amber-700 transition-transform"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-3 hidden leading-relaxed">
+                        We specialize in 4 core verticals: Banking (including RBI Exam, SBI, IBPS), Staff Selection Commission (SSC CGL/CHSL/MTS/CPO), Railways (RRB NTPC, ALP, JE, Group D), and exclusively the UPSC Civil Services Examination (CSE).
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-amber-900/10 bg-[#FAF7F2] py-10 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-6 space-y-3">
+            <p class="font-serif text-sm font-bold text-slate-800">TRIRATNA Coaching Institute</p>
+            <p class="text-amber-800 font-medium">"Right Knowledge • Right Practice • Right Mentorship"</p>
+            <p>© TRIRATNA. Compassionate Learning for Success.</p>
+        </div>
+    </footer>
+
+    <!-- Three.js (Warm Ambient Visual) & Logic Scripts -->
+    <script>
+        lucide.createIcons();
+
+        /* ================= 3D BACKGROUND (THREE.JS) ================= */
+        const canvas = document.getElementById('webgl-bg');
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 7;
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        const geom = new THREE.TorusGeometry(2.4, 0.04, 16, 100);
+        const mat = new THREE.MeshBasicMaterial({ color: 0xD97706, transparent: true, opacity: 0.22 });
+        const ring1 = new THREE.Mesh(geom, mat);
+        const ring2 = new THREE.Mesh(geom, mat);
+        ring2.rotation.x = Math.PI / 2;
+        group.add(ring1);
+        group.add(ring2);
+
+        const particleCount = 75;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            positions[i] = (Math.random() - 0.5) * 14;
+            positions[i + 1] = (Math.random() - 0.5) * 14;
+            positions[i + 2] = (Math.random() - 0.5) * 8;
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0xB45309,
+            size: 0.06,
+            transparent: true,
+            opacity: 0.35
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            group.rotation.y += 0.0025;
+            group.rotation.x += 0.0018;
+            group.position.x = mouseX * 0.7;
+            group.position.y = -mouseY * 0.7;
+            particles.rotation.y += 0.0008;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        /* ================= 3D CARD TILT ================= */
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = -(y / (rect.height / 2)) * 6;
+                const rotateY = (x / (rect.width / 2)) * 6;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+            });
+        });
+
+        /* ================= FAQ ACCORDION ================= */
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const p = item.querySelector('p');
+                const icon = item.querySelector('i');
+                const isOpen = !p.classList.contains('hidden');
+                
+                // close all
+                document.querySelectorAll('.faq-item p').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.faq-item i').forEach(el => el.style.transform = 'rotate(0deg)');
+
+                if (!isOpen) {
+                    p.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        /* ============================================================== */
+        /* QUESTION OF THE DAY: REAL INTERNET TIME + GOOGLE SHEET MASTER  */
+        /* ============================================================== */
+        
+        /* 
+           HOW TO CONNECT YOUR GOOGLE SHEET:
+           1. In your Google Sheet, make your first tab 'Master'.
+           2. File -> Share -> Publish to web -> Select 'Master' tab -> Format as 'Comma-separated values (.csv)'.
+           3. Paste that published CSV link in the variable below:
+        */
+        const GOOGLE_SHEET_CSV_URL = ""; // e.g. "https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"
+
+        // High quality built-in fallback questions with 5 options (A to E)
+        const fallbackQuestions = [
+            {
+                day: 1,
+                question: "Which of the following bodies is constitutional in nature as per the Constitution of India?",
+                options: [
+                    "NITI Aayog",
+                    "National Development Council",
+                    "Finance Commission",
+                    "Central Vigilance Commission",
+                    "National Human Rights Commission"
+                ],
+                correct: "C",
+                explanation: "The Finance Commission is constituted under Article 280 of the Constitution of India, making it a constitutional body. Others are non-constitutional/statutory bodies."
+            },
+            {
+                day: 2,
+                question: "In the context of the Indian Banking system, what does 'CRR' strictly stand for?",
+                options: [
+                    "Credit Ratio Reserve",
+                    "Cash Reserve Ratio",
+                    "Capital Risk Ratio",
+                    "Currency Repurchase Rate",
+                    "Commercial Reserve Ratio"
+                ],
+                correct: "B",
+                explanation: "CRR stands for Cash Reserve Ratio. It is the percentage of a bank's total deposits that it is required to maintain with the Reserve Bank of India in cash form."
+            },
+            {
+                day: 3,
+                question: "Which Indus Valley Civilization site is renowned for possessing a tidal dockyard?",
+                options: [
+                    "Harappa",
+                    "Mohenjo-daro",
+                    "Kalibangan",
+                    "Lothal",
+                    "Dholavira"
+                ],
+                correct: "D",
+                explanation: "Lothal in Gujarat was a prominent port city of the Indus Valley Civilization featuring an advanced tidal dockyard connected to the Sabarmati river."
+            }
+        ];
+
+        let realDateObj = new Date(); // default fallback
+
+        async function fetchRealServerDate() {
+            try {
+                // Fetch real-world Indian Standard Time (independent of user phone clock)
+                const res = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kolkata');
+                const data = await res.json();
+                if (data && data.year && data.month && data.day) {
+                    realDateObj = new Date(data.year, data.month - 1, data.day);
+                }
+            } catch (e) {
+                try {
+                    const res2 = await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata');
+                    const d2 = await res2.json();
+                    realDateObj = new Date(d2.datetime);
+                } catch (e2) {
+                    realDateObj = new Date();
+                }
+            }
+            return realDateObj;
+        }
+
+        // Calculate Day of Year (1 to 365)
+        function getDayOfYear(date) {
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        async function loadDailyQuestion() {
+            const realDate = await fetchRealServerDate();
+            const dayOfYear = getDayOfYear(realDate);
+
+            // Update Badge
+            const optionsFormat = { day: 'numeric', month: 'short' };
+            document.getElementById('quizDateBadge').textContent = 
+                `Day ${dayOfYear} of 365 • ${realDate.toLocaleDateString('en-IN', optionsFormat)}`;
+
+            let activeQuestion = null;
+
+            // Try loading from Google Sheet if URL provided
+            if (GOOGLE_SHEET_CSV_URL) {
+                try {
+                    const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                    const csvText = await response.text();
+                    const rows = csvText.split('\n').map(r => r.split(','));
+                    
+                    // Look for today's day number in Column A (index 0)
+                    for (let i = 1; i < rows.length; i++) {
+                        const rowDay = parseInt(rows[i][0]);
+                        if (rowDay === dayOfYear) {
+                            activeQuestion = {
+                                day: rowDay,
+                                question: rows[i][1],
+                                options: [rows[i][2], rows[i][3], rows[i][4], rows[i][5], rows[i][6]],
+                                correct: (rows[i][7] || '').trim().toUpperCase(),
+                                explanation: rows[i][8] || ''
+                            };
+                            break;
+                        }
+                    }
+                } catch (err) {
+                    console.log("Using built-in question fallback.");
+                }
+            }
+
+            // Fallback selection (auto-loops smoothly through fallback array)
+            if (!activeQuestion) {
+                const index = (dayOfYear - 1) % fallbackQuestions.length;
+                activeQuestion = fallbackQuestions[index];
+            }
+
+            renderQuiz(activeQuestion);
+        }
+
+        function renderQuiz(qData) {
+            document.getElementById('quizQuestion').textContent = qData.question;
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+
+            const optionLetters = ['A', 'B', 'C', 'D', 'E'];
+
+            qData.options.forEach((optText, i) => {
+                const letter = optionLetters[i];
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 sm:p-4 rounded-xl border border-amber-200 bg-white/90 hover:bg-amber-50 hover:border-amber-400 transition-all text-xs sm:text-sm font-medium text-slate-800 flex items-center gap-3";
+                btn.innerHTML = `
+                    <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                        ${letter}
+                    </span>
+                    <span class="flex-grow">${optText}</span>
+                `;
+
+                btn.addEventListener('click', () => handleOptionClick(letter, qData, btn));
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleOptionClick(selectedLetter, qData, clickedBtn) {
+            const allButtons = document.querySelectorAll('#quizOptions button');
+            allButtons.forEach(b => b.disabled = true); // disable after click
+
+            const feedback = document.getElementById('quizFeedback');
+            const title = document.getElementById('feedbackTitle');
+            const explanation = document.getElementById('feedbackExplanation');
+            
+            const isCorrect = selectedLetter === qData.correct;
+
+            if (isCorrect) {
+                clickedBtn.classList.remove('bg-white/90', 'border-amber-200');
+                clickedBtn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900');
+                feedback.className = "mt-6 p-5 rounded-2xl border bg-emerald-50/90 border-emerald-300 text-emerald-900";
+                title.innerHTML = `
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+                    <span>Correct Answer! (${qData.correct})</span>
+                `;
+            } else {
+                clickedBtn.classList.remove('bg-white/90', 'border-amber-200');
+                clickedBtn.classList.add('bg-rose-50', 'border-rose-400', 'text-rose-900');
+                feedback.className = "mt-6 p-5 rounded-2xl border bg-amber-50/90 border-amber-300 text-amber-950";
+                title.innerHTML = `
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-amber-700"></i>
+                    <span>Incorrect. The correct option is (${qData.correct})</span>
+                `;
+
+                // Highlight correct button in green
+                const optionLetters = ['A', 'B', 'C', 'D', 'E'];
+                const correctIdx = optionLetters.indexOf(qData.correct);
+                if (allButtons[correctIdx]) {
+                    allButtons[correctIdx].classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900');
+                }
+            }
+
+            explanation.textContent = qData.explanation;
+            feedback.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // Initialize Daily Quiz
+        loadDailyQuestion();
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

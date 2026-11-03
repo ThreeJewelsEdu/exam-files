@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Practice Tests & Mock CBT Portal | Triratna Coaching Institute</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A',
+                        neutralBorder: '#E2E8F0'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts, KaTeX and DOMPurify -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+
+    <style>
+        .warm-card { background: #FFFFFF; border: 1px solid #E2E8F0; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+        .warm-card:hover { border-color: rgba(217, 119, 6, 0.45); transform: translateY(-3px); box-shadow: 0 12px 28px -6px rgba(180, 83, 9, 0.12); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .katex { font-size: 1.05em; }
+        .smart-content img { max-height: 16rem; }
+        @media (max-width: 1023px) { .passage-panel.collapsed { display: none; } }
+        button:focus-visible, select:focus-visible { outline: 2px solid #D97706; outline-offset: 2px; }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-[#0F172A] font-sans min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- ================= RESUME BANNER (crash recovery) ================= -->
+    <div id="resume-banner" class="hidden w-full bg-[#0F172A] text-white border-b-2 border-amber-500 px-4 py-3 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+            <div>
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block sm:inline">Active Exam Session Detected</span>
+                <span class="text-xs text-slate-300 sm:ml-2" id="resume-text"></span>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="resume-discard" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">Discard</button>
+            <button id="resume-btn" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#D97706] hover:bg-amber-600 text-white shadow transition">Resume Test</button>
+        </div>
+    </div>
+
+    <!-- ================= TOP HEADER ================= -->
+    <header class="border-b border-[#E2E8F0] bg-[#FAF7F2]/95 sticky top-0 z-30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#D97706] to-amber-400 flex items-center justify-center text-white shadow-md shadow-amber-600/20 shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A] font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-[#B45309] font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="past-papers.html" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#B45309] transition">
+                    <span>Past Papers</span>
+                </a>
+                <a href="banking-practice.html" class="text-xs font-bold text-[#B45309] flex items-center gap-1.5">
+                    <span>Banking Practice</span>
+                </a>
+                <a href="railway-practice.html" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#B45309] transition">
+                    <span>Railway Practice</span>
+                </a>
+                <button id="btn-counseling" class="px-4 py-2 rounded-full bg-[#0F172A] hover:bg-[#D97706] text-white text-xs font-bold transition shadow-sm">Counseling</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= BANNER ================= -->
+    <section class="border-b border-[#E2E8F0] bg-gradient-to-b from-white/80 to-transparent py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-50 text-amber-800 text-xs font-bold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Testbook & TCS iON Banking CBT Simulator
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-bold font-serif text-[#0F172A]">Banking Mock Tests & CBT Portal</h1>
+                <p class="text-slate-600 text-xs sm:text-sm mt-2 max-w-2xl font-serif italic">
+                    "Sectional and overall timers, 5-option (A–E) engine, passage-aware split screen for RC, Puzzles and DI, bilingual English/Hindi, crash recovery and instant detailed solutions."
+                </p>
+            </div>
+            <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-sm w-fit">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-[#B45309] flex items-center justify-center font-bold shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-500 font-bold">5 Options (A–E) Engine</div>
+                    <div class="text-sm font-bold text-[#0F172A]">Sectional & Overall Timers</div>
+                    <span class="text-xs text-[#B45309] font-semibold">TCS iON Post-Exam Review</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MAIN REPOSITORY ================= -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full">
+
+        <!-- Exam pills (rendered by script) -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#E2E8F0] no-scrollbar" id="exam-pills"></div>
+
+        <!-- Test type tabs -->
+        <div class="mt-6 flex flex-wrap gap-3" id="type-tabs">
+            <button data-action="type" data-type="full" class="px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all flex items-center gap-2">
+                <span>Full Length Mock Tests</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-800/80 text-white ml-1">Comprehensive Papers</span>
+            </button>
+            <button data-action="type" data-type="sectional" class="px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all flex items-center gap-2">
+                <span>Sectional & Subject Drills</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 ml-1">Speed Mastery</span>
+            </button>
+        </div>
+
+        <!-- Stage & search -->
+        <div class="mt-6 bg-white p-4 rounded-2xl warm-card flex flex-col sm:flex-row gap-4 justify-between items-center shadow-sm">
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider hidden sm:inline">Stage:</span>
+                <div class="flex bg-amber-50/70 p-1.5 rounded-xl border border-amber-200/60 w-full sm:w-auto">
+                    <button data-action="stage" data-stage="all" class="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition">All Stages</button>
+                    <button data-action="stage" data-stage="Prelims" class="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition">Prelims</button>
+                    <button data-action="stage" data-stage="Mains" class="flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition">Mains</button>
+                </div>
+            </div>
+            <div class="relative w-full sm:w-80">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0118 0z"/></svg>
+                <input type="text" id="search-filter" placeholder="Search mock title, exam, or code..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-[#E2E8F0] rounded-xl text-xs focus:outline-none focus:border-[#D97706]">
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="mt-8">
+            <div id="loading-spinner" class="hidden text-center py-16 bg-white rounded-2xl warm-card p-8">
+                <div class="w-8 h-8 border-4 border-[#D97706] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                <p class="text-xs font-bold text-slate-700">Loading banking mock tests...</p>
+                <p class="text-[11px] text-slate-400 mt-1">Fetching metadata on demand</p>
+            </div>
+            <div id="tests-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl warm-card p-8">
+                <h4 class="text-base font-bold font-serif text-[#0F172A]">No Mock Tests Found</h4>
+                <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Try switching between Prelims / Mains or resetting your search filter.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= CBT SIMULATOR ================= -->
+    <div id="cbtModal" class="fixed inset-0 z-50 bg-[#0F172A] hidden flex flex-col">
+
+        <!-- Top bar -->
+        <div class="bg-[#0F172A] text-white px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2 border-b border-slate-700 shrink-0">
+            <div class="flex items-center gap-3 min-w-0">
+                <span id="cbt-title" class="font-bold font-serif text-amber-400 text-xs sm:text-sm truncate max-w-[160px] sm:max-w-lg"></span>
+                <span id="cbt-mode" class="hidden md:inline-block text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono border border-slate-700"></span>
+            </div>
+            <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+                <button id="btn-instructions" class="hidden sm:inline-flex items-center text-xs text-slate-300 hover:text-white px-2.5 py-1 rounded border border-slate-700 hover:border-slate-500 transition">Instructions</button>
+                <button id="btn-paper" class="hidden sm:inline-flex items-center text-xs text-slate-300 hover:text-white px-2.5 py-1 rounded border border-slate-700 hover:border-slate-500 transition">Question Paper</button>
+                <div class="flex items-center gap-1.5 bg-amber-950/80 border border-amber-500/50 px-2.5 sm:px-3 py-1.5 rounded-xl text-amber-400 font-mono font-bold text-xs sm:text-sm">
+                    <span id="cbt-timer-label" class="hidden sm:inline">Time left:</span>
+                    <span id="cbt-timer">00:00</span>
+                </div>
+                <button id="btn-exit" class="text-xs text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-slate-700 hover:border-slate-500 transition">Exit</button>
+            </div>
+        </div>
+
+        <!-- Section strip -->
+        <div class="bg-slate-900 border-b border-slate-800 px-3 sm:px-6 py-2 flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar min-w-0" id="cbt-sections"></div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button id="btn-passage" class="lg:hidden hidden text-xs bg-amber-600 hover:bg-amber-700 text-white font-semibold px-2.5 py-1 rounded-lg">📖 Context</button>
+                <button id="btn-palette" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold px-2.5 py-1 rounded-lg border border-slate-700 flex items-center gap-1">
+                    <span id="btn-palette-text" class="hidden sm:inline">Hide Palette</span>
+                    <span id="btn-palette-arrow">▶</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Working area -->
+        <div class="flex-1 min-h-0 overflow-y-auto">
+            <div class="max-w-7xl mx-auto w-full p-2.5 sm:p-4 grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4">
+
+                <!-- Question column -->
+                <div id="cbt-qcol" class="lg:col-span-3 bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col min-w-0">
+                    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span id="cbt-qnum" class="text-xs font-bold text-amber-800 uppercase tracking-wider"></span>
+                            <span id="cbt-qsec" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200"></span>
+                            <span id="cbt-qual" class="hidden text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">Qualifying Module</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span id="cbt-qmarks" class="text-xs font-semibold text-slate-600 font-mono"></span>
+                            <label class="flex items-center gap-1 text-xs text-slate-700 bg-slate-100 px-2 py-1 rounded-md border border-slate-200">
+                                <span class="text-[11px] font-semibold">Lang:</span>
+                                <select data-lang class="bg-transparent font-bold text-slate-900 focus:outline-none cursor-pointer">
+                                    <option value="en">English</option>
+                                    <option value="hi">हिन्दी</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="cbt-split" class="grid grid-cols-1 gap-4 mt-3">
+                        <div id="cbt-passage" class="passage-panel hidden bg-amber-50/50 p-4 rounded-xl border border-amber-200/70 text-slate-800 text-sm leading-relaxed overflow-y-auto max-h-72 lg:max-h-[60vh]">
+                            <div class="text-xs font-bold uppercase tracking-wider text-amber-900 mb-2">📖 Directions & Context (RC / Puzzle / DI)</div>
+                            <div id="cbt-passage-body" class="smart-content text-xs sm:text-sm"></div>
+                        </div>
+                        <div class="flex flex-col min-w-0">
+                            <div id="cbt-qtext" class="text-[#0F172A] text-base sm:text-lg font-medium leading-relaxed smart-content"></div>
+                            <div id="cbt-options" class="mt-5 space-y-2.5"></div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 mt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                        <div class="flex items-center gap-2">
+                            <button id="btn-clear" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-300 transition">Clear Response</button>
+                            <button id="btn-mark" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-purple-600"></span>
+                                <span>Mark for Review & Next</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="btn-prev" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">Previous</button>
+                            <button id="btn-next" class="px-5 py-2 rounded-xl text-xs font-bold bg-[#D97706] hover:bg-amber-700 text-white shadow transition">Save & Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Palette column -->
+                <aside id="cbt-pcol" class="bg-white rounded-2xl p-4 shadow-lg flex flex-col h-fit lg:sticky lg:top-2">
+                    <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 mb-3 flex items-center gap-2.5">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-600 to-amber-400 text-white flex items-center justify-center font-bold text-xs shrink-0">BANK</div>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-900 truncate">Banking Aspirant</div>
+                            <div class="text-[10px] text-slate-500 font-mono">TCS-iON-BANK-MOCK</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600">Question Palette</h4>
+                        <span id="cbt-palette-title" class="text-[11px] font-bold text-amber-800 truncate max-w-[120px]"></span>
+                    </div>
+                    <div id="cbt-palette" class="grid grid-cols-5 gap-2 max-h-64 overflow-y-auto p-1"></div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-[10.5px] text-slate-600">
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block shrink-0"></span><span>Answered</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-rose-500 inline-block shrink-0"></span><span>Not Answered</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-purple-600 inline-block shrink-0"></span><span>Marked for Review</span></div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded bg-purple-600 relative inline-block shrink-0"><span class="w-1.5 h-1.5 bg-emerald-400 rounded-full absolute -top-0.5 -right-0.5 border border-white"></span></span>
+                            <span>Answered & Marked (Evaluated)</span>
+                        </div>
+                        <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-300 inline-block shrink-0"></span><span>Not Visited</span></div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-200 space-y-2">
+                        <button id="btn-section-submit" class="hidden w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs uppercase tracking-wider transition shadow">
+                            <span id="btn-section-submit-text">Lock & Submit Section</span>
+                        </button>
+                        <button id="btn-submit" class="w-full py-2.5 rounded-xl bg-[#0F172A] hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider transition shadow">Submit Exam</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="bg-slate-950 text-slate-400 text-[10px] px-4 py-1 text-center shrink-0">
+            Triratna Speed Engine • Official TCS iON Banking Testing Architecture • ← → navigate, A–E select
+        </div>
+    </div>
+
+    <!-- ================= SUMMARY MODAL (before final submit) ================= -->
+    <div id="summaryModal" class="fixed inset-0 z-[60] bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 border border-amber-200 shadow-2xl text-center">
+            <h3 class="text-lg font-bold font-serif text-[#0F172A]">Banking Exam Summary</h3>
+            <p class="text-xs text-slate-500 mt-1">Review your attempts before final submission.</p>
+            <div class="grid grid-cols-2 gap-3 my-5 text-left text-xs">
+                <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200"><span class="text-slate-500 block text-[10px] uppercase font-bold">Answered</span><span class="text-base font-bold text-emerald-700" id="sum-answered">0</span></div>
+                <div class="p-2.5 rounded-xl bg-rose-50 border border-rose-200"><span class="text-slate-500 block text-[10px] uppercase font-bold">Not Answered</span><span class="text-base font-bold text-rose-700" id="sum-na">0</span></div>
+                <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200"><span class="text-slate-500 block text-[10px] uppercase font-bold">Marked for Review</span><span class="text-base font-bold text-purple-700" id="sum-marked">0</span></div>
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200"><span class="text-slate-500 block text-[10px] uppercase font-bold">Not Visited</span><span class="text-base font-bold text-slate-700" id="sum-nv">0</span></div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="sum-cancel" class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">Resume Test</button>
+                <button id="sum-confirm" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow">Confirm Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SECTION LOCK CONFIRMATION ================= -->
+    <div id="sectionModal" class="fixed inset-0 z-[60] bg-[#0F172A]/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 border border-amber-200 shadow-2xl">
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4 text-xl">⚠</div>
+            <h3 class="text-xl font-bold font-serif text-[#0F172A]">Lock Section Early?</h3>
+            <div class="my-4 bg-amber-50 p-3.5 rounded-xl border border-amber-200/80 text-xs text-amber-900 leading-relaxed">
+                <p class="font-bold mb-1">Time remaining: <span id="sec-time" class="font-mono">00:00</span></p>
+                <p>Once you submit <strong id="sec-name">this section</strong>, it will be <strong>permanently locked</strong> as per Banking rules. You cannot return to it, and the remaining time is forfeited.</p>
+                <p class="mt-1 text-[11px]" id="sec-last"></p>
+            </div>
+            <div class="flex items-center gap-3 mt-6">
+                <button id="sec-cancel" class="flex-1 py-3 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-100 transition">Keep Reviewing</button>
+                <button id="sec-confirm" class="flex-1 py-3 rounded-xl bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold transition shadow-md">Yes, Lock & Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= QUESTION PAPER ================= -->
+    <div id="questionPaperModal" class="fixed inset-0 z-[60] bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-7 border border-amber-200 shadow-2xl max-h-[88vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200 gap-3">
+                <div class="min-w-0">
+                    <h3 class="text-base sm:text-lg font-bold font-serif text-[#0F172A]">Complete Question Paper Overview</h3>
+                    <p class="text-xs text-slate-500 truncate" id="qp-title">Paper Preview</p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <select data-lang class="text-xs border border-slate-300 rounded-lg px-2 py-1.5 font-bold">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                    <button id="qp-close" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">Close</button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto my-4 space-y-5 pr-2" id="qp-body"></div>
+        </div>
+    </div>
+
+    <!-- ================= INSTRUCTIONS ================= -->
+    <div id="instructionsModal" class="fixed inset-0 z-[60] bg-[#0F172A]/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-amber-200 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+                <h3 class="text-lg font-bold font-serif text-[#0F172A]">General Examination Instructions (Banking Patterns)</h3>
+                <button id="inst-close" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg font-bold text-slate-700">Close</button>
+            </div>
+            <div class="text-xs text-slate-700 space-y-3 mt-4 leading-relaxed">
+                <p><strong>1. Sectional vs. overall timers:</strong></p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li><strong>Sectional timer (SBI PO/Clerk, IBPS PO/Clerk, Mains):</strong> Each section has its own clock. A section locks when its time ends or when you lock it early, and locked sections cannot be revisited.</li>
+                    <li><strong>Overall timer (IBPS RRB Prelims):</strong> One composite countdown with free navigation across sections.</li>
+                </ul>
+                <p><strong>2. Five options and negative marking:</strong> Each question has options A–E. Wrong answers lose the negative marks shown on the question (usually 0.25 for 1-mark and 0.50 for 2-mark questions). Unanswered questions carry no penalty.</p>
+                <p><strong>3. Qualifying modules:</strong> Marked as "Qualifying Module". Their marks are excluded from merit, but you must reach the stated cut-off.</p>
+                <p><strong>4. Palette symbols:</strong></p>
+                <ul class="list-disc pl-5 space-y-1.5">
+                    <li><span class="text-emerald-700 font-bold">Green:</span> Answered.</li>
+                    <li><span class="text-rose-600 font-bold">Red:</span> Visited but not answered.</li>
+                    <li><span class="text-purple-700 font-bold">Purple:</span> Marked for review without an answer.</li>
+                    <li><span class="text-purple-700 font-bold">Purple with green dot:</span> Answered and marked. <em>This answer is evaluated.</em></li>
+                    <li><span class="text-slate-500 font-bold">Gray:</span> Not visited yet.</li>
+                </ul>
+                <p><strong>5. Shortcuts:</strong> ← and → move between questions. A–E select an option.</p>
+                <p><strong>6. Tab switching:</strong> Leaving the exam screen is counted and shown in your scorecard.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SCORECARD ================= -->
+    <div id="resultModal" class="fixed inset-0 z-[60] bg-[#0F172A]/70 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-7 border border-amber-200 shadow-2xl text-center max-h-[90vh] overflow-y-auto">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-[#B45309] flex items-center justify-center mx-auto mb-2 font-bold text-2xl font-serif">🏆</div>
+            <h3 class="text-2xl font-bold font-serif text-[#0F172A]">Exam Performance Analysis</h3>
+            <p class="text-xs text-slate-500 mt-0.5" id="res-title">Official Scorecard</p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 my-4">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 col-span-2 sm:col-span-1">
+                    <div class="text-[9px] uppercase font-bold text-slate-400">Grand Merit Score</div>
+                    <div class="text-sm font-bold text-amber-700" id="res-score">0.00</div>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200"><div class="text-[9px] uppercase font-bold text-emerald-800">Correct</div><div class="text-base font-bold text-emerald-700" id="res-correct">0</div></div>
+                <div class="bg-rose-50 p-3 rounded-xl border border-rose-200"><div class="text-[9px] uppercase font-bold text-rose-800">Wrong</div><div class="text-base font-bold text-rose-700" id="res-wrong">0</div></div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200"><div class="text-[9px] uppercase font-bold text-slate-500">Unattempted</div><div class="text-base font-bold text-slate-700" id="res-unattempted">0</div></div>
+                <div class="bg-blue-50 p-3 rounded-xl border border-blue-200"><div class="text-[9px] uppercase font-bold text-blue-800">Merit Accuracy</div><div class="text-base font-bold text-blue-700" id="res-accuracy">0%</div></div>
+            </div>
+
+            <p id="res-tabs" class="text-[11px] font-semibold text-slate-500 mb-1">Tab switches: 0</p>
+
+            <div id="res-qual" class="hidden text-left my-3 bg-amber-50/70 p-3 rounded-xl border border-amber-200">
+                <h5 class="text-[11px] font-bold uppercase tracking-wider text-amber-900 mb-1.5">Qualifying Modules (excluded from merit)</h5>
+                <div id="res-qual-list" class="space-y-1.5"></div>
+            </div>
+
+            <div class="text-left my-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Sectional Marks Breakdown</h4>
+                <div class="border border-slate-200 rounded-xl overflow-x-auto text-xs">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                            <tr>
+                                <th class="p-2.5">Section</th>
+                                <th class="p-2.5 text-center">Attempted</th>
+                                <th class="p-2.5 text-center">Correct</th>
+                                <th class="p-2.5 text-center">Wrong</th>
+                                <th class="p-2.5 text-right">Marks</th>
+                                <th class="p-2.5 text-right">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="res-sec-body" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <p id="res-time" class="text-xs text-slate-500 -mt-2 mb-1"></p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-5">
+                <button id="res-view" class="w-full py-3 rounded-xl bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold transition shadow">View Detailed Step Solutions</button>
+                <button id="res-csv" class="w-full py-3 rounded-xl bg-white hover:bg-amber-50 text-slate-700 border border-slate-300 text-xs font-bold transition">Download Response Sheet (CSV)</button>
+            </div>
+            <button id="res-close" class="w-full mt-2 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">Return to Portal</button>
+        </div>
+    </div>
+
+    <!-- ================= SOLUTIONS REVIEW ================= -->
+    <div id="solModal" class="fixed inset-0 z-[60] bg-[#0F172A]/95 backdrop-blur-md hidden flex flex-col">
+        <div class="bg-[#0F172A] text-white px-4 sm:px-6 py-2.5 flex items-center justify-between gap-2 border-b border-slate-700 shrink-0">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="font-bold font-serif text-amber-400 text-sm sm:text-base truncate">Banking Solutions & Explanations</span>
+                <span class="hidden sm:inline text-[10px] bg-emerald-950 border border-emerald-500/50 text-emerald-400 px-2 py-0.5 rounded font-mono">TCS iON Post-Exam Review</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <select data-lang class="bg-slate-800 text-xs text-white border border-slate-600 rounded-lg px-2 py-1">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+                <button id="sol-close" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-600 transition">Exit Solutions</button>
+            </div>
+        </div>
+
+        <div class="flex-1 min-h-0 overflow-y-auto">
+            <div class="max-w-7xl mx-auto w-full p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-4 gap-4">
+                <div class="lg:col-span-3 bg-white rounded-2xl p-4 sm:p-6 shadow-lg flex flex-col">
+                    <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-xs font-bold text-amber-800 uppercase tracking-wider" id="sol-num"></span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600" id="sol-sec"></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="sol-time" class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300"></span>
+                            <span id="sol-status" class="text-xs font-bold px-2.5 py-0.5 rounded"></span>
+                        </div>
+                    </div>
+                    <div id="sol-passage" class="hidden mt-4 p-4 rounded-xl bg-amber-50/60 border border-amber-200 text-slate-800 text-xs sm:text-sm smart-content"></div>
+                    <div class="mt-4 text-[#0F172A] text-base sm:text-lg font-medium leading-relaxed smart-content" id="sol-qtext"></div>
+                    <div class="mt-5 space-y-2.5" id="sol-options"></div>
+                    <div class="mt-6 bg-amber-50/80 border border-amber-300 rounded-2xl p-4 sm:p-5">
+                        <div class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2">Detailed Step-by-Step Solution & Analysis</div>
+                        <div class="text-xs sm:text-sm text-slate-800 leading-relaxed smart-content" id="sol-exp"></div>
+                    </div>
+                    <div class="mt-6 pt-3 border-t border-slate-200 flex items-center justify-between">
+                        <button id="sol-prev" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-300 text-slate-700 hover:bg-slate-50 transition">Previous Question</button>
+                        <button id="sol-next" class="px-5 py-2 rounded-xl text-xs font-bold bg-[#D97706] hover:bg-amber-700 text-white shadow transition">Next Question</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-lg h-fit">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Filter</h4>
+                    <div class="grid grid-cols-2 gap-1.5 mb-3 text-[11px] font-bold">
+                        <button data-action="solfilter" data-filter="all" class="px-2 py-1.5 rounded-lg border">All</button>
+                        <button data-action="solfilter" data-filter="correct" class="px-2 py-1.5 rounded-lg border">Correct</button>
+                        <button data-action="solfilter" data-filter="wrong" class="px-2 py-1.5 rounded-lg border">Wrong</button>
+                        <button data-action="solfilter" data-filter="skipped" class="px-2 py-1.5 rounded-lg border">Skipped</button>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1.5 max-h-72 overflow-y-auto p-1" id="sol-palette"></div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-[11px] text-slate-600">
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span><span>Correct Response</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-rose-600 inline-block"></span><span>Incorrect Response</span></div>
+                        <div class="flex items-center gap-2"><span class="w-3 h-3 rounded bg-slate-300 inline-block"></span><span>Skipped / Unattempted</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-[70] bg-[#0F172A] text-white text-xs px-5 py-3.5 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition duration-300 flex items-center gap-3 max-w-xs">
+        <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
+        <span id="toast-text">Notification</span>
+    </div>
+
+    <!-- ================= ENGINE ================= -->
+    <script>
+    (function () {
+        "use strict";
+
+        /* ================= 1. CONFIGURATION ================= */
+        // Apps Script web app. Must answer ?action=getTests and ?action=getQuestions&testId=...
+        const GOOGLE_APPS_SCRIPT_URL = "";
+        // Master Google Sheet. One tab per exam (see EXAM_SHEETS_CONFIG). Used when no Apps Script URL is set.
+        const SPREADSHEET_ID = "";
+        const EXAM_SHEETS_CONFIG = {
+            "SBI PO": "SBI PO",
+            "SBI Clerk": "SBI Clerk",
+            "IBPS PO": "IBPS PO",
+            "IBPS Clerk": "IBPS Clerk",
+            "IBPS RRB": "IBPS RRB",
+            "RBI Assistant": "RBI Assistant"
+        };
+        const EXAM_LIST = Object.keys(EXAM_SHEETS_CONFIG);
+        const STORAGE_KEY = "TRIRATNA_BANK_CBT_STATE_V2";
+        // Banking defaults: +1 / -0.25 for 1-mark questions. Individual questions can override.
+        // qualifyingCutoff default is a placeholder; set the official cut-off in the sheet.
+        const DEFAULTS = { posMarks: 1, negMarks: 0.25, secDuration: 20, totalDuration: 60, cutoff: 40 };
+        const LETTERS = ["A", "B", "C", "D", "E"];
+        const OPT_KEYS = ["optA", "optB", "optC", "optD", "optE"];
+        const MATH_DELIMS = [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+        ];
+
+        /* ================= 2. BUILT-IN FALLBACK TESTS ================= */
+        const BUILTIN_TESTS = [
+            {
+                id: "BM-01", exam: "SBI PO", type: "full", stage: "Prelims", timerMode: "sectional", totalDuration: 60,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "https://example.com/sbi-po-prelims.pdf",
+                title: "SBI PO Prelims Full Mock 01 (Speed Booster)",
+                questions: [
+                    { section: "English Language", secDuration: 20,
+                      passage: "<strong>Directions:</strong> Read the following context carefully and answer the question that follows.<br><em>Economic stability heavily relies on mitigating inflationary pressures through disciplined monetary policy.</em>",
+                      q: "Identify the antonym of the word <strong>'Mitigate'</strong>: || शब्द <strong>'Mitigate'</strong> का विलोम शब्द पहचानिए:",
+                      optA: "Aggravate || बदतर बनाना", optB: "Relieve || शांत करना", optC: "Soothe || कम करना", optD: "Diminish || घटाना", optE: "Alleviate || राहत देना",
+                      ans: "A", exp: "'Mitigate' means to make less severe. 'Aggravate' means to intensify or worsen, hence it is the direct antonym." },
+                    { section: "English Language", secDuration: 20, passage: "",
+                      q: "Choose the correctly spelled word among the options given below: || नीचे दिए गए विकल्पों में से सही वर्तनी वाले शब्द का चयन करें:",
+                      optA: "Accomodation", optB: "Accommodation", optC: "Acommodation", optD: "Accomadation", optE: "Acomodation",
+                      ans: "B", exp: "The correct spelling is 'Accommodation', requiring double 'c' and double 'm'." },
+                    { section: "Quantitative Aptitude", secDuration: 20,
+                      passage: "<strong>Data Analysis:</strong> In a manufacturing batch, train speeds and crossing durations are calibrated under standard conditions.",
+                      q: "A train running at $54\\text{ km/h}$ crosses a pole in $20\\text{ seconds}$. What is the length of the train? || $54\\text{ km/h}$ की गति से चलने वाली एक ट्रेन $20\\text{ सेकंड}$ में एक खंभे को पार करती है। ट्रेन की लंबाई क्या है?",
+                      optA: "250 meters", optB: "300 meters", optC: "350 meters", optD: "400 meters", optE: "280 meters",
+                      ans: "B", exp: "Speed in m/s = $54 \\times \\frac{5}{18} = 15\\text{ m/s}$. Length = $15 \\times 20 = 300\\text{ meters}$." },
+                    { section: "Quantitative Aptitude", secDuration: 20, passage: "",
+                      q: "Solve the quadratic equation for $x$: $$x^2 - 11x + 30 = 0$$ || $x$ के लिए द्विघात समीकरण हल करें: $$x^2 - 11x + 30 = 0$$",
+                      optA: "$x = 5, 6$", optB: "$x = -5, -6$", optC: "$x = 2, 15$", optD: "$x = 3, 10$", optE: "$x = -2, -15$",
+                      ans: "A", exp: "$x^2 - 5x - 6x + 30 = 0 \\implies (x - 5)(x - 6) = 0 \\implies x = 5, 6$." },
+                    { section: "Reasoning Ability", secDuration: 20,
+                      passage: "<strong>Directions:</strong> In a secret cryptographic protocol, letters follow systematic sequential shifts.",
+                      q: "In a certain code, 'LIGHT' is written as 'MJHIU'. How is 'FLAME' written in that code? || एक निश्चित कोड में, 'LIGHT' को 'MJHIU' लिखा जाता है। उसी कोड में 'FLAME' कैसे लिखा जाएगा?",
+                      optA: "GMBNF", optB: "GMAMF", optC: "GLBNF", optD: "GMANF", optE: "FMANF",
+                      ans: "A", exp: "Each letter shifts forward by $+1$: F→G, L→M, A→B, M→N, E→F. Thus, GMBNF." }
+                ]
+            },
+            {
+                id: "BM-RRB-01", exam: "IBPS RRB", type: "full", stage: "Prelims", timerMode: "overall", totalDuration: 45,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "https://example.com/ibps-rrb-paper.pdf",
+                title: "IBPS RRB Officer Scale-I All-India Live Mock 01",
+                questions: [
+                    { section: "Reasoning Ability", secDuration: 45,
+                      passage: "<strong>Puzzle Context:</strong> Eight persons A, B, C, D, E, F, G, and H are seated around a circular table facing the center.",
+                      q: "If A is sitting opposite to D and immediate right to B, who is sitting to the immediate left of A? || यदि A, D के विपरीत बैठा है और B के ठीक दाएं है, तो A के ठीक बाएं कौन बैठा है?",
+                      optA: "B", optB: "C", optC: "D", optD: "E", optE: "Cannot be determined || निर्धारित नहीं किया जा सकता",
+                      ans: "A", exp: "Since A is to the immediate right of B, B is to the immediate left of A." },
+                    { section: "Quantitative Aptitude", secDuration: 45, passage: "",
+                      q: "Find the missing number in the series: $$4, \\; 9, \\; 19, \\; 39, \\; 79, \\; ?$$ || श्रृंखला में लुप्त संख्या ज्ञात कीजिए: $$4, \\; 9, \\; 19, \\; 39, \\; 79, \\; ?$$",
+                      optA: "159", optB: "149", optC: "169", optD: "139", optE: "179",
+                      ans: "A", exp: "The progression is $\\times 2 + 1$: $79 \\times 2 + 1 = 159$." }
+                ]
+            },
+            {
+                id: "BM-MAINS-01", exam: "IBPS PO", type: "full", stage: "Mains", timerMode: "sectional", totalDuration: 75,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "#",
+                title: "IBPS PO Mains Comprehensive Speed Simulation",
+                questions: [
+                    { section: "Data Analysis & Interpretation", secDuration: 45, posMarks: 2, negMarks: 0.5,
+                      passage: "<strong>Caselet DI Context:</strong> Total production in a factory is $P = 4500$ units. The defective percentage in Batch I is $4\\%$ and Batch II is $6\\%$.",
+                      q: "If Batch I contains $2500$ units, find the total defective units across both batches: || यदि बैच I में $2500$ इकाइयाँ हैं, तो दोनों बैचों में कुल दोषपूर्ण इकाइयाँ ज्ञात करें:",
+                      optA: "220 units", optB: "210 units", optC: "230 units", optD: "240 units", optE: "200 units",
+                      ans: "A", exp: "Batch I defectives = $2500 \\times 0.04 = 100$. Batch II units = $2000$, defectives = $2000 \\times 0.06 = 120$. Total = $220$ units." },
+                    { section: "Computer & Special Aptitude", secDuration: 30, isQualifying: "YES", qualifyingCutoff: 40,
+                      passage: "<strong>Notice:</strong> This Computer module is qualifying. Marks are excluded from the Grand Merit calculation.",
+                      q: "In computer networking, which protocol is responsible for resolving an IP address to a physical MAC address? || कंप्यूटर नेटवर्किंग में, कौन सा प्रोटोकॉल IP एड्रेस को भौतिक MAC एड्रेस में बदलने के लिए जिम्मेदार है?",
+                      optA: "ARP (Address Resolution Protocol)", optB: "DHCP", optC: "DNS", optD: "FTP", optE: "ICMP",
+                      ans: "A", exp: "ARP (Address Resolution Protocol) resolves logical IPv4 addresses to physical MAC addresses." }
+                ]
+            },
+            {
+                id: "BM-CLERK-01", exam: "SBI Clerk", type: "full", stage: "Prelims", timerMode: "sectional", totalDuration: 20,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "#",
+                title: "SBI Clerk Prelims All-India Live Mock 01",
+                questions: [
+                    { section: "English Language", secDuration: 20, passage: "",
+                      q: "Select the most appropriate synonym of the word <strong>'Candid'</strong>: || शब्द <strong>'Candid'</strong> का सर्वाधिक उपयुक्त पर्यायवाची चुनें:",
+                      optA: "Secretive || गुप्त", optB: "Frank || स्पष्ट", optC: "Deceitful || कपटी", optD: "Shy || संकोची", optE: "Vague || अस्पष्ट",
+                      ans: "B", exp: "'Candid' means truthful, straightforward, and frank." }
+                ]
+            },
+            {
+                id: "BM-IBPS-CLK-01", exam: "IBPS Clerk", type: "full", stage: "Prelims", timerMode: "sectional", totalDuration: 20,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "#",
+                title: "IBPS Clerk Prelims Standard Sprint",
+                questions: [
+                    { section: "Quantitative Aptitude", secDuration: 20, passage: "",
+                      q: "A sum of ₹$5,000$ yields simple interest of ₹$1,200$ in $3\\text{ years}$. Find the rate of interest: || ₹$5,000$ की राशि पर $3\\text{ वर्ष}$ में ₹$1,200$ का साधारण ब्याज मिलता है। ब्याज की दर ज्ञात कीजिए:",
+                      optA: "8%", optB: "10%", optC: "6%", optD: "12%", optE: "7.5%",
+                      ans: "A", exp: "$R = \\frac{1200 \\times 100}{5000 \\times 3} = 8\\%$." }
+                ]
+            },
+            {
+                id: "BM-RBI-01", exam: "RBI Assistant", type: "full", stage: "Prelims", timerMode: "sectional", totalDuration: 20,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "#",
+                title: "RBI Assistant Prelims High-Speed Test",
+                questions: [
+                    { section: "Numerical Ability", secDuration: 20, passage: "",
+                      q: "What is $45\\%$ of $800$ plus $25\\%$ of $600$? || $800$ का $45\\%$ तथा $600$ का $25\\%$ कितना होगा?",
+                      optA: "510", optB: "500", optC: "520", optD: "490", optE: "530",
+                      ans: "A", exp: "$0.45 \\times 800 + 0.25 \\times 600 = 360 + 150 = 510$." }
+                ]
+            },
+            {
+                id: "BQ-01", exam: "SBI PO", type: "sectional", stage: "Prelims", timerMode: "sectional", totalDuration: 20,
+                posMarks: 1, negMarks: 0.25, pdfUrl: "#",
+                title: "Quant Speed Test: Quadratic Equations & DI Drill",
+                questions: [
+                    { section: "Quantitative Aptitude", secDuration: 20, passage: "",
+                      q: "Solve for $x$: $$x^2 - 14x + 48 = 0$$ || $x$ के लिए हल करें: $$x^2 - 14x + 48 = 0$$",
+                      optA: "$x = 6, 8$", optB: "$x = -6, -8$", optC: "$x = 4, 12$", optD: "$x = 3, 16$", optE: "$x = -4, -12$",
+                      ans: "A", exp: "$x^2 - 6x - 8x + 48 = 0 \\implies (x - 6)(x - 8) = 0 \\implies x = 6, 8$." }
+                ]
+            }
+        ];
+
+        /* ================= 3. STATE ================= */
+        const $ = (id) => document.getElementById(id);
+        const F = { exam: "all", type: "full", stage: "all" };
+        const S = {
+            catalog: [], sheetCache: {},
+            meta: null, qs: [], plan: [], active: false, lang: "en",
+            idx: 0, secIdx: 0, answers: {}, marked: new Set(), visited: new Set(), completed: new Set(),
+            times: {}, qTimerIdx: null, qStart: 0, tabSwitches: 0,
+            endAt: 0, tick: null, paletteHidden: false, passageOpen: false,
+            solutions: [], solIdx: 0, solFilter: "all"
+        };
+        const PAL_CLASS = {
+            answered: "bg-emerald-600 text-white border-emerald-700",
+            not_answered: "bg-rose-500 text-white border-rose-600",
+            review: "bg-purple-600 text-white border-purple-700",
+            answered_review: "bg-purple-600 text-white border-purple-700",
+            not_visited: "bg-slate-100 text-slate-700 border-slate-300"
+        };
+        const PAL_LABEL = { answered: "answered", not_answered: "not answered", review: "marked for review", answered_review: "answered and marked", not_visited: "not visited" };
+
+        /* ================= 4. HELPERS ================= */
+        const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const num = (v, d) => { const n = parseFloat(v); return isNaN(n) ? d : n; };
+        const norm = (h) => String(h || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+        const fmtClock = (sec) => {
+            sec = Math.max(0, Math.round(sec));
+            const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+            const p = (n) => String(n).padStart(2, "0");
+            return h > 0 ? `${h}:${p(m)}:${p(s)}` : `${p(m)}:${p(s)}`;
+        };
+        const fmtDur = (sec) => { sec = Math.round(sec || 0); const m = Math.floor(sec / 60), r = sec % 60; return m > 0 ? `${m}m ${String(r).padStart(2, "0")}s` : `${r}s`; };
+        const csvCell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+
+        function toast(msg) {
+            $("toast-text").textContent = msg;
+            $("toast").classList.remove("translate-y-24", "opacity-0");
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => $("toast").classList.add("translate-y-24", "opacity-0"), 3200);
+        }
+        function openModal(id) { $(id).classList.remove("hidden"); }
+        function closeModal(id) { $(id).classList.add("hidden"); }
+        function anyModalOpen() {
+            return ["summaryModal", "sectionModal", "questionPaperModal", "instructionsModal", "solModal", "resultModal"]
+                .some(id => !$(id).classList.contains("hidden"));
+        }
+
+        // Sanitize untrusted sheet HTML (scripts, iframes, on* handlers, javascript: URLs)
+        function sanitize(html) {
+            if (window.DOMPurify) return DOMPurify.sanitize(html, { ADD_ATTR: ["target"] });
+            const doc = new DOMParser().parseFromString(`<body>${html}</body>`, "text/html");
+            doc.body.querySelectorAll("script,iframe,object,embed,link,meta,style,base,form").forEach(n => n.remove());
+            doc.body.querySelectorAll("*").forEach(el => {
+                [...el.attributes].forEach(at => {
+                    const v = at.value.replace(/\s/g, "").toLowerCase();
+                    if (at.name.startsWith("on") || ((at.name === "href" || at.name === "src") && v.startsWith("javascript:"))) el.removeAttribute(at.name);
+                });
+            });
+            return doc.body.innerHTML;
+        }
+
+        // Turns one raw cell into display HTML for the current language
+        function renderCell(raw) {
+            if (raw === undefined || raw === null) return "";
+            let s = String(raw).trim();
+            if (!s) return "";
+            if (s.includes("||")) {
+                const [en, hi] = s.split(/\|\|\|?/);
+                s = (S.lang === "hi" && hi && hi.trim()) ? hi.trim() : (en || "").trim();
+            }
+            if (/^https?:\/\/\S+$/i.test(s) && /(\.(png|jpe?g|gif|webp|svg)(\?\S*)?$|drive\.google\.com|imgur\.com)/i.test(s)) {
+                return `<img src="${esc(s)}" alt="Figure" loading="lazy" class="max-h-64 rounded-lg my-2 object-contain mx-auto border border-slate-200">`;
+            }
+            return sanitize(s.replace(/\n/g, "<br>"));
+        }
+        function plain(raw) {
+            const s = String(raw || "").split(/\|\|\|?/)[0];
+            const d = document.createElement("div");
+            d.innerHTML = sanitize(s);
+            return d.textContent.replace(/\s+/g, " ").trim();
+        }
+        function typeset(el) {
+            if (el && window.renderMathInElement) {
+                try { renderMathInElement(el, { delimiters: MATH_DELIMS, throwOnError: false }); } catch (e) { /* ignore */ }
+            }
+        }
+
+        /* ================= 5. DATA LAYER ================= */
+        function parseCSV(text) {
+            const rows = []; let row = [], field = "", inQ = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i], n = text[i + 1];
+                if (inQ) {
+                    if (c === '"' && n === '"') { field += '"'; i++; }
+                    else if (c === '"') inQ = false;
+                    else field += c;
+                } else if (c === '"') inQ = true;
+                else if (c === ",") { row.push(field); field = ""; }
+                else if (c === "\r" || c === "\n") {
+                    if (c === "\r" && n === "\n") i++;
+                    row.push(field);
+                    if (row.some(f => f.trim() !== "")) rows.push(row);
+                    row = []; field = "";
+                } else field += c;
+            }
+            if (field !== "" || row.length) { row.push(field); if (row.some(f => f.trim() !== "")) rows.push(row); }
+            return rows;
+        }
+
+        // Header-based mapping, so column order in the sheet does not matter
+        function rowsToTests(rows, defaultExam) {
+            if (rows.length < 2) return [];
+            const head = rows[0].map(norm);
+            const pick = (r, names) => {
+                for (const n of names) {
+                    const i = head.indexOf(n);
+                    if (i >= 0 && String(r[i] ?? "").trim() !== "") return String(r[i]).trim();
+                }
+                return "";
+            };
+            const map = new Map();
+            for (let i = 1; i < rows.length; i++) {
+                const r = rows[i];
+                const id = pick(r, ["testid"]);
+                if (!id) continue;
+                if (!map.has(id)) {
+                    map.set(id, {
+                        id,
+                        exam: pick(r, ["exam"]) || defaultExam,
+                        type: pick(r, ["type"]) || "full",
+                        stage: pick(r, ["stage"]),
+                        title: pick(r, ["title"]) || id,
+                        timerMode: pick(r, ["timermode"]) || "sectional",
+                        totalDuration: num(pick(r, ["totaldurationmins", "durationmins", "totalduration"]), DEFAULTS.totalDuration),
+                        posMarks: pick(r, ["posmarks"]),
+                        negMarks: pick(r, ["negmarks"]),
+                        pdfUrl: pick(r, ["pdfurl"]) || "#",
+                        questions: []
+                    });
+                }
+                map.get(id).questions.push({
+                    section: pick(r, ["section"]) || "General",
+                    secDuration: pick(r, ["secdurationmins", "secduration"]),
+                    isQualifying: pick(r, ["isqualifying", "qualifying"]),
+                    qualifyingCutoff: pick(r, ["qualifyingcutoff"]),
+                    passage: String(r[head.indexOf("passage")] ?? "").trim(),
+                    q: pick(r, ["question", "q"]),
+                    optA: pick(r, ["opta"]), optB: pick(r, ["optb"]), optC: pick(r, ["optc"]),
+                    optD: pick(r, ["optd"]), optE: pick(r, ["opte"]),
+                    ans: pick(r, ["ans", "answer", "correct"]),
+                    exp: pick(r, ["explanation", "exp"]),
+                    posMarks: pick(r, ["posmarks"]),
+                    negMarks: pick(r, ["negmarks"])
+                });
+            }
+            return [...map.values()];
+        }
+
+        async function fetchTab(tab, exam) {
+            if (S.sheetCache[tab]) return S.sheetCache[tab];
+            const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(SPREADSHEET_ID)}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status} for tab ${tab}`);
+            const list = rowsToTests(parseCSV(await res.text()), exam);
+            S.sheetCache[tab] = list;
+            return list;
+        }
+
+        function normalizeStage(s) {
+            const t = String(s || "").toLowerCase();
+            if (!t.trim()) return "Prelims";
+            if (/main|tier[\s-]*2|tier2|cbt[\s-]*2/.test(t)) return "Mains";
+            if (/prelim|tier[\s-]*1|tier1|cbt[\s-]*1/.test(t)) return "Prelims";
+            return "Other";
+        }
+
+        function optionsOf(q) {
+            const out = [];
+            OPT_KEYS.forEach((k, i) => { if (String(q[k] ?? "").trim() !== "") out.push({ letter: LETTERS[i], text: q[k] }); });
+            return out;
+        }
+
+        function normalizeQuestion(q) {
+            const out = {
+                section: String(q.section || "General").trim() || "General",
+                secDuration: num(q.secDuration, DEFAULTS.secDuration),
+                isQualifying: q.isQualifying === true || /^y(es)?$/i.test(String(q.isQualifying || "").trim()),
+                qualifyingCutoff: num(q.qualifyingCutoff, DEFAULTS.cutoff),
+                passage: String(q.passage || ""),
+                q: String(q.q || "").trim() || "Question text not provided.",
+                posMarks: (q.posMarks === undefined || q.posMarks === null || q.posMarks === "") ? null : num(q.posMarks, null),
+                negMarks: (q.negMarks === undefined || q.negMarks === null || q.negMarks === "") ? null : num(q.negMarks, null),
+                exp: String(q.exp || "").trim() || "Detailed explanation provided in the official answer key."
+            };
+            OPT_KEYS.forEach(k => { out[k] = String(q[k] ?? "").trim(); });
+            if (Array.isArray(q.options)) q.options.slice(0, 5).forEach((o, i) => { out[OPT_KEYS[i]] = String(o ?? ""); });
+            let a = String(q.ans ?? "A").trim().toUpperCase().charAt(0);
+            if (/[1-5]/.test(a)) a = LETTERS[Number(a) - 1];
+            out.ans = LETTERS.includes(a) ? a : "A";
+            return out;
+        }
+
+        // Splits a question list into sections, in order of first appearance
+        function sectionPlan(qs) {
+            const order = [], map = {};
+            qs.forEach((q, i) => {
+                const name = q.section || "General";
+                if (!map[name]) {
+                    map[name] = { name, mins: Math.max(1, q.secDuration || DEFAULTS.secDuration), first: i, indices: [] };
+                    order.push(map[name]);
+                }
+                map[name].indices.push(i);
+            });
+            return order;
+        }
+
+        function normalizeMeta(t) {
+            const hasQs = Array.isArray(t.questions) && t.questions.length > 0;
+            const qs = hasQs ? t.questions.map(normalizeQuestion) : null;
+            const timerMode = /over/i.test(String(t.timerMode || "")) ? "overall" : "sectional";
+            const meta = {
+                id: String(t.id ?? t.testId ?? ""),
+                exam: String(t.exam || "Banking"),
+                type: /sec/i.test(String(t.type || "")) ? "sectional" : "full",
+                stage: normalizeStage(t.stage),
+                title: String(t.title || t.id || "Banking Mock Test"),
+                timerMode,
+                totalDuration: num(t.totalDuration ?? t.durationMins, DEFAULTS.totalDuration),
+                posMarks: num(t.posMarks, DEFAULTS.posMarks),
+                negMarks: num(t.negMarks, DEFAULTS.negMarks),
+                pdfUrl: t.pdfUrl || "#",
+                questions: qs,
+                qCount: qs ? qs.length : num(t.qCount, 0),
+                hasQualifying: qs ? qs.some(q => q.isQualifying) : !!t.hasQualifying
+            };
+            if (qs && timerMode === "sectional") {
+                const total = sectionPlan(qs).reduce((a, s) => a + s.mins, 0);
+                if (total > 0) meta.totalDuration = total;
+            }
+            return meta;
+        }
+
+        async function loadCatalog() {
+            showLoading(true);
+            let list = [];
+            try {
+                if (GOOGLE_APPS_SCRIPT_URL) {
+                    const res = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getTests`);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const data = await res.json();
+                    list = (Array.isArray(data) ? data : []).map(normalizeMeta);
+                } else if (SPREADSHEET_ID) {
+                    const parts = await Promise.all(Object.entries(EXAM_SHEETS_CONFIG).map(([exam, tab]) =>
+                        fetchTab(tab, exam).catch(err => { console.warn(err); return []; })));
+                    list = parts.flat().map(normalizeMeta);
+                }
+            } catch (err) {
+                console.warn("Live catalog unavailable, using built-in tests.", err);
+                list = [];
+            }
+            if (!list.length) list = BUILTIN_TESTS.map(normalizeMeta);
+            S.catalog = list;
+            showLoading(false);
+            renderCards();
+        }
+
+        async function getQuestions(meta) {
+            if (meta.questions && meta.questions.length) return meta.questions;
+            if (!GOOGLE_APPS_SCRIPT_URL) throw new Error("No questions available for this test");
+            const res = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getQuestions&testId=${encodeURIComponent(meta.id)}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            meta.questions = (Array.isArray(data) ? data : []).map(normalizeQuestion);
+            meta.qCount = meta.questions.length;
+            meta.hasQualifying = meta.questions.some(q => q.isQualifying);
+            return meta.questions;
+        }
+
+        /* ================= 6. CATALOG UI ================= */
+        function showLoading(on) {
+            $("loading-spinner").classList.toggle("hidden", !on);
+            $("tests-grid").classList.toggle("hidden", on);
+            if (on) $("empty-state").classList.add("hidden");
+        }
+
+        function renderPills() {
+            $("exam-pills").innerHTML = ["all", ...EXAM_LIST].map(e => {
+                const on = e === F.exam;
+                return `<button data-action="exam" data-exam="${esc(e)}" class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition ${on ? "bg-[#0F172A] text-white shadow-sm" : "bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]"}">${e === "all" ? "All Banking Exams" : esc(e)}</button>`;
+            }).join("");
+        }
+        function renderTabs() {
+            document.querySelectorAll("[data-action='type']").forEach(b => {
+                const on = b.dataset.type === F.type;
+                b.className = `px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold font-serif transition-all flex items-center gap-2 ${on ? "bg-[#D97706] text-white shadow-md shadow-amber-600/20" : "bg-white text-slate-700 border border-[#E2E8F0] hover:border-[#D97706]"}`;
+            });
+        }
+        function renderStages() {
+            document.querySelectorAll("[data-action='stage']").forEach(b => {
+                const on = b.dataset.stage === F.stage;
+                b.className = `flex-1 sm:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition ${on ? "bg-white text-[#0F172A] shadow-sm" : "text-slate-600 hover:text-slate-900"}`;
+            });
+        }
+
+        function cardHTML(t) {
+            const stageCls = t.stage === "Mains" ? "bg-rose-50 text-rose-800 border-rose-200" : "bg-emerald-50 text-emerald-800 border-emerald-200";
+            const mode = t.timerMode === "overall" ? "Overall timer (free navigation)" : "Sectional timer (locked sections)";
+            const pdf = t.pdfUrl && t.pdfUrl !== "#"
+                ? `<a href="${esc(t.pdfUrl)}" target="_blank" rel="noopener" class="p-3 bg-white hover:bg-amber-50 text-slate-700 border border-[#E2E8F0] rounded-xl transition" title="Download Question Paper PDF">PDF</a>`
+                : "";
+            return `
+            <div class="warm-card rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                <div>
+                    <div class="flex items-center gap-2 mb-3 flex-wrap">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md border ${stageCls}">${esc(t.stage)}</span>
+                        <span class="text-xs font-bold text-[#B45309] font-serif">${esc(t.exam)}</span>
+                        <span class="text-[11px] font-semibold text-slate-500 ml-auto font-mono">${Math.round(t.totalDuration)} Mins</span>
+                    </div>
+                    <h3 class="text-base font-bold font-serif text-[#0F172A] leading-snug">${esc(t.title)}</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">${esc(mode)} · Official banking pattern with 5 options (A–E)</p>
+                    <div class="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-600 font-semibold bg-amber-50/60 p-2.5 rounded-xl border border-amber-200/50">
+                        <span>📝 ${t.qCount} Questions</span><span>•</span>
+                        <span>⚖️ +${t.posMarks.toFixed(2)} / -${t.negMarks.toFixed(2)}</span>
+                        ${t.hasQualifying ? '<span>•</span><span class="text-rose-700">🎯 Qualifying module</span>' : ""}
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-[#E2E8F0] flex items-center gap-2">
+                    <button data-action="start" data-id="${esc(t.id)}" class="flex-1 bg-[#D97706] hover:bg-amber-700 text-white text-xs font-bold py-3 px-4 rounded-xl shadow-md transition">Start CBT Test</button>
+                    ${pdf}
+                </div>
+            </div>`;
+        }
+
+        function renderCards() {
+            const q = $("search-filter").value.trim().toLowerCase();
+            const list = S.catalog.filter(t =>
+                (F.exam === "all" || t.exam === F.exam) &&
+                t.type === F.type &&
+                (F.stage === "all" || t.stage === F.stage) &&
+                (!q || [t.title, t.exam, t.id].some(x => String(x).toLowerCase().includes(q))));
+            $("tests-grid").innerHTML = list.map(cardHTML).join("");
+            $("empty-state").classList.toggle("hidden", list.length > 0);
+        }
+
+        /* ================= 7. START / RESUME ================= */
+        async function startTest(id) {
+            if (S.active) return;
+            const meta = S.catalog.find(t => t.id === id);
+            if (!meta) return;
+            toast("Loading test...");
+            let qs;
+            try { qs = await getQuestions(meta); }
+            catch (e) { console.error(e); return toast("⚠️ Could not load this test. Check your connection and try again."); }
+            if (!qs || !qs.length) return toast("No questions found for this test.");
+            begin(meta, qs, sectionPlan(qs), null);
+        }
+
+        function applyRestore(st) {
+            S.idx = Number.isInteger(st.idx) ? st.idx : 0;
+            S.secIdx = st.secIdx || 0;
+            S.answers = st.answers || {};
+            S.marked = new Set(st.marked || []);
+            S.visited = new Set(st.visited || []);
+            S.completed = new Set(st.completed || []);
+            S.times = st.times || {};
+            S.tabSwitches = st.tabSwitches || 0;
+            S.endAt = st.endAt;
+            S.lang = st.lang === "hi" ? "hi" : S.lang;
+        }
+
+        function begin(meta, qs, plan, restore) {
+            S.meta = meta; S.qs = qs; S.plan = plan; S.active = true;
+            S.solutions = []; S.passageOpen = false; S.qTimerIdx = null;
+            S.answers = {}; S.marked = new Set(); S.visited = new Set(); S.completed = new Set();
+            S.times = {}; S.tabSwitches = 0; S.idx = 0; S.secIdx = 0;
+            if (restore) applyRestore(restore);
+            else S.endAt = meta.timerMode === "sectional" ? Date.now() + plan[0].mins * 60000 : Date.now() + meta.totalDuration * 60000;
+
+            $("cbtModal").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+            $("cbt-title").textContent = `${meta.exam}: ${meta.title}`;
+            $("cbt-mode").textContent = meta.timerMode === "overall" ? "OVERALL TIMER · FREE NAVIGATION" : "SECTIONAL TIMER · LOCKED SECTIONS";
+            renderSectionStrip();
+            loadQuestion(S.idx);
+            startTick();
+            saveState();
+        }
+
+        async function checkRecovery() {
+            let st = null;
+            try { st = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (e) { st = null; }
+            if (!st || !st.id) return purgeState();
+            const meta = S.catalog.find(t => t.id === st.id);
+            if (!meta) return purgeState();
+            let qs;
+            try { qs = await getQuestions(meta); } catch (e) { return; }
+            const plan = sectionPlan(qs);
+            const banner = $("resume-banner"), text = $("resume-text"), btn = $("resume-btn");
+            $("resume-discard").onclick = () => { purgeState(); banner.classList.add("hidden"); toast("Previous exam session discarded."); };
+            const resumeWith = (restore, msg, label) => {
+                text.textContent = msg; btn.textContent = label;
+                btn.onclick = () => { banner.classList.add("hidden"); begin(meta, qs, plan, restore); };
+                banner.classList.remove("hidden");
+            };
+            const expiredResult = (restore) => {
+                text.textContent = "Your previous exam time expired while you were away. Showing your result.";
+                btn.textContent = "View Result";
+                btn.onclick = () => {
+                    banner.classList.add("hidden");
+                    applyRestore(restore);
+                    S.meta = meta; S.qs = qs; S.plan = plan; S.active = true;
+                    finalize("Previous exam submitted automatically.");
+                };
+                banner.classList.remove("hidden");
+            };
+
+            const now = Date.now();
+            if (meta.timerMode === "sectional") {
+                let i = Math.min(st.secIdx || 0, plan.length - 1);
+                let end = st.endAt || 0;
+                const locked = new Set(st.completed || []);
+                // Walk forward through any sections whose clocks ran out while the tab was closed
+                while (end <= now && i < plan.length - 1) {
+                    locked.add(plan[i].name);
+                    i++;
+                    end += plan[i].mins * 60000;
+                }
+                if (end > now) {
+                    const changed = i !== (st.secIdx || 0);
+                    return resumeWith(
+                        { ...st, secIdx: i, endAt: end, completed: [...locked], idx: changed ? plan[i].first : st.idx },
+                        changed ? `Time ran out for an earlier section while you were away, so it is locked. Continue with "${plan[i].name}"?` : `In-progress banking exam: "${meta.title}". Resume where you left off?`,
+                        changed ? "Continue" : "Resume Test"
+                    );
+                }
+                return expiredResult({ ...st, secIdx: i, completed: [...locked] });
+            }
+            if (st.endAt > now) return resumeWith(st, `In-progress banking exam: "${meta.title}". Resume where you left off?`, "Resume Test");
+            return expiredResult(st);
+        }
+
+        /* ================= 8. TIMERS & PERSISTENCE ================= */
+        function trackStart(idx) { trackStop(); S.qTimerIdx = idx; S.qStart = Date.now(); }
+        function trackStop() {
+            if (S.qTimerIdx !== null) {
+                S.times[S.qTimerIdx] = (S.times[S.qTimerIdx] || 0) + (Date.now() - S.qStart) / 1000;
+                S.qTimerIdx = null;
+            }
+        }
+        function startTick() { stopTick(); S.tick = setInterval(onTick, 500); onTick(); }
+        function stopTick() { if (S.tick) clearInterval(S.tick); S.tick = null; }
+        function onTick() {
+            if (!S.active) return;
+            const rem = (S.endAt - Date.now()) / 1000;
+            $("cbt-timer").textContent = fmtClock(rem);
+            $("cbt-timer-label").textContent = S.meta.timerMode === "sectional" ? "Section time:" : "Time left:";
+            if (rem <= 0) onTimeUp();
+        }
+        function onTimeUp() {
+            if (!S.active) return;
+            if (S.meta.timerMode === "sectional" && S.secIdx < S.plan.length - 1) {
+                S.completed.add(S.plan[S.secIdx].name);
+                closeModal("sectionModal");
+                toast(`⏰ Time up for "${S.plan[S.secIdx].name}". Section locked.`);
+                advanceSection();
+            } else {
+                finalize("⏰ Time is over. Exam submitted automatically.");
+            }
+        }
+        function saveState() {
+            if (!S.active || !S.meta) return;
+            const times = { ...S.times };
+            if (S.qTimerIdx !== null) times[S.qTimerIdx] = (times[S.qTimerIdx] || 0) + (Date.now() - S.qStart) / 1000;
+            const state = {
+                v: 2, id: S.meta.id, idx: S.idx, secIdx: S.secIdx, answers: S.answers,
+                marked: [...S.marked], visited: [...S.visited], completed: [...S.completed],
+                times, tabSwitches: S.tabSwitches, endAt: S.endAt, lang: S.lang
+            };
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* quota or privacy mode */ }
+        }
+        function purgeState() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* ignore */ } }
+
+        /* ================= 9. QUESTION ENGINE ================= */
+        function qState(i) {
+            const answered = S.answers[i] !== undefined;
+            const marked = S.marked.has(i);
+            if (answered && marked) return "answered_review";
+            if (marked) return "review";
+            if (answered) return "answered";
+            if (S.visited.has(i)) return "not_answered";
+            return "not_visited";
+        }
+
+        function canMoveTo(target) {
+            if (target < 0 || target >= S.qs.length) return false;
+            if (S.meta.timerMode !== "sectional") return true;
+            return (S.qs[target].section || "General") === S.plan[S.secIdx].name;
+        }
+
+        function loadQuestion(idx) {
+            if (!S.active || idx < 0 || idx >= S.qs.length) return;
+            S.idx = idx;
+            S.visited.add(idx);
+            const q = S.qs[idx];
+            const sIdx = S.plan.findIndex(p => p.name === (q.section || "General"));
+            if (sIdx >= 0) S.secIdx = sIdx;
+            trackStart(idx);
+
+            const pos = q.posMarks ?? S.meta.posMarks;
+            const neg = q.negMarks ?? S.meta.negMarks;
+            $("cbt-qnum").textContent = `Question ${idx + 1} of ${S.qs.length}`;
+            $("cbt-qsec").textContent = q.section || "General";
+            $("cbt-qual").classList.toggle("hidden", !q.isQualifying);
+            $("cbt-qmarks").textContent = `Marks: +${pos.toFixed(2)} | -${neg.toFixed(2)}`;
+
+            const hasPassage = !!q.passage.trim();
+            $("cbt-passage").classList.toggle("hidden", !hasPassage);
+            $("btn-passage").classList.toggle("hidden", !hasPassage);
+            $("cbt-split").classList.toggle("lg:grid-cols-2", hasPassage);
+            if (hasPassage) {
+                $("cbt-passage-body").innerHTML = renderCell(q.passage);
+                typeset($("cbt-passage-body"));
+            }
+            applyPassageState();
+
+            $("cbt-qtext").innerHTML = renderCell(q.q);
+            typeset($("cbt-qtext"));
+            renderOptions();
+            renderSectionStrip();
+            renderPalette();
+            saveState();
+        }
+
+        function applyPassageState() {
+            $("cbt-passage").classList.toggle("collapsed", !S.passageOpen);
+        }
+
+        function renderOptions() {
+            const q = S.qs[S.idx];
+            const sel = S.answers[S.idx];
+            $("cbt-options").innerHTML = optionsOf(q).map(o => `
+                <label class="flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition ${sel === o.letter ? "bg-amber-50 border-amber-600 font-semibold ring-1 ring-amber-500" : "bg-slate-50/60 border-slate-200 hover:border-amber-400"}">
+                    <input type="radio" name="cbt-choice" value="${o.letter}" ${sel === o.letter ? "checked" : ""} class="accent-amber-600 w-4 h-4">
+                    <span class="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">${o.letter}</span>
+                    <div class="text-sm text-[#0F172A] smart-content flex-1 min-w-0">${renderCell(o.text)}</div>
+                </label>`).join("");
+            typeset($("cbt-options"));
+        }
+
+        function selectOption(letter) {
+            if (!S.active) return;
+            S.answers[S.idx] = letter;
+            renderOptions();
+            renderPalette();
+            saveState();
+        }
+
+        function renderSectionStrip() {
+            if (!S.meta) return;
+            $("cbt-sections").innerHTML = S.plan.map((p, i) => {
+                const locked = S.completed.has(p.name);
+                const active = i === S.secIdx;
+                const done = p.indices.filter(j => S.answers[j] !== undefined).length;
+                const cls = locked ? "bg-slate-950 text-slate-500 border-slate-800 cursor-not-allowed"
+                    : active ? "bg-amber-500/20 text-amber-300 border-amber-500 font-bold"
+                    : "bg-slate-800 text-slate-300 border-slate-700 hover:text-white";
+                return `<button data-action="section" data-sec="${i}" data-idx="${p.first}" class="px-3 py-1 rounded text-xs border transition whitespace-nowrap ${cls}">${locked ? "🔒 " : ""}${esc(p.name)} <span class="opacity-70 font-mono">${done}/${p.indices.length}</span></button>`;
+            }).join("");
+            $("btn-section-submit").classList.toggle("hidden", S.meta.timerMode !== "sectional");
+            $("btn-section-submit-text").textContent = S.secIdx === S.plan.length - 1 ? "Lock & Submit Exam" : "Lock & Submit Section";
+        }
+
+        function renderPalette() {
+            const sectional = S.meta.timerMode === "sectional";
+            const sec = S.plan[S.secIdx];
+            const idxs = sectional ? sec.indices : S.qs.map((_, i) => i);
+            $("cbt-palette-title").textContent = sectional ? sec.name : "All sections";
+            $("cbt-palette").innerHTML = idxs.map(i => {
+                const st = qState(i);
+                const dot = st === "answered_review" ? '<span class="w-2 h-2 bg-emerald-400 rounded-full absolute -top-0.5 -right-0.5 border border-white"></span>' : "";
+                return `<button data-action="jump" data-idx="${i}" aria-label="Question ${i + 1}, ${PAL_LABEL[st]}" class="relative w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center border transition ${PAL_CLASS[st]} ${i === S.idx ? "ring-2 ring-amber-500 ring-offset-1" : ""}">${i + 1}${dot}</button>`;
+            }).join("");
+        }
+
+        function jumpTo(i) {
+            if (!S.active) return;
+            if (!canMoveTo(i)) return toast("🔒 That section is locked. Finish your current section first.");
+            loadQuestion(i);
+        }
+
+        function goNext() {
+            const t = S.idx + 1;
+            if (t >= S.qs.length) { toast("You are on the last question."); renderPalette(); return saveState(); }
+            if (!canMoveTo(t)) { toast('End of section. Use "Lock & Submit Section" to continue.'); renderPalette(); return saveState(); }
+            loadQuestion(t);
+        }
+        function goPrev() {
+            const t = S.idx - 1;
+            if (t < 0) return;
+            if (!canMoveTo(t)) return toast("🔒 Locked section. You cannot go back.");
+            loadQuestion(t);
+        }
+
+        function advanceSection() {
+            S.secIdx = Math.min(S.secIdx + 1, S.plan.length - 1);
+            const plan = S.plan[S.secIdx];
+            S.endAt = Date.now() + plan.mins * 60000;
+            loadQuestion(plan.first);
+            onTick();
+        }
+
+        function openSectionModal() {
+            const plan = S.plan[S.secIdx];
+            const isLast = S.secIdx === S.plan.length - 1;
+            $("sec-name").textContent = `"${plan.name}"`;
+            $("sec-time").textContent = fmtClock((S.endAt - Date.now()) / 1000);
+            $("sec-confirm").textContent = isLast ? "Yes, Submit Exam" : "Yes, Lock & Next";
+            $("sec-last").textContent = isLast ? "This is the last section, so confirming ends the exam." : "";
+            openModal("sectionModal");
+        }
+        function confirmSectionLock() {
+            closeModal("sectionModal");
+            if (!S.active) return;
+            const plan = S.plan[S.secIdx];
+            S.completed.add(plan.name);
+            if (S.secIdx >= S.plan.length - 1) return finalize("Exam submitted.");
+            toast(`"${plan.name}" locked.`);
+            advanceSection();
+        }
+
+        function openSummary() {
+            let answered = 0, notAns = 0, marked = 0, notVis = 0;
+            S.qs.forEach((_, i) => {
+                const st = qState(i);
+                if (st === "answered" || st === "answered_review") answered++;
+                if (st === "not_answered") notAns++;
+                if (st === "review" || st === "answered_review") marked++;
+                if (st === "not_visited") notVis++;
+            });
+            $("sum-answered").textContent = answered;
+            $("sum-na").textContent = notAns;
+            $("sum-marked").textContent = marked;
+            $("sum-nv").textContent = notVis;
+            openModal("summaryModal");
+        }
+
+        function exitExam() {
+            if (!S.active) return;
+            if (!confirm("Exit examination? Your progress will be discarded.")) return;
+            S.active = false;
+            stopTick(); trackStop(); purgeState();
+            closeModal("cbtModal"); closeModal("summaryModal"); closeModal("sectionModal");
+            document.body.style.overflow = "auto";
+            renderCards();
+        }
+
+        /* ================= 10. FINALIZE & SCORECARD ================= */
+        function finalize(message) {
+            if (!S.active) return;
+            S.active = false;
+            stopTick(); trackStop(); purgeState();
+            closeModal("summaryModal"); closeModal("sectionModal"); closeModal("cbtModal");
+            document.body.style.overflow = "auto";
+            if (message) toast(message);
+
+            const meta = S.meta;
+            let score = 0, maxMarks = 0, correct = 0, wrong = 0, attempted = 0, nonQual = 0;
+            const secStats = {}, qualStats = {};
+            S.solutions = [];
+
+            S.qs.forEach((q, i) => {
+                const pos = q.posMarks ?? meta.posMarks;
+                const neg = q.negMarks ?? meta.negMarks;
+                const pick = S.answers[i];
+                const evaluated = pick !== undefined;
+                const isCorrect = evaluated && pick === q.ans;
+                const isWrong = evaluated && !isCorrect;
+                const name = q.section || "General";
+                const time = S.times[i] || 0;
+
+                if (q.isQualifying) {
+                    const b = qualStats[name] || (qualStats[name] = { max: 0, marks: 0, cutoff: q.qualifyingCutoff, time: 0 });
+                    b.max += pos; b.time += time; b.cutoff = q.qualifyingCutoff;
+                    if (isCorrect) b.marks += pos;
+                    else if (isWrong) b.marks -= neg;
+                } else {
+                    nonQual++;
+                    const b = secStats[name] || (secStats[name] = { attempted: 0, correct: 0, wrong: 0, marks: 0, time: 0 });
+                    b.time += time;
+                    maxMarks += pos;
+                    if (evaluated) { b.attempted++; attempted++; }
+                    if (isCorrect) { b.correct++; b.marks += pos; correct++; score += pos; }
+                    else if (isWrong) { b.wrong++; b.marks -= neg; wrong++; score -= neg; }
+                }
+
+                S.solutions.push({
+                    section: name, qualifying: !!q.isQualifying, passage: q.passage, q: q.q,
+                    opts: optionsOf(q), ans: q.ans, exp: q.exp, pick: evaluated ? pick : undefined,
+                    state: isCorrect ? "correct" : isWrong ? "wrong" : "skipped", pos, neg, time
+                });
+            });
+
+            const accuracy = attempted ? (correct / attempted) * 100 : 0;
+            const totalTime = Object.values(S.times).reduce((a, b) => a + b, 0);
+            const timedCount = Object.values(S.times).filter(t => t > 0).length;
+
+            $("res-title").textContent = meta.title;
+            $("res-score").textContent = `${score.toFixed(2)} / ${maxMarks.toFixed(2)}`;
+            $("res-correct").textContent = correct;
+            $("res-wrong").textContent = wrong;
+            $("res-unattempted").textContent = nonQual - attempted;
+            $("res-accuracy").textContent = `${accuracy.toFixed(1)}%`;
+            $("res-tabs").textContent = `Tab switches: ${S.tabSwitches}`;
+
+            const qEntries = Object.entries(qualStats);
+            $("res-qual").classList.toggle("hidden", qEntries.length === 0);
+            $("res-qual-list").innerHTML = qEntries.map(([n, b]) => {
+                const pct = b.max ? (b.marks / b.max) * 100 : 0;
+                const ok = pct >= b.cutoff;
+                return `<div class="flex items-center justify-between gap-2 text-xs p-2 rounded-lg bg-white border border-amber-200">
+                    <div><span class="font-bold text-slate-800">${esc(n)}</span>
+                    <span class="block text-[10px] text-slate-500">Score ${b.marks.toFixed(2)} / ${b.max.toFixed(2)} (${pct.toFixed(1)}%) · Cut-off ${b.cutoff}% · Time ${fmtDur(b.time)}</span></div>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded shrink-0 ${ok ? "bg-emerald-100 text-emerald-800 border border-emerald-300" : "bg-rose-100 text-rose-800 border border-rose-300"}">${ok ? "QUALIFIED ✓" : "NOT QUALIFIED ✗"}</span>
+                </div>`;
+            }).join("");
+
+            $("res-sec-body").innerHTML = Object.entries(secStats).map(([n, b]) => `
+                <tr class="hover:bg-slate-50/80">
+                    <td class="p-2.5 font-semibold text-slate-800">${esc(n)}</td>
+                    <td class="p-2.5 text-center">${b.attempted}</td>
+                    <td class="p-2.5 text-center text-emerald-700 font-bold">${b.correct}</td>
+                    <td class="p-2.5 text-center text-rose-700 font-bold">${b.wrong}</td>
+                    <td class="p-2.5 text-right font-mono font-bold text-amber-700">${b.marks.toFixed(2)}</td>
+                    <td class="p-2.5 text-right font-mono text-slate-600">${fmtDur(b.time)}</td>
+                </tr>`).join("");
+
+            $("res-time").textContent = `Total time: ${fmtDur(totalTime)} · Average per timed question: ${fmtDur(totalTime / Math.max(1, timedCount))}`;
+            openModal("resultModal");
+        }
+
+        function downloadCSV() {
+            if (!S.solutions.length) return;
+            const head = ["No", "Section", "Question", "Your Answer", "Correct Answer", "Status", "Marks", "Time (s)"];
+            const rows = S.solutions.map((s, i) => [
+                i + 1, s.section, plain(s.q), s.pick || "-", s.ans, s.state,
+                (s.state === "correct" ? s.pos : s.state === "wrong" ? -s.neg : 0).toFixed(2),
+                Math.round(s.time)
+            ]);
+            const csv = [head, ...rows].map(r => r.map(csvCell).join(",")).join("\r\n");
+            const url = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" }));
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${S.meta.id || "banking-test"}-response.csv`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        /* ================= 11. SOLUTIONS REVIEW ================= */
+        function solList() {
+            return S.solutions.map((s, i) => ({ ...s, i })).filter(s => S.solFilter === "all" || s.state === S.solFilter);
+        }
+
+        function renderSolPalette() {
+            document.querySelectorAll("[data-action='solfilter']").forEach(b => {
+                const on = b.dataset.filter === S.solFilter;
+                b.className = `px-2 py-1.5 rounded-lg border ${on ? "bg-[#0F172A] text-white border-[#0F172A]" : "bg-white text-slate-700 border-slate-300 hover:border-[#D97706]"}`;
+            });
+            const list = solList();
+            $("sol-palette").innerHTML = list.length ? list.map(s => {
+                const cls = s.state === "correct" ? "bg-emerald-600 text-white"
+                    : s.state === "wrong" ? "bg-rose-600 text-white" : "bg-slate-300 text-slate-800";
+                return `<button data-action="soljump" data-idx="${s.i}" class="w-8 h-8 rounded-lg text-xs font-bold flex items-center justify-center ${cls} ${s.i === S.solIdx ? "ring-2 ring-amber-500" : ""}">${s.i + 1}</button>`;
+            }).join("") : '<p class="col-span-5 text-xs text-slate-500">No questions in this filter.</p>';
+        }
+
+        function loadSolution(i) {
+            const s = S.solutions[i];
+            if (!s) return;
+            S.solIdx = i;
+            $("sol-num").textContent = `Question ${i + 1} of ${S.solutions.length}`;
+            $("sol-sec").textContent = s.section + (s.qualifying ? " · Qualifying" : "");
+            $("sol-time").textContent = `Time: ${fmtDur(s.time)}`;
+            const badge = $("sol-status");
+            if (s.state === "correct") {
+                badge.className = "text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300";
+                badge.textContent = `Correct (+${s.pos.toFixed(2)})`;
+            } else if (s.state === "wrong") {
+                badge.className = "text-xs font-bold px-2.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-300";
+                badge.textContent = `Wrong (-${s.neg.toFixed(2)})`;
+            } else {
+                badge.className = "text-xs font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-300";
+                badge.textContent = "Skipped / Unattempted (0.00)";
+            }
+            const pBox = $("sol-passage");
+            pBox.classList.toggle("hidden", !s.passage.trim());
+            if (s.passage.trim()) pBox.innerHTML = `<strong>Context / Directions:</strong><br>${renderCell(s.passage)}`;
+            $("sol-qtext").innerHTML = renderCell(s.q);
+            $("sol-options").innerHTML = s.opts.map(o => {
+                const isC = o.letter === s.ans, isU = o.letter === s.pick;
+                let cls = "border-slate-200 bg-white", tag = "";
+                if (isC) { cls = "border-emerald-500 bg-emerald-50 font-semibold ring-1 ring-emerald-500"; tag = '<span class="ml-auto text-[11px] font-bold text-emerald-700 bg-emerald-200/70 px-2 py-0.5 rounded">Correct Answer ✓</span>'; }
+                else if (isU) { cls = "border-rose-500 bg-rose-50 font-semibold ring-1 ring-rose-500"; tag = '<span class="ml-auto text-[11px] font-bold text-rose-700 bg-rose-200/70 px-2 py-0.5 rounded">Your Choice ✗</span>'; }
+                return `<div class="flex items-center gap-3 p-3 rounded-xl border ${cls}">
+                    <span class="w-6 h-6 rounded-lg ${isC ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-700"} font-bold text-xs flex items-center justify-center shrink-0">${o.letter}</span>
+                    <div class="text-sm smart-content flex-1 min-w-0">${renderCell(o.text)}</div>${tag}
+                </div>`;
+            }).join("");
+            $("sol-exp").innerHTML = renderCell(s.exp);
+            typeset($("solModal"));
+            renderSolPalette();
+        }
+
+        /* ================= 12. PAPER, LANGUAGE, EVENTS ================= */
+        function renderPaper() {
+            if (!S.qs.length) return;
+            $("qp-title").textContent = `${S.meta.title} (${S.qs.length} Questions)`;
+            $("qp-body").innerHTML = S.qs.map((q, i) => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50">
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-bold text-amber-800 uppercase">Q${i + 1}</span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">${esc(q.section)}</span>
+                    </div>
+                    ${q.passage.trim() ? `<div class="p-3 bg-amber-50/80 rounded-lg text-xs text-slate-800 mb-2 border border-amber-200/60 smart-content">${renderCell(q.passage)}</div>` : ""}
+                    <div class="text-sm font-medium text-slate-900 smart-content">${renderCell(q.q)}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 text-xs text-slate-700">
+                        ${optionsOf(q).map(o => `<div class="p-2 bg-white rounded-lg border border-slate-200 smart-content"><strong>${o.letter}.</strong> ${renderCell(o.text)}</div>`).join("")}
+                    </div>
+                </div>`).join("");
+            typeset($("qp-body"));
+        }
+
+        function setLang(v) {
+            S.lang = v === "hi" ? "hi" : "en";
+            document.querySelectorAll("select[data-lang]").forEach(s => { s.value = S.lang; });
+            if (S.active) loadQuestion(S.idx);
+            if (!$("solModal").classList.contains("hidden")) loadSolution(S.solIdx);
+            if (!$("questionPaperModal").classList.contains("hidden")) renderPaper();
+            saveState();
+        }
+
+        function onClick(e) {
+            const el = e.target.closest("[data-action]");
+            if (!el) return;
+            const a = el.dataset.action;
+            if (a === "exam") { F.exam = el.dataset.exam; renderPills(); renderCards(); }
+            else if (a === "type") { F.type = el.dataset.type; renderTabs(); renderCards(); }
+            else if (a === "stage") { F.stage = el.dataset.stage; renderStages(); renderCards(); }
+            else if (a === "start") startTest(el.dataset.id);
+            else if (a === "section") {
+                const secIdx = Number(el.dataset.sec), first = Number(el.dataset.idx);
+                if (S.meta.timerMode === "sectional" && secIdx !== S.secIdx) return toast("🔒 Sections cannot be switched in sectional mode.");
+                if (S.completed.has(S.plan[secIdx].name)) return toast("🔒 This section is locked.");
+                loadQuestion(first);
+            }
+            else if (a === "jump") jumpTo(Number(el.dataset.idx));
+            else if (a === "solfilter") {
+                S.solFilter = el.dataset.filter;
+                const first = solList()[0];
+                if (first) loadSolution(first.i); else renderSolPalette();
+            }
+            else if (a === "soljump") loadSolution(Number(el.dataset.idx));
+        }
+
+        function onChange(e) {
+            const t = e.target;
+            if (t.matches && t.matches("select[data-lang]")) setLang(t.value);
+            else if (t.name === "cbt-choice") selectOption(t.value);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") {
+                ["summaryModal", "sectionModal", "questionPaperModal", "instructionsModal", "solModal"].forEach(closeModal);
+                return;
+            }
+            if (!S.active || anyModalOpen()) return;
+            if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && e.target.type !== "radio") return;
+            if (e.key === "ArrowRight") goNext();
+            else if (e.key === "ArrowLeft") goPrev();
+            else if (/^[a-eA-E]$/.test(e.key)) {
+                const letter = e.key.toUpperCase();
+                if (optionsOf(S.qs[S.idx]).some(o => o.letter === letter)) selectOption(letter);
+            }
+        }
+
+        function onVisibility() {
+            if (!S.active) return;
+            if (document.hidden) {
+                trackStop();
+                S.tabSwitches++;
+                saveState();
+            } else {
+                trackStart(S.idx);
+                saveState();
+                toast(`⚠️ Tab switch detected (${S.tabSwitches}). Please stay on the exam screen.`);
+            }
+        }
+
+        function bindStatic() {
+            $("btn-counseling").onclick = () => toast("Admissions Helpline: +91 98765 43210");
+            $("search-filter").addEventListener("input", renderCards);
+            $("btn-clear").onclick = () => { if (!S.active) return; delete S.answers[S.idx]; loadQuestion(S.idx); };
+            $("btn-mark").onclick = () => { if (!S.active) return; S.marked.add(S.idx); goNext(); };
+            $("btn-next").onclick = () => { if (S.active) goNext(); };
+            $("btn-prev").onclick = () => { if (S.active) goPrev(); };
+            $("btn-palette").onclick = () => {
+                S.paletteHidden = !S.paletteHidden;
+                $("cbt-pcol").classList.toggle("hidden", S.paletteHidden);
+                $("cbt-qcol").classList.toggle("lg:col-span-3", !S.paletteHidden);
+                $("cbt-qcol").classList.toggle("lg:col-span-4", S.paletteHidden);
+                $("btn-palette-text").textContent = S.paletteHidden ? "Show Palette" : "Hide Palette";
+                $("btn-palette-arrow").textContent = S.paletteHidden ? "◀" : "▶";
+            };
+            $("btn-passage").onclick = () => { S.passageOpen = !S.passageOpen; applyPassageState(); };
+            $("btn-instructions").onclick = () => openModal("instructionsModal");
+            $("btn-paper").onclick = () => { renderPaper(); openModal("questionPaperModal"); };
+            $("btn-section-submit").onclick = openSectionModal;
+            $("btn-submit").onclick = openSummary;
+            $("btn-exit").onclick = exitExam;
+            $("sum-cancel").onclick = () => closeModal("summaryModal");
+            $("sum-confirm").onclick = () => finalize("Exam submitted.");
+            $("sec-cancel").onclick = () => closeModal("sectionModal");
+            $("sec-confirm").onclick = confirmSectionLock;
+            $("qp-close").onclick = () => closeModal("questionPaperModal");
+            $("inst-close").onclick = () => closeModal("instructionsModal");
+            $("res-view").onclick = () => { closeModal("resultModal"); S.solFilter = "all"; openModal("solModal"); loadSolution(0); };
+            $("res-csv").onclick = downloadCSV;
+            $("res-close").onclick = () => { closeModal("resultModal"); renderCards(); };
+            $("sol-close").onclick = () => closeModal("solModal");
+            $("sol-prev").onclick = () => { if (S.solIdx > 0) loadSolution(S.solIdx - 1); };
+            $("sol-next").onclick = () => { if (S.solIdx < S.solutions.length - 1) loadSolution(S.solIdx + 1); };
+        }
+
+        /* ================= 13. BOOT ================= */
+        document.addEventListener("click", onClick);
+        document.addEventListener("change", onChange);
+        document.addEventListener("keydown", onKey);
+        document.addEventListener("visibilitychange", onVisibility);
+        window.addEventListener("pagehide", saveState);
+
+        window.addEventListener("DOMContentLoaded", () => {
+            bindStatic();
+            renderPills();
+            renderTabs();
+            renderStages();
+            loadCatalog().then(checkRecovery);
+        });
+        window.addEventListener("load", () => typeset(document.body));
+    })();
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

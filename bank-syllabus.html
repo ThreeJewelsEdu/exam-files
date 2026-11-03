@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Examinations Master Portal | Triratna Coaching Institute</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF7F2;
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(217, 119, 6, 0.04) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, rgba(180, 83, 9, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+
+        /* --- 3D TACTILE & DIMENSIONAL SYSTEM (NO FLAT BOXES) --- */
+        .dock-3d {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(217, 119, 6, 0.18);
+            box-shadow: 
+                0 1px 2px rgba(0,0,0,0.02),
+                0 10px 25px -5px rgba(180, 83, 9, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .dock-btn {
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .dock-btn:hover:not(.active) {
+            transform: translateY(-2px);
+            color: #92400e;
+        }
+
+        .dock-btn.active {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff !important;
+            box-shadow: 
+                0 4px 14px rgba(180, 83, 9, 0.38),
+                0 2px 0 #78350f,
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* 3D HUD Continuous Slab (Replaces isolated mini-cards) */
+        .hud-slab {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF5EE 100%);
+            border: 1px solid rgba(217, 119, 6, 0.22);
+            border-bottom: 3px solid rgba(180, 83, 9, 0.35);
+            box-shadow: 
+                0 15px 35px -10px rgba(120, 53, 15, 0.08),
+                0 1px 3px rgba(0,0,0,0.02),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* 3D Perspective Stage */
+        .stage-3d {
+            perspective: 1200px;
+        }
+
+        .stage-surface {
+            transform: rotateX(1deg);
+            transition: transform 0.4s ease;
+        }
+
+        /* 3D Pipeline Track for Stages */
+        .pipeline-track {
+            background: linear-gradient(90deg, #d97706 0%, #b45309 100%);
+            box-shadow: 0 2px 8px rgba(180, 83, 9, 0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+        }
+
+        .node-3d {
+            box-shadow: 
+                0 4px 10px rgba(180, 83, 9, 0.25),
+                0 2px 0 #92400e,
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        /* 3D Perspective Accordion / Drawer */
+        .drawer-3d {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid rgba(217, 119, 6, 0.16);
+        }
+        .drawer-3d:hover {
+            background: rgba(255, 255, 255, 0.7);
+            padding-left: 0.5rem;
+        }
+
+        /* Content Transition */
+        .content-swap {
+            animation: stageReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes stageReveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.995);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Primary Architectural Header -->
+    <header class="border-b border-amber-900/10 bg-[#FAF7F2]/95 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-amber-900/20 group-hover:scale-105 transition-transform" style="box-shadow: 0 4px 0 #92400e, 0 8px 16px rgba(180,83,9,0.3);">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif block leading-tight">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-extrabold">Coaching Institute</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="#papers-section" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 text-white text-xs font-bold hover:bg-amber-700 shadow-sm transition-all" style="box-shadow: 0 3px 0 #92400e, 0 6px 12px rgba(180,83,9,0.25);">
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Papers Archive</span>
+                </a>
+                <a href="bank.html" class="text-sm font-semibold text-slate-600 hover:text-amber-800 flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING 3D NAVIGATION DOCK (Controls deep links for all 6 exams) -->
+    <nav class="sticky top-20 z-40 py-3 bg-[#FAF7F2]/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="dock-3d p-2 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                <button onclick="navigateTo('sbipo')" data-target="sbipo" class="dock-btn active px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="landmark" class="w-3.5 h-3.5"></i> SBI PO
+                </button>
+                <button onclick="navigateTo('sbiclerk')" data-target="sbiclerk" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="briefcase" class="w-3.5 h-3.5"></i> SBI Clerk
+                </button>
+                <button onclick="navigateTo('ibpspo')" data-target="ibpspo" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i> IBPS PO
+                </button>
+                <button onclick="navigateTo('ibpsclerk')" data-target="ibpsclerk" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> IBPS Clerk
+                </button>
+                <button onclick="navigateTo('ibpsrrb')" data-target="ibpsrrb" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="trees" class="w-3.5 h-3.5"></i> IBPS RRB
+                </button>
+                <button onclick="navigateTo('rbigradeb')" data-target="rbigradeb" class="dock-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap text-slate-700 flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> RBI Grade B
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN DYNAMIC STAGE (No cards, pure architectural canvas) -->
+    <main class="max-w-7xl mx-auto px-6 py-6 flex-grow w-full space-y-16">
+
+        <div id="dynamic-exam-canvas" class="content-swap space-y-16">
+            <!-- Content will be injected here via JavaScript based on URL hash -->
+        </div>
+
+        <!-- SHARED TEST PAPERS ARCHIVE (Full-width sleek continuous section) -->
+        <section id="papers-section" class="scroll-mt-32 pt-8">
+            <div class="hud-slab p-10 rounded-3xl relative overflow-hidden">
+                <div class="max-w-3xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-600 text-white text-xs font-bold" style="box-shadow: 0 2px 0 #92400e;">
+                        <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i> Triratna Bank Test Repository
+                    </div>
+                    <h2 class="text-3xl font-serif font-bold text-slate-900">
+                        Previous Year Question Papers &amp; Full Mocks
+                    </h2>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Practice original memory-based questions from past cycles and benchmark your performance with sectional timers, negative marking analysis and All-India percentile.
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4" id="papers-actions">
+                        <!-- Dynamic paper links injected per exam -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Editorial Footer -->
+    <footer class="border-t border-amber-900/10 py-8 text-center text-xs text-slate-500 bg-[#FAF7F2] mt-16">
+        <p class="font-serif font-semibold text-slate-800 text-sm mb-1">TRIRATNA COACHING INSTITUTE</p>
+        <p>"Compassionate Learning for Success." &bull; Comprehensive Bank Examination Portal</p>
+    </footer>
+
+    <!-- LOGIC & DATABASE FOR ALL 6 EXAMS -->
+    <script>
+        const EXAM_DATABASE = {
+            sbipo: {
+                title: "SBI Probationary Officer (PO)",
+                badge: "State Bank of India &bull; CRPD/PO/2026-27/09",
+                heroDesc: "The premier banking leadership cadre recruitment. 3-phase comprehensive selection featuring computer-based Prelims, Mains (Objective + Descriptive), and the Phase-III Psychometric Test, Group Exercise, and Final Interview.",
+                basicPay: "₹48,480 + Allowances",
+                phases: "3 Phases",
+                phasesSub: "Prelims → Mains → Phase-III",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For wrong objective answers",
+                sectionalCutoff: "None",
+                sectionalCutoffSub: "Overall aggregate cutoff only",
+                vacancies: "1,500 (1,446 regular + 54 backlog)",
+                fee: "₹750 (General/OBC/EWS) / Nil (SC/ST/PwBD)",
+                ageLimit: "21 to 30 years (Relaxations as per GOI)",
+                qual: "Graduation in any discipline from a recognized University",
+                attempts: "Gen: 4, OBC/PwBD-Gen: 7, SC/ST: No limit",
+                stages: [
+                    { num: "Phase 1", title: "Preliminary Examination", nature: "Qualifying Only (100 Qs / 1 Hr)", desc: "100 marks test with 20 minutes fixed per section. Shortlists candidates category-wise (approx. 10 times vacancies) for Mains." },
+                    { num: "Phase 2", title: "Main Examination", nature: "Decisive Merit (250 Marks / 3.5 Hrs)", desc: "155 Objective Qs (200 marks) + Typed English Descriptive Test (50 marks). Both scaled to 50 for the combined merit score." },
+                    { num: "Phase 3", title: "Psychometric, GE & Interview", nature: "Phase-III (50 Marks)", desc: "Mandatory Psychometric profiling (non-scored) + Group Exercise (20 marks) + Personal Interview (30 marks). Scaled to 50 marks." }
+                ],
+                patternPrelims: [
+                    { sec: "English Language", q: "30", m: "30", time: "20 min" },
+                    { sec: "Quantitative Aptitude", q: "35", m: "35", time: "20 min" },
+                    { sec: "Reasoning Ability", q: "35", m: "35", time: "20 min" },
+                    { sec: "Grand Total", q: "100 Qs", m: "100 Marks", time: "60 min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Reasoning & Computer Aptitude", q: "45", m: "60", time: "60 min" },
+                    { sec: "Data Analysis & Interpretation", q: "35", m: "60", time: "45 min" },
+                    { sec: "General / Economy / Banking Awareness", q: "40", m: "40", time: "35 min" },
+                    { sec: "English Language", q: "35", m: "40", time: "40 min" },
+                    { sec: "Descriptive Test (Letter & Essay)", q: "2", m: "50", time: "30 min" },
+                    { sec: "Mains Total", q: "157 Qs", m: "250 Marks", time: "3 Hr 30 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Data Analysis & Interpretation", topics: "Line, Bar, Pie, Radar & Caselet DIs, Missing DI, Probability, Mensuration, Permutation & Combination, Arithmetic Data Sufficiency." },
+                    { subject: "Reasoning & Computer Aptitude", topics: "High-level multi-variable Puzzles, Floor & Box Arrangements, Syllogisms, Coded Inequalities, Direction & Distance, Machine Input-Output, Critical & Logical Reasoning, Network & Cyber Security basics." },
+                    { subject: "General & Banking Awareness", topics: "RBI Monetary Policies, Banking Regulation, Financial News of last 6 months, Union Budget, Government Schemes, Capital & Money Markets, Static GK." },
+                    { subject: "English & Descriptive Test", topics: "Reading Comprehension, Cloze Test, Error Detection, Sentence Rearrangement. Descriptive: Formal/Informal Letter Writing and Contemporary Editorial Essay Writing (typed on screen)." }
+                ],
+                papers: [
+                    { title: "SBI PO Prelims Papers", url: "papers-sbi-po-prelims.html" },
+                    { title: "SBI PO Mains & Descriptive", url: "papers-sbi-po-mains.html" },
+                    { title: "Full-Length SBI PO Mocks", url: "papers-sbi-po-mock.html" }
+                ]
+            },
+
+            sbiclerk: {
+                title: "SBI Clerk (Junior Associate)",
+                badge: "Customer Support & Sales &bull; State Bank of India",
+                heroDesc: "Direct clerical cadre recruitment across SBI branches nationwide. Two-stage merit evaluation (Prelims and Mains) followed by a mandatory Local Language Proficiency Test. No interview stage.",
+                basicPay: "₹19,900 (Revised basic + allowances)",
+                phases: "2 Stages + LPT",
+                phasesSub: "Prelims → Mains → Language Test",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For wrong answers",
+                sectionalCutoff: "None",
+                sectionalCutoffSub: "Overall score determines merit",
+                vacancies: "9,000+ (7,680 regular plus backlog)",
+                fee: "₹750 (General/OBC/EWS) / Nil (SC/ST/PwBD/ExSM)",
+                ageLimit: "20 to 28 years",
+                qual: "Graduation in any discipline from a recognized University",
+                attempts: "No fixed limit within the age limit",
+                stages: [
+                    { num: "Phase 1", title: "Preliminary Examination", nature: "Qualifying Only (100 Qs / 60 Min)", desc: "100 objective questions with 20 minutes fixed per section. Shortlists candidates state-wise for Mains at approx. 10 times vacancies." },
+                    { num: "Phase 2", title: "Main Examination", nature: "Final Merit (190 Qs / 200 Marks / 2 Hr 40 Min)", desc: "Four timed sections. The state-wise and category-wise final appointment merit is drawn 100% on Mains marks alone." },
+                    { num: "Phase 3", title: "Local Language Test", nature: "Mandatory Qualifying Test", desc: "Conducted for selected candidates before joining. Waived if you studied the specified local language in 10th or 12th standard." }
+                ],
+                patternPrelims: [
+                    { sec: "English Language", q: "30", m: "30", time: "20 min" },
+                    { sec: "Numerical Ability", q: "35", m: "35", time: "20 min" },
+                    { sec: "Reasoning Ability", q: "35", m: "35", time: "20 min" },
+                    { sec: "Grand Total", q: "100 Qs", m: "100 Marks", time: "60 min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "General / Financial Awareness", q: "50", m: "50", time: "35 min" },
+                    { sec: "General English", q: "40", m: "40", time: "35 min" },
+                    { sec: "Quantitative Aptitude", q: "50", m: "50", time: "45 min" },
+                    { sec: "Reasoning & Computer Aptitude", q: "50", m: "60", time: "45 min" },
+                    { sec: "Mains Total", q: "190 Qs", m: "200 Marks", time: "2 Hr 40 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Numerical Ability & Quant", topics: "Simplification & Approximation, Number Series, Quadratic Equations, Arithmetic (Ratio, Percentages, Profit & Loss, SI/CI, Time & Work), Tabular, Bar, Line & Pie DI." },
+                    { subject: "Reasoning Ability", topics: "Linear & Circular Seating, Floor & Box Puzzles, Syllogisms, Inequalities, Blood Relations, Direction Sense, Coding-Decoding, Alphanumeric Series." },
+                    { subject: "General & Financial Awareness", topics: "Banking history, RBI functions & monetary policy, recent financial agreements, government schemes, National & International news of the last 6 months, Static GK." },
+                    { subject: "General English", topics: "Reading Comprehension, Cloze Test, Spotting Errors, Sentence Improvement, Para Jumbles, Fillers, Vocabulary (Synonyms & Antonyms)." }
+                ],
+                papers: [
+                    { title: "SBI Clerk Prelims Papers", url: "papers-sbi-clerk-prelims.html" },
+                    { title: "SBI Clerk Mains Papers", url: "papers-sbi-clerk-mains.html" },
+                    { title: "SBI Clerk Full-Length Mocks", url: "papers-sbi-clerk-mock.html" }
+                ]
+            },
+
+            ibpspo: {
+                title: "IBPS PO / Management Trainee",
+                badge: "CRP PO/MT-XVI &bull; 11 Public Sector Banks",
+                heroDesc: "Recruitment for Probationary Officers across 11 nationalized public sector banks. Computer-based Prelims, Mains featuring the revised Essay and Comprehension section, followed by the mandatory Personality Test and final Interview (80:20 ratio).",
+                basicPay: "₹48,480 (Scale I Officer initial)",
+                phases: "4 Stages",
+                phasesSub: "Prelims → Mains → PT → Interview",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For wrong answers",
+                sectionalCutoff: "Yes",
+                sectionalCutoffSub: "Sectional & overall cutoff applies",
+                vacancies: "~7,565 (Revised across 11 participating banks)",
+                fee: "₹850 (General/OBC/EWS) / ₹175 (SC/ST/PwBD)",
+                ageLimit: "20 to 30 years",
+                qual: "Bachelor's degree in any discipline",
+                attempts: "No fixed limit (as per age relaxation)",
+                stages: [
+                    { num: "Phase 1", title: "Preliminary Exam", nature: "Qualifying Screening (100 Qs / 60 Min)", desc: "Sectional cutoff and timing applied. Screened at ~10 times vacancy for Mains." },
+                    { num: "Phase 2", title: "Main Exam & Descriptive", nature: "Merit Stage (172 Qs / 225 Marks / 3 Hr 10 Min)", desc: "170 objective questions (200 marks) + 25-mark typed Essay & Comprehension test. Counts for 80% weightage in final merit." },
+                    { num: "Phase 3", title: "Personality Test", nature: "Mandatory (Non-scored)", desc: "Conducted for Mains-qualified candidates prior to the interview. Attendance is mandatory." },
+                    { num: "Phase 4", title: "Interview", nature: "Final Stage (100 Marks / 20% Weightage)", desc: "Common personal interview conducted by participating banks. Final merit is Mains (80%) + Interview (20%)." }
+                ],
+                patternPrelims: [
+                    { sec: "English Language", q: "30", m: "30", time: "20 min" },
+                    { sec: "Quantitative Aptitude", q: "35", m: "30", time: "20 min" },
+                    { sec: "Reasoning Ability", q: "35", m: "40", time: "20 min" },
+                    { sec: "Grand Total", q: "100 Qs", m: "100 Marks", time: "60 min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Reasoning", q: "40", m: "60", time: "45 min" },
+                    { sec: "General / Economy / Banking & Digital Awareness", q: "50", m: "60", time: "35 min" },
+                    { sec: "English Language", q: "40", m: "20", time: "35 min" },
+                    { sec: "Data Analysis & Interpretation", q: "40", m: "60", time: "45 min" },
+                    { sec: "Descriptive (Essay & Comprehension)", q: "2", m: "25", time: "30 min" },
+                    { sec: "Mains Total", q: "172 Qs", m: "225 Marks", time: "3 Hr 10 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Data Analysis & Interpretation", topics: "Advanced DI sets, Radar and Funnel DI, Probability, Arithmetic chapters (Time & Work, Pipes, Profit & Loss, SI/CI, Mixtures), Data Sufficiency." },
+                    { subject: "Reasoning Ability", topics: "Puzzles (Box, Floor, Circular, Multi-variable), Critical Reasoning, Syllogisms, Inequalities, Machine Input, Coding-Decoding." },
+                    { subject: "General, Banking & Digital Awareness", topics: "Digital banking, UPI/NPCI, Payment systems, RBI notifications, Monetary policies, Financial awareness, Current affairs of last 6 months." },
+                    { subject: "English & Descriptive Test", topics: "Comprehension passages, Cloze tests, Error spotting, Vocabulary. Descriptive: Essay and Comprehension evaluation typed online." }
+                ],
+                papers: [
+                    { title: "IBPS PO Prelims Papers", url: "papers-ibps-po-prelims.html" },
+                    { title: "IBPS PO Mains Papers", url: "papers-ibps-po-mains.html" },
+                    { title: "IBPS PO Mock Tests", url: "papers-ibps-po-mock.html" }
+                ]
+            },
+
+            ibpsclerk: {
+                title: "IBPS Clerk (Customer Service Associate)",
+                badge: "CRP CSA-XVI &bull; 11 Public Sector Banks",
+                heroDesc: "Direct customer front-desk recruitment for 11 public sector banks. 100% written test merit on Mains marks with no interview, followed by state-wise local language verification.",
+                basicPay: "₹19,900 (Plus DA, HRA, CCA)",
+                phases: "2 Stages + LPT",
+                phasesSub: "Prelims → Mains → Language Test",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For wrong answers",
+                sectionalCutoff: "Yes",
+                sectionalCutoffSub: "Sectional & aggregate both apply",
+                vacancies: "11,403 (State-wise allotment)",
+                fee: "₹850 (General/OBC/EWS) / ₹175 (SC/ST/PwBD/ExSM)",
+                ageLimit: "20 to 28 years",
+                qual: "Graduation in any discipline + Computer literacy",
+                attempts: "No fixed limit within the age criteria",
+                stages: [
+                    { num: "Phase 1", title: "Preliminary Examination", nature: "Qualifying Screening (100 Qs / 60 Min)", desc: "Conducted online with sectional timing of 20 minutes each. Category & state-wise cutoff." },
+                    { num: "Phase 2", title: "Main Examination (Revised)", nature: "Decisive Merit (155 Qs / 200 Marks / 120 Min)", desc: "155 questions for 200 marks. Final allotment is drawn solely from this score with no interview." },
+                    { num: "Phase 3", title: "Local Language Proficiency", nature: "Mandatory Qualifying Test", desc: "Language test conducted in the official language of the state applied for. Must be passed before joining." }
+                ],
+                patternPrelims: [
+                    { sec: "English Language", q: "30", m: "30", time: "20 min" },
+                    { sec: "Numerical Ability", q: "35", m: "35", time: "20 min" },
+                    { sec: "Reasoning Ability", q: "35", m: "35", time: "20 min" },
+                    { sec: "Grand Total", q: "100 Qs", m: "100 Marks", time: "60 min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "General / Financial Awareness", q: "40", m: "50", time: "20 min" },
+                    { sec: "General English", q: "40", m: "40", time: "35 min" },
+                    { sec: "Reasoning Ability & Computer Aptitude", q: "40", m: "60", time: "35 min" },
+                    { sec: "Quantitative Aptitude", q: "35", m: "50", time: "30 min" },
+                    { sec: "Mains Total", q: "155 Qs", m: "200 Marks", time: "120 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Reasoning & Computer Aptitude", topics: "Puzzles, Seating arrangements, Syllogisms, Inequalities, Alphanumeric Series, Coding-Decoding. Computer fundamentals: OS, Networking, Shortcuts, MS Office." },
+                    { subject: "Numerical Ability & Quant", topics: "Simplification & Approximation, Number Series, Quadratic Equations, Commercial Arithmetic (Ages, Percentages, Ratios, SI & CI, Time & Work), Basic & Caselet DI." },
+                    { subject: "General English", topics: "Reading Comprehension, Cloze Test, Sentence Rearrangement, Spotting Errors, Phrase Replacement, Vocabulary." },
+                    { subject: "General & Financial Awareness", topics: "Recent banking and financial reforms, RBI monetary policies, Union Budget, Government schemes, National & International Current Affairs, Awards & Honours." }
+                ],
+                papers: [
+                    { title: "IBPS Clerk Prelims Papers", url: "papers-ibps-clerk-prelims.html" },
+                    { title: "IBPS Clerk Mains Papers", url: "papers-ibps-clerk-mains.html" },
+                    { title: "IBPS Clerk Mock Tests", url: "papers-ibps-clerk-mock.html" }
+                ]
+            },
+
+            ibpsrrb: {
+                title: "IBPS RRB (Scale I & Office Assistant)",
+                badge: "CRP RRBs-XV &bull; Regional Rural Banks",
+                heroDesc: "Recruitment for Regional Rural Banks across India. Covers Officer Scale I (Assistant Manager) and Office Assistant (Multipurpose). No English section in Prelims; choice between English or Hindi in Mains.",
+                basicPay: "OA: ₹19,900 | Scale I: ₹36,000+",
+                phases: "Post-wise",
+                phasesSub: "OA: 2 Stages | Scale I: + Interview",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For wrong answers",
+                sectionalCutoff: "Yes",
+                sectionalCutoffSub: "Sectional & state-wise cutoff applies",
+                vacancies: "~13,700 (8,183 OA + 4,256 Scale I + Scale II/III)",
+                fee: "₹850 (General/OBC/EWS) / ₹175 (SC/ST/PwBD/ExSM)",
+                ageLimit: "OA: 18-28 Yrs | Scale I: 18-30 Yrs",
+                qual: "Graduation in any discipline + Local language knowledge",
+                attempts: "No fixed attempt limit",
+                stages: [
+                    { num: "Phase 1", title: "Preliminary Examination", nature: "Qualifying Only (80 Qs / 45 Min)", desc: "Common Prelims for Scale I & OA containing only Reasoning and Numerical Ability (80 Qs / 80 Marks / 45 min)." },
+                    { num: "Phase 2", title: "Main Examination", nature: "200 Qs / 200 Marks / 2 Hours", desc: "Includes Computer Knowledge and a choice between English or Hindi language. OA merit is 100% on Mains." },
+                    { num: "Phase 3", title: "Interview (Scale I Only)", nature: "100 Marks (20% Final Weightage)", desc: "Conducted solely for Officer Scale I. Final merit is Mains (80%) + Interview (20%)." },
+                    { num: "Scale II & III", title: "Single Online Exam + Interview", nature: "Direct Specialist Cadre", desc: "Single online exam without Prelims, followed by an interview for experienced personnel." }
+                ],
+                patternPrelims: [
+                    { sec: "Reasoning Ability", q: "40", m: "40", time: "Combined 45 min" },
+                    { sec: "Numerical Ability", q: "40", m: "40", time: "Combined 45 min" },
+                    { sec: "Grand Total", q: "80 Qs", m: "80 Marks", time: "45 min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Reasoning", q: "40", m: "50", time: "Sectionally timed" },
+                    { sec: "Numerical / Quant Ability", q: "40", m: "50", time: "Sectionally timed" },
+                    { sec: "General Awareness", q: "40", m: "40", time: "Sectionally timed" },
+                    { sec: "English OR Hindi Language", q: "40", m: "40", time: "Sectionally timed" },
+                    { sec: "Computer Knowledge", q: "40", m: "20", time: "Sectionally timed" },
+                    { sec: "Mains Total", q: "200 Qs", m: "200 Marks", time: "120 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Reasoning Ability", topics: "Puzzles (Box, Floor, Grid, Day-based), Seating Arrangements (Linear, Circular), Inequalities, Syllogisms, Coding-Decoding, Blood Relations, Direction Sense." },
+                    { subject: "Numerical Ability", topics: "Simplification & Approximation, Number Series, Quadratic Equations, Arithmetic chapters, Data Interpretation (Table, Bar, Line, Pie & Caselet)." },
+                    { subject: "General Awareness & Computer", topics: "Banking Awareness, Rural Banking & NABARD policies, Current affairs of last 6 months, Union Budget. Computer: Hardware, Operating Systems, MS Office, Shortcuts, Networking & Internet security." },
+                    { subject: "English OR Hindi Language", topics: "Reading Comprehension, Cloze Test, Fill in the Blanks, Error Detection, Vocabulary / हिंदी: गद्यांश, वाक्य त्रुटि, रिक्त स्थान, मुहावरे एवं विलोम शब्द।" }
+                ],
+                papers: [
+                    { title: "IBPS RRB Prelims Papers", url: "papers-ibps-rrb-prelims.html" },
+                    { title: "IBPS RRB Mains Papers", url: "papers-ibps-rrb-mains.html" },
+                    { title: "IBPS RRB Mock Tests", url: "papers-ibps-rrb-mock.html" }
+                ]
+            },
+
+            rbigradeb: {
+                title: "RBI Grade B Officer (DR)",
+                badge: "Reserve Bank of India &bull; General, DEPR & DSIM",
+                heroDesc: "India's most coveted central banking cadre. 3-stage merit selection: Phase 1 objective test, Phase 2 featuring typed descriptive papers in Economic & Social Issues (ESI), English Writing, and Finance & Management (FM), culminating in the final Interview.",
+                basicPay: "₹55,200 (Gross approx. ₹1,16,000+ per month)",
+                phases: "3 Stages",
+                phasesSub: "Phase 1 → Phase 2 → Interview",
+                negMarking: "-1/4th Mark",
+                negMarkingSub: "For objective questions",
+                sectionalCutoff: "Yes",
+                sectionalCutoffSub: "Strict sectional & overall cutoff in Phase 1",
+                vacancies: "60 (40 General + 10 DEPR + 10 DSIM)",
+                fee: "₹850 (General/OBC/EWS) / ₹100 (SC/ST/PwBD) + GST",
+                ageLimit: "21 to 30 years (32 for M.Phil / 34 for Ph.D)",
+                qual: "Graduation with min 60% (50% for SC/ST) OR Post-Grad with 55%",
+                attempts: "General: 6 attempts in Phase 1; SC/ST: No limit",
+                stages: [
+                    { num: "Phase 1", title: "Online Objective Screening", nature: "Qualifying Only (200 Qs / 200 Marks / 120 Min)", desc: "Features 80 General Awareness questions. Strict sectional timing and sectional cutoffs apply." },
+                    { num: "Phase 2", title: "Descriptive + Objective Written", nature: "3 Papers (300 Marks / 270 Min)", desc: "Paper I: Economic & Social Issues (100 M), Paper II: English Writing Skills (100 M), Paper III: Finance & Management (100 M). All descriptive answers typed online." },
+                    { num: "Phase 3", title: "Interview", nature: "Final Stage (75 Marks)", desc: "Psychometric test followed by Board Interview. Final merit is Phase 2 (300) + Interview (75) = 375 marks." }
+                ],
+                patternPrelims: [
+                    { sec: "General Awareness", q: "80", m: "80", time: "25 min" },
+                    { sec: "Reasoning Ability", q: "60", m: "60", time: "45 min" },
+                    { sec: "English Language", q: "30", m: "30", time: "25 min" },
+                    { sec: "Quantitative Aptitude", q: "30", m: "30", time: "25 min" },
+                    { sec: "Phase 1 Total", q: "200 Qs", m: "200 Marks", time: "120 Min", isTotal: true }
+                ],
+                patternMains: [
+                    { sec: "Paper I: Economic & Social Issues (ESI)", q: "Obj + Desc", m: "100", time: "90 min (30 obj + 60 desc)" },
+                    { sec: "Paper II: English (Writing Skills)", q: "3 Desc Qs", m: "100", time: "90 min" },
+                    { sec: "Paper III: Finance & Management (FM)", q: "Obj + Desc", m: "100", time: "90 min (30 obj + 60 desc)" },
+                    { sec: "Phase 2 Total", q: "3 Papers", m: "300 Marks", time: "270 Min", isTotal: true }
+                ],
+                syllabus: [
+                    { subject: "Economic & Social Issues (ESI)", topics: "Growth & Development, Indian Economy reforms, Poverty Alleviation & Employment, Sustainable Development, Globalisation, Social Structure in India, Demographics, Union Budget & Economic Survey." },
+                    { subject: "Finance & Financial System", topics: "Financial Markets (Money, Debt, Forex, Equity), RBI functions, Banking system regulations, Basel III norms, Corporate Governance, Financial Inclusion, FinTech." },
+                    { subject: "Management & Leadership", topics: "Leadership theories, Motivation, Human Resource Management, Corporate Communication, Emotional Intelligence, Business Ethics." },
+                    { subject: "English Writing Skills (Phase 2)", topics: "Typed Essay on contemporary socio-economic topics, Precis writing with precise word limit, and analytical Reading Comprehension questions." }
+                ],
+                papers: [
+                    { title: "RBI Grade B Phase 1 Papers", url: "papers-rbi-grade-b-phase1.html" },
+                    { title: "RBI Grade B Phase 2 & Descriptive", url: "papers-rbi-grade-b-phase2.html" },
+                    { title: "RBI Grade B Full Mocks", url: "papers-rbi-grade-b-mock.html" }
+                ]
+            }
+        };
+
+        // Render Dynamic Canvas
+        function renderExam(examKey) {
+            const data = EXAM_DATABASE[examKey] || EXAM_DATABASE.sbipo;
+            const container = document.getElementById('dynamic-exam-canvas');
+
+            // Build dynamic HTML without repetitive card grids
+            container.innerHTML = `
+                <!-- Architectural Hero Banner -->
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-600/30 bg-amber-500/10 text-amber-900 text-xs font-extrabold uppercase tracking-wider">
+                        <i data-lucide="award" class="w-3.5 h-3.5 text-amber-600"></i> ${data.badge}
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-serif text-slate-900 tracking-tight leading-tight">
+                        ${data.title}
+                    </h1>
+                    <p class="text-slate-600 max-w-4xl text-sm sm:text-base leading-relaxed">
+                        ${data.heroDesc}
+                    </p>
+                </div>
+
+                <!-- 3D HUD TELEMETRY RAIL (Continuous dimensional slab instead of 4 mini-cards) -->
+                <div class="hud-slab rounded-2xl p-6 sm:p-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-amber-900/15">
+                        <div class="px-2 pt-2 md:pt-0">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Starting Basic Pay</span>
+                            <span class="text-2xl font-bold font-serif text-slate-900 block">${data.basicPay}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">Plus DA, HRA &amp; Allowances</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Selection Phases</span>
+                            <span class="text-2xl font-bold font-serif text-slate-900 block">${data.phases}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">${data.phasesSub}</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Negative Marking</span>
+                            <span class="text-2xl font-bold font-serif text-rose-700 block">${data.negMarking}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">${data.negMarkingSub}</span>
+                        </div>
+                        <div class="px-2 pt-4 md:pt-0 md:pl-6">
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 block mb-1">Sectional Cut-off</span>
+                            <span class="text-2xl font-bold font-serif text-amber-800 block">${data.sectionalCutoff}</span>
+                            <span class="text-xs text-slate-500 mt-1 block">${data.sectionalCutoffSub}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D SELECTION PIPELINE (Connected continuous track instead of 3 card boxes) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Selection Process Pipeline</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">The progressive roadmap to final appointment.</p>
+                    </div>
+
+                    <div class="relative pl-6 border-l-2 border-amber-600/30 space-y-8 my-4">
+                        ${data.stages.map(st => `
+                            <div class="relative group">
+                                <span class="absolute -left-[37px] top-0.5 w-7 h-7 rounded-full bg-amber-600 text-white font-bold text-xs flex items-center justify-center node-3d">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                </span>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-3">
+                                        <h3 class="font-serif font-bold text-slate-900 text-lg">${st.title}</h3>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${st.nature}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed max-w-3xl">${st.desc}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <!-- EXAM PATTERN (Architectural Open Tables with Dimensional Headers) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Official Exam Pattern &amp; Structure</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Complete section-wise question distribution, marks and sectional limits.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Prelims / Phase 1 -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Preliminary / Phase 1</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-600 text-white shadow-sm">Screening Stage</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Section</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternPrelims.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mains / Phase 2 -->
+                        <div class="hud-slab rounded-2xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between pb-4 border-b border-amber-900/10 mb-4">
+                                    <h3 class="font-serif font-bold text-xl text-slate-900">Main Examination / Phase 2</h3>
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-slate-800 text-white shadow-sm">Merit Score</span>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="text-amber-900 font-bold uppercase tracking-wider border-b border-amber-900/15">
+                                            <tr>
+                                                <th class="py-2.5">Section / Paper</th>
+                                                <th class="py-2.5 text-center">Questions</th>
+                                                <th class="py-2.5 text-center">Marks</th>
+                                                <th class="py-2.5 text-right">Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-amber-900/10">
+                                            ${data.patternMains.map(p => `
+                                                <tr class="${p.isTotal ? 'font-bold bg-amber-100/40 text-amber-950' : 'text-slate-700'}">
+                                                    <td class="py-2.5 font-semibold">${p.sec}</td>
+                                                    <td class="py-2.5 text-center">${p.q}</td>
+                                                    <td class="py-2.5 text-center">${p.m}</td>
+                                                    <td class="py-2.5 text-right font-medium text-amber-800">${p.time}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ELIGIBILITY SPECIFICATION SHEET (Continuous spec document layout) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Eligibility &amp; Cadre Specifications</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Educational criteria, age limit, fee structure and participating bodies.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-8 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs leading-relaxed">
+                            <div class="space-y-4">
+                                <div>
+                                    <span class="font-bold text-amber-800 text-sm block mb-1">Educational Qualification</span>
+                                    <p class="text-slate-700">${data.qual}</p>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-amber-800 text-sm block mb-1">Age Limits &amp; Relaxations</span>
+                                    <p class="text-slate-700">${data.ageLimit} (SC/ST +5 yrs, OBC +3 yrs, PwBD +10 yrs).</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4 md:border-l md:border-amber-900/10 md:pl-8">
+                                <div>
+                                    <span class="font-bold text-amber-800 text-sm block mb-1">Application Fee</span>
+                                    <p class="text-slate-700">${data.fee}</p>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-amber-800 text-sm block mb-1">Vacancies &amp; Attempts</span>
+                                    <p class="text-slate-700"><b>Vacancies:</b> ${data.vacancies}</p>
+                                    <p class="text-slate-700 mt-1"><b>Attempts:</b> ${data.attempts}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3D INTERACTIVE SYLLABUS DRAWERS (Hover & click perspective unfolding) -->
+                <section class="space-y-6">
+                    <div class="border-l-4 border-amber-600 pl-4">
+                        <h2 class="text-2xl font-bold font-serif text-slate-900">Detailed Subject Curriculum</h2>
+                        <p class="text-xs sm:text-sm text-slate-600">Interactive curriculum breakdown for Prelims and Mains.</p>
+                    </div>
+
+                    <div class="hud-slab rounded-2xl p-6 sm:p-8 space-y-4">
+                        ${data.syllabus.map((s, idx) => `
+                            <div class="drawer-3d py-3">
+                                <div class="flex items-start gap-4">
+                                    <span class="w-8 h-8 rounded-xl bg-amber-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5" style="box-shadow: 0 2px 0 #92400e;">
+                                        ${idx + 1}
+                                    </span>
+                                    <div>
+                                        <h3 class="font-serif font-bold text-slate-900 text-base mb-1">${s.subject}</h3>
+                                        <p class="text-xs text-slate-600 leading-relaxed">${s.topics}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+
+            // Update Papers links
+            const papersContainer = document.getElementById('papers-actions');
+            papersContainer.innerHTML = data.papers.map(p => `
+                <a href="${p.url}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white border border-amber-900/20 text-amber-900 text-xs font-bold hover:border-amber-600 hover:shadow-md transition-all">
+                    <span>${p.title}</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-amber-600"></i>
+                </a>
+            `).join('');
+
+            // Re-render Lucide icons
+            lucide.createIcons();
+        }
+
+        // Handle Tab / URL Hash Navigation
+        function navigateTo(examKey) {
+            if (!EXAM_DATABASE[examKey]) examKey = 'sbipo';
+            
+            // Set URL Hash (e.g., #sbipo, #sbiclerk)
+            window.location.hash = examKey;
+
+            // Update dock button states
+            document.querySelectorAll('.dock-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === examKey) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Re-render
+            renderExam(examKey);
+        }
+
+        // Sync with browser URL hash on load and when hash changes
+        window.addEventListener('hashchange', () => {
+            const currentHash = window.location.hash.replace('#', '');
+            if (currentHash && EXAM_DATABASE[currentHash]) {
+                navigateTo(currentHash);
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && EXAM_DATABASE[initialHash]) {
+                navigateTo(initialHash);
+            } else {
+                navigateTo('sbipo');
+            }
+        });
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

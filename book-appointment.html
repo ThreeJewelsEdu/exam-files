@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book an Appointment | TRIRATNA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --cream: #fffaf1;
+  --gold: #bd8734;
+  --gold-light: #f4dfb5;
+  --gold-dark: #987443;
+  --ink: #51402a;
+  --muted: #847762;
+  --green: #43845a;
+  --border: #ead9b9;
+  --card-bg: linear-gradient(145deg, #fffefb, #fff8eb);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(ellipse at 12% 10%, #fff0cf 0, transparent 32%),
+    radial-gradient(ellipse at 90% 75%, #f8e8d1 0, transparent 30%),
+    var(--cream);
+}
+
+button, a, input, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.site-header {
+  max-width: 1120px;
+  margin: auto;
+  padding: 23px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e6c47e, #c18b39);
+  color: white;
+  box-shadow: 0 8px 18px #bd873435,
+              inset 1px 1px 2px #ffffff90,
+              inset -2px -2px 4px #8d5b2035;
+}
+
+.brand-name {
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  display: block;
+  margin-top: 3px;
+  color: #987443;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.header-label {
+  color: #927346;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+main {
+  width: min(780px, calc(100% - 36px));
+  margin: 25px auto 60px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeIn .7s ease both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid #ead4a9;
+  border-radius: 50px;
+  background: #fffdf8;
+  color: #96703a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  background: #bd8734;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #bd873425;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  margin: 19px 0 12px;
+  font-size: clamp(32px, 5vw, 50px);
+  line-height: 1.15;
+  letter-spacing: -.8px;
+}
+
+.gold-text {
+  color: #b77e2b;
+}
+
+.intro p {
+  max-width: 540px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Card Styling */
+.card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--card-bg);
+  box-shadow:
+    0 35px 70px #96734316,
+    0 12px 25px #96734312,
+    inset 0 1px 0 white;
+  padding: 42px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8c6933;
+  margin-bottom: 8px;
+}
+
+.req {
+  color: #c44f38;
+}
+
+.input-field, .textarea-field {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5d3b3;
+  border-radius: 14px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-size: 14px;
+  transition: all .2s ease;
+  outline: none;
+}
+
+.input-field:focus, .textarea-field:focus {
+  border-color: #bd8734;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px #bd873420;
+}
+
+.input-field::placeholder, .textarea-field::placeholder {
+  color: #b5a48d;
+}
+
+.textarea-field {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* Date Notice Box */
+.notice-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff6e4;
+  border: 1px solid #ebd4ab;
+  border-radius: 14px;
+  margin-top: 10px;
+}
+
+.notice-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: #a9772e;
+  margin-top: 1px;
+}
+
+.notice-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #7b623d;
+}
+
+.notice-text strong {
+  color: #5d421d;
+}
+
+.sync-badge {
+  font-size: 10px;
+  color: #987443;
+  font-weight: 600;
+  text-transform: none;
+  margin-left: 6px;
+}
+
+.submit-btn {
+  width: 100%;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #b98538;
+  border-radius: 16px;
+  color: white;
+  background: linear-gradient(135deg, #d4a75d, #b77d2c);
+  box-shadow: 0 8px 18px #b77d2c30, inset 1px 1px 1px #ffffff70;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  transition: all .2s ease;
+  margin-top: 12px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px #b77d2c40;
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Floating sparkles */
+.sparkle {
+  position: fixed;
+  z-index: -1;
+  color: #c49a50;
+  opacity: .55;
+  pointer-events: none;
+  animation: float 4s ease-in-out infinite;
+}
+
+.sparkle.s1 { top: 22%; left: 6%; font-size: 24px; }
+.sparkle.s2 { top: 45%; right: 7%; font-size: 28px; animation-delay: -1s; }
+.sparkle.s3 { top: 80%; left: 9%; font-size: 18px; animation-delay: -2s; }
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+  color: #9a8970;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 650px) {
+  .site-header { padding: 18px; }
+  .header-label { display: none; }
+  .card { padding: 26px 18px; border-radius: 24px; }
+  .form-row { grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-icon">
+      <svg viewBox="0 0 24 24" width="25" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
+        <path d="M6 11v5c4 3 8 3 12 0v-5M22 9v6"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">TRIRATNA</span>
+      <span class="brand-sub">COACHING INSTITUTE</span>
+    </span>
+  </a>
+  <span class="header-label">APPOINTMENT DESK</span>
+</header>
+
+<span class="sparkle s1">✧</span>
+<span class="sparkle s2">✦</span>
+<span class="sparkle s3">✧</span>
+
+<main>
+  <section class="intro">
+    <span class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      1-ON-1 GUIDANCE & CONSULTATION
+    </span>
+
+    <h1>
+      Book an Appointment with<br>
+      <span class="gold-text">Our Expert Mentors.</span>
+    </h1>
+
+    <p>
+      Schedule a personalized session with our faculty. Submit your request below and we will confirm your schedule via email.
+    </p>
+  </section>
+
+  <div class="card">
+    <form id="appointmentForm" action="https://formsubmit.co/triratna.appointments.temp@mailinator.com" method="POST">
+      
+      <input type="hidden" name="_subject" value="New Appointment Booking Request - TRIRATNA">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="Service" value="Mentor / Counseling Appointment">
+
+      <!-- Row 1: Name and Email (Both Mandatory) -->
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="fullName">Your Full Name <span class="req">*</span></label>
+          <input type="text" id="fullName" name="Student_Name" class="input-field" placeholder="e.g. Aryan Sharma" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="emailAddr">Your Email Address <span class="req">*</span></label>
+          <input type="email" id="emailAddr" name="Student_Email" class="input-field" placeholder="e.g. aryan@example.com" required>
+        </div>
+      </div>
+
+      <!-- Row 2: Real Server Date & Mode of Meeting (Both Mandatory) -->
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="appDate">
+            Preferred Date <span class="req">*</span>
+            <span class="sync-badge" id="syncStatus">Syncing calendar...</span>
+          </label>
+          <input type="date" id="appDate" name="Preferred_Date" class="input-field" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="meetingMode">Mode of Meeting <span class="req">*</span></label>
+          <input type="text" id="meetingMode" name="Meeting_Mode" class="input-field" placeholder="e.g. In-Person at Center / Online Video Call" required>
+        </div>
+      </div>
+
+      <!-- Date Confirmation Notice -->
+      <div class="form-group" style="margin-top:-6px;">
+        <div class="notice-box">
+          <svg class="notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <p class="notice-text">
+            <strong>Important Note on Scheduling:</strong> The date you select is your requested preference (minimum 4 days in advance). Since scheduling is coordinated manually with our faculty, the final confirmed date and schedule will be sent directly to your registered email address.
+          </p>
+        </div>
+      </div>
+
+      <!-- Descriptive Box: Reason / Purpose (Mandatory) -->
+      <div class="form-group">
+        <label for="purpose">Reason / Purpose for Appointment <span class="req">*</span></label>
+        <textarea id="purpose" name="Appointment_Purpose" class="textarea-field" placeholder="Please describe briefly why you want to meet (e.g. Academic counseling, doubts in Chemistry, study plan discussion)..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span>Request Appointment</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <footer>
+    <strong>TRIRATNA Coaching Institute</strong><br>
+    All appointment confirmations and final schedules are communicated directly via email.
+  </footer>
+</main>
+
+<script>
+// ==============================================================
+// 1. FETCH REAL INTERNET SERVER DATE (INDEPENDENT OF USER DEVICE)
+// ==============================================================
+let realNetworkDate = null;
+const dateInput = document.getElementById('appDate');
+const syncStatus = document.getElementById('syncStatus');
+
+async function syncRealServerDate() {
+  try {
+    // Queries public live time server for Indian Standard Time (IST)
+    const response = await fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kolkata');
+    const data = await response.json();
+    
+    if (data && data.year && data.month && data.day) {
+      realNetworkDate = new Date(data.year, data.month - 1, data.day);
+    }
+  } catch (err) {
+    // If the first API fails, fetch from second reliable backup
+    try {
+      const resBackup = await fetch('https://worldtimeapi.org/api/timezone/Asia/Kolkata');
+      const dataBackup = await resBackup.json();
+      realNetworkDate = new Date(dataBackup.datetime);
+    } catch (e2) {
+      // In extreme case of no internet API access, fallback gracefully
+      realNetworkDate = new Date();
+    }
+  }
+
+  // Calculate Real Date + 4 Days
+  const minDate = new Date(realNetworkDate);
+  minDate.setDate(minDate.getDate() + 4);
+
+  // Format as YYYY-MM-DD for the HTML date picker
+  const yyyy = minDate.getFullYear();
+  const mm = String(minDate.getMonth() + 1).padStart(2, '0');
+  const dd = String(minDate.getDate()).padStart(2, '0');
+  const formattedMin = `${yyyy}-${mm}-${dd}`;
+
+  dateInput.min = formattedMin;
+
+  // Update badge to display the earliest available date
+  const options = { day: 'numeric', month: 'short' };
+  syncStatus.textContent = `(Min 4 days advance: from ${minDate.toLocaleDateString('en-IN', options)})`;
+}
+
+// Call live sync immediately on page load
+syncRealServerDate();
+
+
+// ==============================================================
+// 2. SUBMISSION AND CLIENT-GUARD CHECK
+// ==============================================================
+const form = document.getElementById('appointmentForm');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Guard check: Ensure selected date is at least 4 days from real present date
+  if (realNetworkDate && dateInput.value) {
+    const chosenDate = new Date(dateInput.value);
+    const minRequiredDate = new Date(realNetworkDate);
+    minRequiredDate.setDate(minRequiredDate.getDate() + 4);
+    
+    chosenDate.setHours(0, 0, 0, 0);
+    minRequiredDate.setHours(0, 0, 0, 0);
+
+    if (chosenDate < minRequiredDate) {
+      alert("Please select a date that is at least 4 days after today's actual date.");
+      return;
+    }
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.innerHTML = `<span>Submitting Request...</span>`;
+  submitBtn.disabled = true;
+
+  // Retrieve user name to pass to thank-you page
+  const nameInput = document.getElementById('fullName');
+  const studentName = nameInput && nameInput.value.trim() ? encodeURIComponent(nameInput.value.trim()) : '';
+  const thankYouUrl = studentName ? `appointment-thank-you.html?name=${studentName}` : `appointment-thank-you.html`;
+
+  const formData = new FormData(form);
+
+  try {
+    // Send form data to temporary email
+    await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+  } catch (err) {
+    console.log('Submission transmitted');
+  }
+
+  // Redirect to thank-you page
+  window.location.href = thankYouUrl;
+});
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

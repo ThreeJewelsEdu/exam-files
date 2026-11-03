@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Give a Suggestion | TRIRATNA</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        serif: ['Playfair Display', 'serif']
+      }
+    }
+  }
+};
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+body { font-family: 'Plus Jakarta Sans', sans-serif; }
+.warm-card {
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(217,119,6,.18);
+}
+.form-field {
+  width:100%; box-sizing:border-box;
+  border:1px solid #CBD5E1; background:#F8FAFC;
+  color:#1E293B; border-radius:12px; padding:13px;
+  font-size:14px; outline:none;
+}
+.form-field:focus {
+  border-color:#D97706;
+  box-shadow:0 0 0 3px rgba(217,119,6,.12);
+}
+textarea.form-field { min-height:180px; resize:vertical; }
+</style>
+</head>
+
+<body class="bg-[#FAF7F2] text-slate-800 min-h-screen">
+<header class="sticky top-0 z-10 border-b border-amber-900/10 bg-[#FAF7F2]/90 p-4">
+  <div class="max-w-5xl mx-auto flex justify-between items-center">
+    <a href="index.html" class="no-underline">
+      <strong class="font-serif text-2xl text-slate-900">TRIRATNA</strong>
+      <span class="block text-xs tracking-widest text-amber-700">COACHING INSTITUTE</span>
+    </a>
+    <a href="index.html" class="text-amber-700 font-semibold text-sm">Home</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-12">
+  <div class="text-center mb-10">
+    <p class="text-amber-700 font-bold mb-3">YOUR IDEAS MATTER</p>
+    <h1 class="font-serif text-4xl sm:text-5xl font-bold text-slate-900">
+      Give a <span class="text-amber-700">Suggestion</span>
+    </h1>
+    <p class="mt-4 text-slate-600">
+      Help us improve TRIRATNA. Share your ideas about our website,
+      exams, mock tests, study material or new features.
+    </p>
+  </div>
+
+  <div class="grid lg:grid-cols-5 gap-7">
+    <aside class="lg:col-span-2 warm-card rounded-2xl p-6">
+      <h2 class="font-serif text-2xl font-bold">What can you suggest?</h2>
+      <ul class="mt-4 space-y-3 text-sm text-slate-600">
+        <li>✓ Website improvements</li>
+        <li>✓ New exams or mock tests</li>
+        <li>✓ Study material and explanations</li>
+        <li>✓ New features and tools</li>
+        <li>✓ Any other idea</li>
+      </ul>
+      <p class="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-950">
+        Thank you for helping us make TRIRATNA better for every student.
+      </p>
+    </aside>
+
+    <section class="lg:col-span-3 warm-card rounded-2xl p-5 sm:p-8">
+      <form id="suggestionForm"
+        action="https://formsubmit.co/ajax/YOUR_EMAIL_HERE@example.com"
+        method="POST" class="space-y-5">
+
+        <input type="hidden" name="_subject" value="New TRIRATNA Suggestion">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div>
+          <label for="category" class="block font-semibold text-sm mb-2">
+            Suggestion category *
+          </label>
+          <select id="category" name="category" class="form-field" required>
+            <option>Website improvement</option>
+            <option>New exam or mock tests</option>
+            <option>Study material</option>
+            <option>New feature or tool</option>
+            <option>Other suggestion</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="suggestion" class="block font-semibold text-sm mb-2">
+            Your suggestion *
+          </label>
+          <textarea id="suggestion" name="suggestion"
+            class="form-field"
+            placeholder="Write your suggestion here..."
+            required></textarea>
+          <p class="text-xs text-slate-500 mt-2">
+            No word limit. Write as much as you need.
+          </p>
+        </div>
+
+        <div>
+          <label for="name" class="block font-semibold text-sm mb-2">
+            Your name (optional)
+          </label>
+          <input id="name" name="name" class="form-field"
+            placeholder="Enter your name">
+        </div>
+
+        <div>
+          <label for="contact" class="block font-semibold text-sm mb-2">
+            Email address or contact number *
+          </label>
+          <input id="contact" name="contact" class="form-field"
+            placeholder="Enter your email or phone number" required>
+        </div>
+
+        <button id="submitButton" type="submit"
+          class="w-full rounded-xl bg-amber-600 hover:bg-amber-700
+          text-white font-bold py-4 px-5 transition">
+          Submit Suggestion
+        </button>
+
+        <p id="formNotice" class="hidden rounded-lg bg-amber-50 p-3
+          text-sm text-amber-900" role="status"></p>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="border-t border-amber-900/10 py-7 text-center text-xs text-slate-500">
+  © TRIRATNA Coaching. “Compassionate Learning for Success.”
+</footer>
+
+<script>
+lucide.createIcons();
+
+const form = document.getElementById('suggestionForm');
+const notice = document.getElementById('formNotice');
+const button = document.getElementById('submitButton');
+
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const placeholder = 'YOUR_EMAIL_HERE@example.com';
+
+  if (form.action.includes(placeholder)) {
+    notice.textContent =
+      'Email setup pending. Replace YOUR_EMAIL_HERE@example.com with your email address first.';
+    notice.classList.remove('hidden');
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Sending...';
+  notice.classList.add('hidden');
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    const result = await response.json();
+
+    if (response.ok &&
+        (result.success === true || result.success === 'true')) {
+      window.location.href = 'suggestion-thank-you.html';
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch (error) {
+    notice.textContent =
+      'Suggestion could not be sent. Please check your internet connection and email setup, then try again.';
+    notice.classList.remove('hidden');
+    button.disabled = false;
+    button.textContent = 'Submit Suggestion';
+  }
+});
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

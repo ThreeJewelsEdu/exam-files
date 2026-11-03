@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Year Papers Hub | Triratna Coaching Institute</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        .warm-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+            transition: all 0.2s ease-out;
+        }
+        .warm-card:hover {
+            border-color: rgba(217, 119, 6, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-slate-800 font-sans selection:bg-amber-200 selection:text-amber-900 overflow-x-hidden min-h-screen">
+
+    <!-- ================= TOP NAVIGATION ================= -->
+    <header class="relative z-30 border-b border-amber-900/10 bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center shadow-md shadow-amber-600/20 text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="index.html" class="hover:text-amber-700 transition-colors">Home</a>
+                <a href="index.html#exams" class="hover:text-amber-700 transition-colors">Exams</a>
+                <a href="#" class="text-amber-700 font-bold">Past Papers</a>
+                <a href="about-us.html" class="hover:text-amber-700 transition-colors">About</a>
+            </nav>
+
+            <button id="open-appointment-btn" class="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>Book an Appointment</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ================= PAGE BANNER ================= -->
+    <section class="py-10 border-b border-amber-900/10 bg-gradient-to-b from-white/60 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-50 text-amber-800 text-xs font-bold tracking-wide mb-3">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        Official Triratna Study Archive
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif text-slate-900">
+                        Previous Year Papers
+                    </h1>
+                    <p class="text-slate-600 text-sm sm:text-base mt-2 max-w-2xl font-serif italic">
+                        "Structured concept building through authentic past examinations"
+                    </p>
+                </div>
+                
+                <div class="flex items-center gap-3 bg-white px-5 py-3 rounded-2xl border border-amber-200 shadow-sm w-fit">
+                    <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-medium">Archive Coverage</div>
+                        <div class="text-sm font-bold text-slate-900">2017 – 2026 (All Shifts)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MAIN REPOSITORY SECTION ================= -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- 1. LEVEL 1: THE 4 EXAM PILLAR TABS -->
+        <div class="flex overflow-x-auto pb-2 gap-3 border-b border-amber-900/10" id="main-category-tabs">
+            <button data-cat="bank" class="cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-amber-600 text-white shadow-md shadow-amber-600/20">
+                Bank Exams
+            </button>
+            <button data-cat="ssc" class="cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500">
+                SSC Exams
+            </button>
+            <button data-cat="railway" class="cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500">
+                Railway Exams
+            </button>
+            <button data-cat="upsc" class="cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500">
+                Civil Services (UPSC CSE)
+            </button>
+        </div>
+
+        <!-- 2. LEVEL 2: DYNAMIC SUB-EXAM PILLS -->
+        <div class="mt-4 flex flex-wrap gap-2 items-center" id="sub-exam-pills"></div>
+
+        <!-- 3. LEVEL 3: STAGE SWITCHER, YEAR SELECTOR, SEARCH BAR -->
+        <div class="mt-6 bg-white/90 p-4 rounded-2xl warm-card flex flex-col md:flex-row gap-4 justify-between items-center">
+            
+            <!-- Stage Toggle -->
+            <div class="flex bg-amber-50 p-1.5 rounded-xl border border-amber-200/60 w-full md:w-auto" id="stage-tabs-container">
+                <button data-stage="all" class="stage-btn flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition bg-white text-slate-900 shadow-sm">
+                    All Stages
+                </button>
+                <button data-stage="Prelims" class="stage-btn flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
+                    Prelims / Tier-1 / CBT-1
+                </button>
+                <button data-stage="Mains" class="stage-btn flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900">
+                    Mains / Tier-2 / CBT-2
+                </button>
+            </div>
+
+            <!-- Year Dropdown and Search -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <select id="year-filter" class="bg-white border border-amber-900/15 text-slate-700 text-xs font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-amber-600">
+                    <option value="all">All Years (2017 – 2026)</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                </select>
+
+                <div class="relative w-full sm:w-64">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0118 0z"/></svg>
+                    <input type="text" id="search-filter" placeholder="Search shift, subject..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-900/15 rounded-xl text-xs focus:outline-none focus:border-amber-600">
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PRACTICE PAPER BRIDGE BANNER -->
+        <div class="mt-6 rounded-2xl bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-white p-6 sm:p-7 shadow-lg shadow-amber-900/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div>
+                <div class="flex items-center gap-2 text-amber-200 text-xs font-bold uppercase tracking-wider mb-1">
+                    <span class="w-2 h-2 rounded-full bg-amber-300"></span>
+                    <span id="banner-tag">Sectional Speed Training</span>
+                </div>
+                <h3 id="banner-heading" class="text-xl sm:text-2xl font-bold font-serif">
+                    Ready to practice in exam conditions?
+                </h3>
+                <p id="banner-subtext" class="text-amber-100 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+                    Test your speed with real exam sectional timers (20 mins per section), auto-lock, and negative marking calculator.
+                </p>
+            </div>
+            
+            <button id="practice-paper-btn" class="shrink-0 bg-white hover:bg-amber-50 text-amber-800 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2">
+                <span>Go to Practice Papers</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+        </div>
+
+        <!-- 5. PAPERS GRID -->
+        <div class="mt-8">
+            <!-- Loading Indicator -->
+            <div id="loading-state" class="text-center py-16 bg-white/80 rounded-2xl warm-card p-8">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent mb-3"></div>
+                <h4 class="text-sm font-bold text-slate-700">Loading Question Papers from Archive...</h4>
+            </div>
+
+            <div id="papers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 hidden">
+                <!-- Injected via JavaScript from Google Sheet -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-16 bg-white/80 rounded-2xl warm-card p-8">
+                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h4 class="text-base font-bold font-serif text-slate-800">No question papers match this criteria</h4>
+                <p class="text-xs text-slate-500 mt-1">Try selecting "All Stages" or choosing a different year.</p>
+                <button id="reset-filter-btn" class="mt-4 px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs font-bold rounded-lg transition">
+                    Reset All Filters
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= APPOINTMENT MODAL ================= -->
+    <div id="appointmentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="relative w-full max-w-md rounded-2xl bg-white p-7 shadow-2xl border border-amber-200 scale-95 transition-transform duration-300" id="modalContainer">
+            <button id="close-modal-btn" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div class="mb-5">
+                <h3 class="text-xl font-bold font-serif text-slate-900">Book an Appointment</h3>
+                <p class="text-xs text-slate-500 mt-1">Schedule a counseling session at Triratna.</p>
+            </div>
+            <form id="appointmentForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Name</label>
+                    <input type="text" required placeholder="Enter your full name" class="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-amber-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Contact Number</label>
+                    <input type="tel" required placeholder="Phone number" class="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-amber-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Target Exam</label>
+                    <select class="w-full px-3.5 py-2 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-amber-600">
+                        <option value="bank">Bank Exam (SBI / IBPS / RRB)</option>
+                        <option value="ssc">SSC Exam (CGL / CHSL / CPO)</option>
+                        <option value="railway">Railway Exam (NTPC / Group D / ALP)</option>
+                        <option value="civil-service">Civil Service Exam (UPSC CSE)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-3 rounded-lg bg-amber-600 text-white font-bold hover:bg-amber-700 transition">
+                    Submit Request
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white text-xs px-5 py-3.5 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition duration-300 z-50 flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        <span id="toast-text">Message</span>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+    (function() {
+        /* ================= 1. EXAM CONFIGURATION ================= */
+        const SUB_EXAMS = {
+            bank: ["All Bank", "SBI PO", "SBI Clerk", "IBPS PO", "IBPS Clerk", "IBPS RRB", "RBI Assistant"],
+            ssc: ["All SSC", "SSC CGL", "SSC CHSL", "SSC CPO", "SSC MTS", "SSC GD Constable"],
+            railway: ["All Railway", "RRB NTPC", "RRB Group D", "RRB ALP", "RRB JE"],
+            upsc: ["All UPSC CSE", "GS Paper 1 (Prelims)", "CSAT Paper 2", "Essay (Mains)", "GS 1-4 (Mains)"]
+        };
+
+        /* ================= 2. GOOGLE SHEET LINK ================= */
+        // 👇 APNI GOOGLE SHEET KA "PUBLISH TO WEB (CSV)" LINK YAHAN PASTE KAREIN
+        const GOOGLE_SHEET_CSV_URL = "PASTE_YOUR_GOOGLE_SHEET_CSV_LINK_HERE";
+
+        let PAPERS = []; // Google Sheet se data aane par auto-populate hoga
+
+        /* ================= 3. STATE ================= */
+        let activeCat = "bank";
+        let activeSubExam = "All Bank";
+        let activeStage = "all";
+
+        const grid = document.getElementById('papers-grid');
+        const emptyState = document.getElementById('empty-state');
+        const loadingState = document.getElementById('loading-state');
+        const subExamContainer = document.getElementById('sub-exam-pills');
+        const yearSelect = document.getElementById('year-filter');
+        const searchInput = document.getElementById('search-filter');
+
+        /* ================= 4. FETCH DATA FROM GOOGLE SHEET ================= */
+        async function fetchPapersFromSheet() {
+            if (!GOOGLE_SHEET_CSV_URL || GOOGLE_SHEET_CSV_URL.includes("PASTE_YOUR_GOOGLE_SHEET")) {
+                loadingState.innerHTML = `
+                    <div class="text-amber-800 text-xs font-bold p-4 bg-amber-50 rounded-xl border border-amber-200">
+                        ⚠️ Please paste your published Google Sheet CSV link in line 218 of this file.
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                const csvData = await response.text();
+
+                // CSV Parse (handles quotes and commas)
+                const rows = csvData.trim().split(/\r?\n/).map(row => {
+                    return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/^"|"$/g, '').trim());
+                });
+
+                // Convert to objects (Skipping Header Row)
+                PAPERS = rows.slice(1).map((col, index) => ({
+                    id: index + 1,
+                    category: (col[0] || "").toLowerCase(),
+                    exam: col[1] || "",
+                    stage: col[2] || "Prelims",
+                    year: parseInt(col[3]) || 2024,
+                    shift: col[4] || "",
+                    title: col[5] || "",
+                    paperUrl: col[6] || "#",
+                    solutionUrl: col[7] || ""
+                }));
+
+                loadingState.classList.add('hidden');
+                grid.classList.remove('hidden');
+                renderPapers();
+
+            } catch (err) {
+                console.error("Error fetching Google Sheet: ", err);
+                loadingState.innerHTML = `
+                    <p class="text-xs text-rose-600 font-bold">Failed to load papers from Google Sheet. Please check your sheet link.</p>
+                `;
+            }
+        }
+
+        /* ================= 5. RENDER SUB-EXAM PILLS ================= */
+        function renderSubExamPills() {
+            const list = SUB_EXAMS[activeCat] || [];
+            subExamContainer.innerHTML = list.map((item, idx) => `
+                <button data-sub="${item}" class="sub-pill px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${idx === 0 ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-amber-900/15 hover:border-amber-600'}">
+                    ${item}
+                </button>
+            `).join('');
+            activeSubExam = list[0] || "all";
+        }
+
+        /* ================= 6. RENDER PAPERS ================= */
+        function renderPapers() {
+            const selectedYear = yearSelect.value;
+            const query = searchInput.value.toLowerCase().trim();
+
+            const filtered = PAPERS.filter(p => {
+                const matchCat = (p.category === activeCat);
+                const matchSub = (activeSubExam.startsWith("All") || p.exam.toLowerCase() === activeSubExam.toLowerCase());
+                const matchStage = (activeStage === "all" || p.stage.toLowerCase() === activeStage.toLowerCase());
+                const matchYear = (selectedYear === "all" || p.year.toString() === selectedYear);
+                const matchQuery = (query === "" || 
+                                    p.title.toLowerCase().includes(query) ||
+                                    p.shift.toLowerCase().includes(query) ||
+                                    p.exam.toLowerCase().includes(query));
+
+                return matchCat && matchSub && matchStage && matchYear && matchQuery;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => `
+                <div class="warm-card rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${item.stage.toLowerCase() === 'prelims' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-900 border border-amber-200'}">
+                                ${item.stage}
+                            </span>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-stone-100 text-slate-700">
+                                ${item.year}
+                            </span>
+                            <span class="text-xs font-bold text-amber-800 ml-auto font-serif">
+                                ${item.exam}
+                            </span>
+                        </div>
+                        <h3 class="text-base font-bold font-serif text-slate-900 leading-snug">
+                            ${item.title}
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-2 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>${item.shift}</span>
+                        </p>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-amber-900/10 flex items-center gap-2">
+                        <a href="${item.paperUrl}" 
+                           target="_blank" rel="noopener noreferrer"
+                           data-url="${item.paperUrl}"
+                           class="paper-download-btn flex-1 bg-slate-900 hover:bg-amber-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span>Question Paper</span>
+                        </a>
+                        ${item.solutionUrl && item.solutionUrl !== "#" ? `
+                            <a href="${item.solutionUrl}" target="_blank" rel="noopener noreferrer" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-bold py-2.5 px-3 rounded-xl transition">
+                                Solution
+                            </a>
+                        ` : `
+                            <span class="text-xs text-slate-400 bg-slate-100 py-2.5 px-3 rounded-xl">No Sol.</span>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ================= 7. EVENT LISTENERS ================= */
+        // Main Category Tabs
+        document.getElementById('main-category-tabs').addEventListener('click', (e) => {
+            const btn = e.target.closest('.cat-tab-btn');
+            if (!btn) return;
+
+            activeCat = btn.getAttribute('data-cat');
+            document.querySelectorAll('.cat-tab-btn').forEach(b => {
+                b.className = "cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500";
+            });
+            btn.className = "cat-tab-btn px-6 py-3 rounded-2xl text-sm font-bold font-serif transition-all bg-amber-600 text-white shadow-md shadow-amber-600/20";
+
+            renderSubExamPills();
+            renderPapers();
+        });
+
+        // Sub-Exam Pills
+        subExamContainer.addEventListener('click', (e) => {
+            const pill = e.target.closest('.sub-pill');
+            if (!pill) return;
+
+            activeSubExam = pill.getAttribute('data-sub');
+            document.querySelectorAll('.sub-pill').forEach(p => {
+                p.className = "sub-pill px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-white text-slate-700 border border-amber-900/15 hover:border-amber-600";
+            });
+            pill.className = "sub-pill px-3.5 py-1.5 rounded-full text-xs font-semibold transition bg-slate-900 text-white";
+
+            renderPapers();
+        });
+
+        // Stage Switcher
+        document.getElementById('stage-tabs-container').addEventListener('click', (e) => {
+            const btn = e.target.closest('.stage-btn');
+            if (!btn) return;
+
+            activeStage = btn.getAttribute('data-stage');
+            document.querySelectorAll('.stage-btn').forEach(b => {
+                b.className = "stage-btn flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600 hover:text-slate-900";
+            });
+            btn.className = "stage-btn flex-1 md:flex-initial px-4 py-2 rounded-lg text-xs font-bold transition bg-white text-slate-900 shadow-sm";
+
+            renderPapers();
+        });
+
+        // Filters
+        yearSelect.addEventListener('change', renderPapers);
+        searchInput.addEventListener('input', renderPapers);
+
+        document.getElementById('reset-filter-btn').addEventListener('click', () => {
+            yearSelect.value = "all";
+            searchInput.value = "";
+            activeStage = "all";
+            renderSubExamPills();
+            renderPapers();
+        });
+
+        // Download Safety Handler
+        grid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.paper-download-btn');
+            if (!btn) return;
+            const url = btn.getAttribute('data-url');
+            if (!url || url === "#") {
+                e.preventDefault();
+                showToast("This paper PDF will be live shortly.");
+            }
+        });
+
+        document.getElementById('practice-paper-btn').addEventListener('click', () => {
+            showToast("Practice Mock CBTs with Sectional Timers are launching soon!");
+        });
+
+        /* ================= 8. MODAL & TOAST ================= */
+        const modal = document.getElementById('appointmentModal');
+        const modalContainer = document.getElementById('modalContainer');
+
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+        }
+
+        document.getElementById('open-appointment-btn').addEventListener('click', openModal);
+        document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        document.getElementById('appointmentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Thank you! Your appointment request has been received.");
+            closeModal();
+        });
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3200);
+        }
+
+        // INITIALIZE
+        renderSubExamPills();
+        fetchPapersFromSheet();
+    })();
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

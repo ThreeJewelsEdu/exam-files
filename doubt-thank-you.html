@@ -1,0 +1,875 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doubt Submitted | TRIRATNA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --cream: #fffaf1;
+  --gold: #bd8734;
+  --gold-light: #f4dfb5;
+  --ink: #51402a;
+  --muted: #847762;
+  --green: #43845a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(ellipse at 12% 10%, #fff0cf 0, transparent 32%),
+    radial-gradient(ellipse at 90% 75%, #f8e8d1 0, transparent 30%),
+    var(--cream);
+}
+
+button, a { font: inherit; }
+button { cursor: pointer; }
+
+.site-header {
+  max-width: 1120px;
+  margin: auto;
+  padding: 23px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e6c47e, #c18b39);
+  color: white;
+  box-shadow: 0 8px 18px #bd873435,
+              inset 1px 1px 2px #ffffff90,
+              inset -2px -2px 4px #8d5b2035;
+}
+
+.brand-name {
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  display: block;
+  margin-top: 3px;
+  color: #987443;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.header-label {
+  color: #927346;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+main {
+  width: min(1080px, calc(100% - 36px));
+  margin: 25px auto 55px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 34px;
+  animation: fadeIn .7s ease both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid #ead4a9;
+  border-radius: 50px;
+  background: #fffdf8;
+  color: #96703a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  background: #64a574;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #64a57420;
+}
+
+h1, h2 {
+  font-family: "Playfair Display", serif;
+}
+
+.intro h1 {
+  margin: 19px 0 12px;
+  font-size: clamp(34px, 5.5vw, 57px);
+  line-height: 1.12;
+  letter-spacing: -.8px;
+}
+
+.gold-text {
+  color: #b77e2b;
+}
+
+.intro p {
+  max-width: 530px;
+  margin: auto;
+  padding: 0 10px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Interactive 3D scene */
+.scene {
+  perspective: 1200px;
+  max-width: 820px;
+  margin: auto;
+  padding: 20px 12px 38px;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: transform .16s ease-out, box-shadow .25s ease;
+  border: 1px solid #ead9b9;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #fffefb, #fff8eb);
+  box-shadow:
+    0 35px 70px #96734316,
+    0 12px 25px #96734312,
+    inset 0 1px 0 white;
+  will-change: transform;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(125deg,
+    #ffffffc9 0%, transparent 30%,
+    transparent 65%, #f1dcb94d 100%);
+  pointer-events: none;
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  padding: 42px;
+  transform-style: preserve-3d;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 29px;
+  border-bottom: 1px dashed #e5d2ae;
+}
+
+.emblem-area {
+  position: relative;
+  flex: 0 0 135px;
+  height: 135px;
+  display: grid;
+  place-items: center;
+  transform: translateZ(48px);
+}
+
+.orbit {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  border: 1px solid #d8b46e;
+  border-radius: 50%;
+  animation: orbit 12s linear infinite;
+}
+
+.orbit.two {
+  width: 102px;
+  height: 102px;
+  border-color: #ead5a8;
+  animation-direction: reverse;
+  animation-duration: 9s;
+}
+
+.orbit::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c7984b;
+  top: 12px;
+  left: 18px;
+  box-shadow: 0 2px 7px #b77e2b55;
+}
+
+.success-emblem {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 25px;
+  color: var(--green);
+  background: linear-gradient(145deg, #f5fff4, #dcefdc);
+  border: 1px solid #c0ddbf;
+  box-shadow:
+    0 15px 20px #43845a22,
+    inset 2px 2px 4px white,
+    inset -2px -2px 5px #a7cba755;
+  animation: float 3s ease-in-out infinite;
+}
+
+.success-emblem svg {
+  width: 39px;
+  height: 39px;
+}
+
+.card-title {
+  transform: translateZ(28px);
+}
+
+.card-title .mini {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.card-title h2 {
+  margin: 10px 0;
+  font-size: clamp(28px, 4vw, 39px);
+}
+
+.card-title p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.card-middle {
+  padding: 27px 0 24px;
+}
+
+.section-heading {
+  margin: 0 0 15px;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #9b773f;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.step {
+  text-align: left;
+  padding: 18px 15px;
+  border-radius: 18px;
+  border: 1px solid #efe0c4;
+  background: #fffdf8;
+  color: inherit;
+  transition: transform .25s ease, box-shadow .25s ease,
+              border-color .25s ease, background .25s ease;
+  transform: translateZ(12px);
+}
+
+.step:hover, .step:focus-visible {
+  transform: translateY(-5px) translateZ(22px);
+  border-color: #d5b16e;
+  box-shadow: 0 12px 22px #a77c3517;
+  outline: none;
+}
+
+.step.active {
+  border-color: #c59a53;
+  background: #fff6e5;
+  box-shadow: 0 8px 20px #a77c3515;
+}
+
+.step-icon {
+  width: 41px;
+  height: 41px;
+  margin-bottom: 13px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #f7ecd6;
+  color: #a9772e;
+}
+
+.step-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.step strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.step small {
+  display: block;
+  margin-top: 7px;
+  color: #8c7b63;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.step-detail {
+  display: none;
+  margin-top: 13px;
+  padding: 16px 18px;
+  border: 1px solid #ead5ad;
+  border-radius: 16px;
+  background: #fff6e4;
+  animation: fadeIn .25s ease;
+}
+
+.step-detail.visible { display: block; }
+
+.step-detail strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.step-detail p {
+  margin: 0;
+  color: #7d6b51;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.card-bottom {
+  padding-top: 23px;
+  border-top: 1px dashed #e5d2ae;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 390px;
+}
+
+.tip-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #a9772e;
+  background: #f8ecd3;
+}
+
+.tip-icon svg { width: 21px; }
+
+.tip p {
+  margin: 0;
+  color: #86745c;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.tip strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #634b28;
+  font-size: 12px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.btn {
+  min-height: 48px;
+  padding: 13px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #d8c198;
+  border-radius: 14px;
+  color: #7b5727;
+  background: #fffdf8;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  transition: transform .2s ease, box-shadow .2s ease,
+              background .2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px #98713a1c;
+}
+
+.btn.primary {
+  color: white;
+  border-color: #b98538;
+  background: linear-gradient(135deg, #d4a75d, #b77d2c);
+  box-shadow: 0 8px 16px #b77d2c2a,
+              inset 1px 1px 1px #ffffff70;
+}
+
+.btn svg { width: 16px; height: 16px; }
+
+footer {
+  padding: 0 15px;
+  text-align: center;
+  color: #9a8970;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* Decorative floating elements */
+.sparkle {
+  position: fixed;
+  z-index: -1;
+  color: #c49a50;
+  opacity: .55;
+  pointer-events: none;
+  animation: float 4s ease-in-out infinite;
+}
+
+.sparkle.s1 { top: 28%; left: 5%; font-size: 23px; }
+.sparkle.s2 { top: 48%; right: 6%; font-size: 28px; animation-delay: -1s; }
+.sparkle.s3 { top: 75%; left: 8%; font-size: 17px; animation-delay: -2s; }
+
+.toast {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  z-index: 20;
+  max-width: calc(100% - 30px);
+  padding: 13px 20px;
+  border: 1px solid #ead5ad;
+  border-radius: 50px;
+  background: #fffdf8;
+  color: #6e532d;
+  box-shadow: 0 8px 30px #5d46201c;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translate(-50%, 15px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 650px) {
+  .site-header { padding: 17px 18px; }
+  .header-label { display: none; }
+  main { margin-top: 20px; }
+  .intro { margin-bottom: 18px; }
+  .intro p { font-size: 13px; }
+  .scene { padding: 12px 0 25px; perspective: 1000px; }
+  .card { border-radius: 23px; }
+  .card-content { padding: 24px 19px; }
+  .card-top { flex-direction: column; text-align: center; gap: 14px; }
+  .emblem-area { flex-basis: 125px; height: 125px; }
+  .card-title h2 { font-size: 31px; }
+  .steps { grid-template-columns: 1fr; }
+  .step {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    column-gap: 12px;
+    align-items: center;
+    padding: 13px;
+  }
+  .step-icon { grid-row: span 2; margin: 0; }
+  .step strong { align-self: end; }
+  .step small { margin-top: 3px; }
+  .card-bottom { align-items: flex-start; }
+  .tip { align-items: flex-start; }
+  .tip-icon { width: 36px; height: 36px; }
+  .buttons { flex-direction: column; }
+  .btn { width: 100%; }
+  .sparkle.s1 { left: 2%; }
+  .sparkle.s2 { right: 2%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-icon">
+      <svg viewBox="0 0 24 24" width="25" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
+        <path d="M6 11v5c4 3 8 3 12 0v-5M22 9v6"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">TRIRATNA</span>
+      <span class="brand-sub">COACHING INSTITUTE</span>
+    </span>
+  </a>
+  <span class="header-label">DOUBT SUPPORT</span>
+</header>
+
+<span class="sparkle s1">✧</span>
+<span class="sparkle s2">✦</span>
+<span class="sparkle s3">✧</span>
+
+<main>
+  <section class="intro">
+    <span class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      QUERY SUBMITTED
+    </span>
+
+    <h1>
+      One step closer to<br>
+      <span class="gold-text">understanding.</span>
+    </h1>
+
+    <p>
+      Every question is an opportunity to learn.
+      Thank you for reaching out to TRIRATNA.
+    </p>
+  </section>
+
+  <!-- 3D INTERACTIVE CARD -->
+  <section class="scene" id="scene">
+    <article class="card" id="tiltCard">
+      <div class="card-content">
+
+        <div class="card-top">
+          <div class="emblem-area">
+            <div class="orbit"></div>
+            <div class="orbit two"></div>
+
+            <div class="success-emblem">
+              <svg viewBox="0 0 48 48" fill="none">
+                <path d="M10 24L20 34L38 14"
+                  stroke="currentColor" stroke-width="4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card-title">
+            <span class="mini">Submission received</span>
+            <h2>Thank You!</h2>
+            <p id="greeting">
+              Your doubt has been submitted successfully.
+              Our team can now review the details you shared.
+            </p>
+          </div>
+        </div>
+
+        <div class="card-middle">
+          <p class="section-heading">Explore what happens next</p>
+
+          <div class="steps">
+
+            <button class="step" data-step="0" aria-expanded="false">
+              <span class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="11" cy="11" r="7"/>
+                  <path d="m16 16 4 4M8 11h6M11 8v6"/>
+                </svg>
+              </span>
+              <strong>01. Review</strong>
+              <small>Understanding your query</small>
+            </button>
+
+            <button class="step" data-step="1" aria-expanded="false">
+              <span class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+                  <path d="M8 11h8M8 14h5"/>
+                </svg>
+              </span>
+              <strong>02. Clarify</strong>
+              <small>Follow-up if required</small>
+            </button>
+
+            <button class="step" data-step="2" aria-expanded="false">
+              <span class="step-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+                  <path d="m9 10 2 2 4-4"/>
+                </svg>
+              </span>
+              <strong>03. Keep learning</strong>
+              <small>Continue your preparation</small>
+            </button>
+
+          </div>
+
+          <div class="step-detail" id="stepDetail" aria-live="polite">
+            <strong id="detailTitle">Your next step</strong>
+            <p id="detailText"></p>
+          </div>
+        </div>
+
+        <div class="card-bottom">
+          <div class="tip">
+            <span class="tip-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M9 18h6M10 22h4M8 14c-1.2-1-2-2.5-2-4a6 6 0 1 1 12 0c0 1.5-.8 3-2 4l-1 2h-6l-1-2Z"/>
+              </svg>
+            </span>
+            <p>
+              <strong>Study tip</strong>
+              Keep the exam name and question details handy if more information is needed.
+            </p>
+          </div>
+
+          <span class="eyebrow" style="letter-spacing:0; flex-shrink:0;">
+            <span class="eyebrow-dot"></span>
+            Thank you
+          </span>
+        </div>
+
+      </div>
+    </article>
+  </section>
+
+  <div class="buttons" style="max-width:820px; margin:0 auto 28px;">
+    <a class="btn primary" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1Z"/>
+      </svg>
+      Back to Home
+    </a>
+
+    <button class="btn" id="reset3d" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+      Reset 3D View
+    </button>
+
+    <button class="btn" id="copyConfirmation" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="8" y="8" width="13" height="13" rx="2"/>
+        <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+      </svg>
+      Copy Confirmation
+    </button>
+  </div>
+
+  <footer>
+    <strong>TRIRATNA Coaching Institute</strong><br>
+    Your questions matter. Keep learning, keep growing.
+    <br><br>
+    <span>This page confirms submission only; it does not guarantee a response time.</span>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Optional personalization:
+   doubt-thank-you.html?name=Riya
+*/
+const query = new URLSearchParams(location.search);
+const name = (query.get("name") || "").trim().slice(0, 60);
+
+if (name) {
+  document.getElementById("greeting").textContent =
+    `Thank you, ${name}! Your doubt has been submitted successfully. Our team can now review the details you shared.`;
+}
+
+/* REAL 3D TILT: mouse, stylus and touch */
+const scene = document.getElementById("scene");
+const card = document.getElementById("tiltCard");
+let resetTimer;
+
+function setTilt(x, y) {
+  const rect = scene.getBoundingClientRect();
+  const px = (x - rect.left) / rect.width;
+  const py = (y - rect.top) / rect.height;
+
+  const rotateY = (px - 0.5) * 12;
+  const rotateX = (0.5 - py) * 9;
+
+  card.style.transition = "transform 0.12s ease-out";
+  card.style.transform =
+    `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+}
+
+scene.addEventListener("pointermove", event => {
+  if (event.pointerType === "touch") return;
+  setTilt(event.clientX, event.clientY);
+});
+
+scene.addEventListener("pointerleave", () => {
+  resetTilt();
+});
+
+scene.addEventListener("pointerdown", event => {
+  if (event.pointerType === "touch") {
+    setTilt(event.clientX, event.clientY);
+  }
+});
+
+scene.addEventListener("pointerup", () => {
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(resetTilt, 500);
+});
+
+function resetTilt() {
+  card.style.transition = "transform .6s cubic-bezier(.2,.8,.2,1)";
+  card.style.transform = "rotateX(0deg) rotateY(0deg)";
+}
+
+document.getElementById("reset3d").addEventListener("click", () => {
+  resetTilt();
+  showToast("3D view reset");
+});
+
+/* Interactive expandable steps */
+const steps = document.querySelectorAll(".step");
+const detail = document.getElementById("stepDetail");
+const detailTitle = document.getElementById("detailTitle");
+const detailText = document.getElementById("detailText");
+
+const stepInfo = [
+  {
+    title: "Step 1: Your query",
+    text: "Your submitted details can be reviewed to understand the question or issue. Keep the relevant question and exam information available."
+  },
+  {
+    title: "Step 2: Further clarification",
+    text: "If additional information is needed, the institute can follow up using the contact details you provided. A reply is not guaranteed by this confirmation page."
+  },
+  {
+    title: "Step 3: Continue preparing",
+    text: "Keep studying while your query is being reviewed. Note any related topics or questions you would like to discuss."
+  }
+];
+
+steps.forEach(button => {
+  button.addEventListener("click", () => {
+    const index = Number(button.dataset.step);
+    const wasActive = button.classList.contains("active");
+
+    steps.forEach(step => {
+      step.classList.remove("active");
+      step.setAttribute("aria-expanded", "false");
+    });
+
+    if (wasActive) {
+      detail.classList.remove("visible");
+      return;
+    }
+
+    button.classList.add("active");
+    button.setAttribute("aria-expanded", "true");
+    detailTitle.textContent = stepInfo[index].title;
+    detailText.textContent = stepInfo[index].text;
+    detail.classList.add("visible");
+  });
+});
+
+/* Copy button */
+document.getElementById("copyConfirmation").addEventListener("click", async () => {
+  const message =
+    "My doubt/query has been submitted to TRIRATNA Coaching Institute.";
+
+  try {
+    await navigator.clipboard.writeText(message);
+    showToast("Confirmation copied!");
+  } catch (error) {
+    // Clipboard access may be blocked for local files or insecure origins.
+    showToast("Clipboard unavailable in this browser.");
+  }
+});
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2300);
+}
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

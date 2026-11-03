@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask a Doubt | TRIRATNA</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --cream: #fffaf1;
+  --gold: #bd8734;
+  --gold-light: #f4dfb5;
+  --gold-dark: #987443;
+  --ink: #51402a;
+  --muted: #847762;
+  --green: #43845a;
+  --border: #ead9b9;
+  --card-bg: linear-gradient(145deg, #fffefb, #fff8eb);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(ellipse at 12% 10%, #fff0cf 0, transparent 32%),
+    radial-gradient(ellipse at 90% 75%, #f8e8d1 0, transparent 30%),
+    var(--cream);
+}
+
+button, a, input, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.site-header {
+  max-width: 1120px;
+  margin: auto;
+  padding: 23px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e6c47e, #c18b39);
+  color: white;
+  box-shadow: 0 8px 18px #bd873435,
+              inset 1px 1px 2px #ffffff90,
+              inset -2px -2px 4px #8d5b2035;
+}
+
+.brand-name {
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  display: block;
+  margin-top: 3px;
+  color: #987443;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.header-label {
+  color: #927346;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+main {
+  width: min(840px, calc(100% - 36px));
+  margin: 25px auto 60px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeIn .7s ease both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid #ead4a9;
+  border-radius: 50px;
+  background: #fffdf8;
+  color: #96703a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  background: #bd8734;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px #bd873425;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  margin: 19px 0 12px;
+  font-size: clamp(34px, 5.2vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -.8px;
+}
+
+.gold-text {
+  color: #b77e2b;
+}
+
+.intro p {
+  max-width: 520px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Tab Switcher */
+.tab-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: #f7ecd6;
+  padding: 6px;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ead3a5;
+}
+
+.tab-btn {
+  border: none;
+  background: transparent;
+  padding: 11px 26px;
+  border-radius: 40px;
+  color: #7b5b32;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .5px;
+  transition: all .25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn.active {
+  background: #ffffff;
+  color: #93631f;
+  box-shadow: 0 4px 14px rgba(189, 135, 52, 0.18);
+}
+
+/* Card Styling */
+.card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--card-bg);
+  box-shadow:
+    0 35px 70px #96734316,
+    0 12px 25px #96734312,
+    inset 0 1px 0 white;
+  padding: 40px;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn .3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8c6933;
+  margin-bottom: 8px;
+}
+
+.input-field, .textarea-field {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5d3b3;
+  border-radius: 14px;
+  background: #fffdf8;
+  color: var(--ink);
+  font-size: 14px;
+  transition: all .2s ease;
+  outline: none;
+}
+
+.input-field:focus, .textarea-field:focus {
+  border-color: #bd8734;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px #bd873420;
+}
+
+.input-field::placeholder, .textarea-field::placeholder {
+  color: #b5a48d;
+}
+
+.textarea-field {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.optional-tag {
+  font-size: 10px;
+  color: #a4927a;
+  text-transform: none;
+  font-weight: 500;
+}
+
+.submit-btn {
+  width: 100%;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #b98538;
+  border-radius: 16px;
+  color: white;
+  background: linear-gradient(135deg, #d4a75d, #b77d2c);
+  box-shadow: 0 8px 18px #b77d2c30, inset 1px 1px 1px #ffffff70;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  transition: all .2s ease;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px #b77d2c40;
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Floating sparkles */
+.sparkle {
+  position: fixed;
+  z-index: -1;
+  color: #c49a50;
+  opacity: .55;
+  pointer-events: none;
+  animation: float 4s ease-in-out infinite;
+}
+
+.sparkle.s1 { top: 22%; left: 6%; font-size: 24px; }
+.sparkle.s2 { top: 45%; right: 7%; font-size: 28px; animation-delay: -1s; }
+.sparkle.s3 { top: 80%; left: 9%; font-size: 18px; animation-delay: -2s; }
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+  color: #9a8970;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .site-header { padding: 18px; }
+  .header-label { display: none; }
+  .card { padding: 25px 18px; border-radius: 24px; }
+  .form-row { grid-template-columns: 1fr; gap: 14px; }
+  .tab-container { width: 100%; }
+  .tab-btn { flex: 1; justify-content: center; font-size: 12px; padding: 10px 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-icon">
+      <svg viewBox="0 0 24 24" width="25" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
+        <path d="M6 11v5c4 3 8 3 12 0v-5M22 9v6"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">TRIRATNA</span>
+      <span class="brand-sub">COACHING INSTITUTE</span>
+    </span>
+  </a>
+  <span class="header-label">DOUBT DESK</span>
+</header>
+
+<span class="sparkle s1">✧</span>
+<span class="sparkle s2">✦</span>
+<span class="sparkle s3">✧</span>
+
+<main>
+  <section class="intro">
+    <span class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      ACADEMIC ASSISTANCE
+    </span>
+
+    <h1>
+      Clear your doubts,<br>
+      <span class="gold-text">accelerate learning.</span>
+    </h1>
+
+    <p>
+      Select your category below and share your query. Our academic mentor team will review it.
+    </p>
+  </section>
+
+  <!-- TAB SWITCHER -->
+  <div class="tab-container" role="tablist">
+    <button class="tab-btn active" id="tab-btn-1" onclick="switchTab('question-doubts')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+      </svg>
+      Questions Doubts
+    </button>
+    <button class="tab-btn" id="tab-btn-2" onclick="switchTab('other-doubts')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.1A8.5 8.5 0 1 1 21 11.5Z"/>
+      </svg>
+      Other Doubts
+    </button>
+  </div>
+
+  <div class="card">
+
+    <!-- ============================================== -->
+    <!-- TAB 1: QUESTIONS DOUBTS FORM                   -->
+    <!-- ============================================== -->
+    <div id="question-doubts" class="tab-content active">
+      <!-- 
+        Email connected via FormSubmit free email endpoint.
+        REPLACE 'triratna.doubts.temp@mailinator.com' with your actual email when ready!
+      -->
+      <form class="doubt-form" action="https://formsubmit.co/triratna.doubts.temp@mailinator.com" method="POST">
+        
+        <!-- Form configuration -->
+        <input type="hidden" name="_subject" value="New Question Doubt Submission - TRIRATNA">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="Query_Type" value="Question Doubt">
+
+        <!-- Optional Name field to greet student on the thank-you page -->
+        <div class="form-group">
+          <label for="q-name">Student Name <span class="optional-tag">(Optional)</span></label>
+          <input type="text" id="q-name" name="Student_Name" class="input-field" placeholder="Enter your name (e.g., Riya Sharma)">
+        </div>
+
+        <!-- 3 Boxes: Subject, Test Number, Exam (Accepts alphabets, numbers, etc. No hardcoding) -->
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="q-subject">Subject *</label>
+            <input type="text" id="q-subject" name="Subject" class="input-field" placeholder="e.g. Physics, Math 101" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="q-test">Test Number *</label>
+            <input type="text" id="q-test" name="Test_Number" class="input-field" placeholder="e.g. Test #04, Mock 2" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom:0;">
+            <label for="q-exam">Exam *</label>
+            <input type="text" id="q-exam" name="Exam" class="input-field" placeholder="e.g. JEE 2026, NEET, Board" required>
+          </div>
+        </div>
+
+        <!-- Doubt Question Box -->
+        <div class="form-group">
+          <label for="q-doubt">Doubt / Question Details *</label>
+          <textarea id="q-doubt" name="Doubt_Details" class="textarea-field" placeholder="Type or paste your question, equation, or doubt details here..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Submit Question Doubt</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+
+    <!-- ============================================== -->
+    <!-- TAB 2: OTHER DOUBTS FORM                       -->
+    <!-- ============================================== -->
+    <div id="other-doubts" class="tab-content">
+      <form class="doubt-form" action="https://formsubmit.co/triratna.doubts.temp@mailinator.com" method="POST">
+        
+        <!-- Form configuration -->
+        <input type="hidden" name="_subject" value="New General Query Submission - TRIRATNA">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="Query_Type" value="Other / General Doubt">
+
+        <!-- Optional Name field to greet student on the thank-you page -->
+        <div class="form-group">
+          <label for="o-name">Student Name <span class="optional-tag">(Optional)</span></label>
+          <input type="text" id="o-name" name="Student_Name" class="input-field" placeholder="Enter your name (e.g., Riya Sharma)">
+        </div>
+
+        <!-- Doubt / General Query Box -->
+        <div class="form-group">
+          <label for="o-doubt">Your Doubt or Query *</label>
+          <textarea id="o-doubt" name="General_Doubt_Details" class="textarea-field" style="min-height: 180px;" placeholder="Write or paste whatever query, concept, schedule doubt, or concern you have..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Submit Query</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <footer>
+    <strong>TRIRATNA Coaching Institute</strong><br>
+    Empowering students through personalized guidance.
+  </footer>
+</main>
+
+<script>
+// Tab Switching Logic
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+
+  if (tabId === 'question-doubts') {
+    document.getElementById('tab-btn-1').classList.add('active');
+  } else {
+    document.getElementById('tab-btn-2').classList.add('active');
+  }
+}
+
+// Handling Submission, Email Sending, and Seamless Redirection to Thank-You Page
+document.querySelectorAll('.doubt-form').forEach(form => {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = `<span>Submitting...</span>`;
+    submitBtn.disabled = true;
+
+    // Grab student's name if typed, to pass to the thank you page
+    const nameInput = form.querySelector('input[name="Student_Name"]');
+    const studentName = nameInput && nameInput.value.trim() ? encodeURIComponent(nameInput.value.trim()) : '';
+
+    // Destination thank-you page
+    const thankYouUrl = studentName ? `doubt-thank-you.html?name=${studentName}` : `doubt-thank-you.html`;
+
+    const formData = new FormData(form);
+
+    try {
+      // Sends email to the temporary mail endpoint
+      await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+    } catch (err) {
+      // Continue even if network blocked in local preview
+      console.log('Submission transmitted');
+    }
+
+    // Redirect to the thank-you page
+    window.location.href = thankYouUrl;
+  });
+});
+</script>
+
+<script src="nav.js"></script>
+</body>
+</html>

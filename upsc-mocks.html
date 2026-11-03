@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSC CSE Practice Portal | Triratna Coaching Institute</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        .warm-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(217, 119, 6, 0.15);
+            transition: all 0.2s ease-out;
+        }
+        .warm-card:hover {
+            border-color: rgba(217, 119, 6, 0.45);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-amber-900/10 bg-[#FAF7F2]/90 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-white font-bold shadow-md shadow-amber-600/20">
+                    T
+                </div>
+                <div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </div>
+            
+            <button onclick="refreshData()" class="px-4 py-2 rounded-full border border-amber-600/30 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Sync Sheet</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="py-8 border-b border-amber-900/10 bg-gradient-to-b from-white/70 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <h1 class="text-3xl sm:text-4xl font-bold font-serif text-slate-900">
+                UPSC CSE Practice & Mock Test Papers
+            </h1>
+            <p class="text-slate-600 text-sm mt-2 font-serif italic">
+                Direct access to Prelims and Mains papers. Read PDFs online or download directly.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8 flex-1 w-full">
+        
+        <!-- DYNAMIC PRIMARY CATEGORIES (e.g. Prelims, Mains, CSAT) -->
+        <div id="primary-tabs" class="flex flex-wrap items-center gap-2 bg-amber-100/70 p-1.5 rounded-2xl w-fit border border-amber-300/40 mb-6">
+            <!-- Rendered Dynamically -->
+        </div>
+
+        <!-- DYNAMIC SUBJECTS / PAPERS (e.g. History, Polity, GS 1) -->
+        <div class="block md:hidden mb-6" id="mobile-subject-wrapper">
+            <label class="block text-xs font-bold text-slate-700 mb-2">Select Subject / Paper:</label>
+            <select id="mobile-subject-dropdown" onchange="onSubCategorySelect(this.value)" class="w-full bg-white border border-amber-900/20 rounded-xl p-3 text-sm font-bold text-slate-900 shadow-sm focus:outline-none focus:border-amber-600">
+                <!-- Rendered Dynamically -->
+            </select>
+        </div>
+
+        <div class="hidden md:flex flex-wrap items-center gap-2 pb-2 mb-6" id="desktop-subject-tabs">
+            <!-- Rendered Dynamically -->
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="relative max-w-md mb-8">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0118 0z"/></svg>
+            <input type="text" id="search-input" oninput="renderCards()" placeholder="Search test papers..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-amber-900/15 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-amber-600 shadow-sm">
+        </div>
+
+        <!-- TESTS GRID -->
+        <div id="tests-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <!-- EMPTY STATE -->
+        <div id="empty-state" class="hidden text-center py-16 bg-white/80 rounded-2xl warm-card p-8">
+            <h4 class="text-base font-bold font-serif text-slate-800">No test papers found in this category.</h4>
+            <p class="text-xs text-slate-500 mt-1">Add rows in your Google Sheet to show tests here automatically.</p>
+        </div>
+
+        <!-- LOADING STATE -->
+        <div id="loading-state" class="text-center py-16">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent mb-3"></div>
+            <p class="text-sm font-bold text-slate-600 font-serif">Connecting with Google Sheet repository...</p>
+        </div>
+
+    </main>
+
+    <!-- ON-DEMAND PDF VIEWER MODAL -->
+    <div id="pdf-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-2 sm:p-6">
+        <div class="bg-white rounded-2xl w-full max-w-5xl h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-amber-900/20">
+            <!-- Modal Header -->
+            <div class="px-5 py-3 border-b border-slate-200 flex items-center justify-between bg-warmBg">
+                <div>
+                    <h3 id="modal-title" class="text-sm sm:text-base font-bold font-serif text-slate-900 truncate max-w-md sm:max-w-xl">
+                        Document Preview
+                    </h3>
+                    <span id="modal-subtitle" class="text-[11px] text-amber-800 font-semibold block">PDF Viewer</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a id="modal-download-btn" href="#" target="_blank" download class="px-3 py-1.5 text-xs font-bold bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg transition flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Download</span>
+                    </a>
+                    <button onclick="closePdfModal()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- On-Demand iframe -->
+            <div class="flex-1 bg-slate-100 relative">
+                <div id="pdf-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 z-10">
+                    <div class="animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent mb-2"></div>
+                    <p class="text-xs font-semibold text-slate-500">Loading document...</p>
+                </div>
+                <iframe id="pdf-frame" class="w-full h-full border-0" onload="document.getElementById('pdf-loader').classList.add('hidden')"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================= CONFIGURATION =================
+        const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
+        const EVALUATION_EMAIL = "evaluations@triratnainstitute.com";
+
+        // Global State
+        let normalizedTree = {}; // Structure: { [MainCategory]: { [SubCategory]: [tests] } }
+        let currentMainCategory = null;
+        let currentSubCategory = null;
+
+        // Smart Normalizer for Tab Names
+        function parseTabName(rawName) {
+            // Split by hyphen or slash (e.g. "pre - History" or "Prelims/GS 1")
+            const parts = rawName.split(/[-/:]/);
+            let rawMain = parts[0].trim();
+            let rawSub = parts.length > 1 ? parts.slice(1).join('-').trim() : "General";
+
+            // Normalization Rules (pre, prelim, prelims -> "Prelims")
+            const lowerMain = rawMain.toLowerCase();
+            let cleanMain = rawMain;
+
+            if (["pre", "prelim", "prelims"].includes(lowerMain)) {
+                cleanMain = "Prelims";
+            } else if (["main", "mains"].includes(lowerMain)) {
+                cleanMain = "Mains";
+            } else {
+                // Capitalize first letters nicely
+                cleanMain = rawMain.replace(/\b\w/g, c => c.toUpperCase());
+            }
+
+            const cleanSub = rawSub.replace(/\b\w/g, c => c.toUpperCase());
+            return { mainCategory: cleanMain, subCategory: cleanSub };
+        }
+
+        // Convert Google Drive view URL to preview URL for iframe embedding
+        function formatDriveUrl(url) {
+            if (!url) return "";
+            url = url.trim();
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+            }
+            return url;
+        }
+
+        // Fetch Data from Google Apps Script
+        async function fetchSheetData(forceRefresh = false) {
+            document.getElementById('loading-state').classList.remove('hidden');
+            document.getElementById('tests-grid').innerHTML = "";
+            document.getElementById('empty-state').classList.add('hidden');
+
+            const cacheKey = "triratna_parsed_cache";
+            if (!forceRefresh) {
+                const cached = sessionStorage.getItem(cacheKey);
+                if (cached) {
+                    normalizedTree = JSON.parse(cached);
+                    initDynamicUI();
+                    return;
+                }
+            }
+
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const rawData = await res.json();
+
+                // Build category tree dynamically
+                normalizedTree = {};
+
+                rawData.forEach(sheetItem => {
+                    const { mainCategory, subCategory } = parseTabName(sheetItem.rawTabName);
+                    
+                    if (!normalizedTree[mainCategory]) {
+                        normalizedTree[mainCategory] = {};
+                    }
+                    if (!normalizedTree[mainCategory][subCategory]) {
+                        normalizedTree[mainCategory][subCategory] = [];
+                    }
+
+                    // Append tests with stage metadata
+                    const formattedTests = sheetItem.tests.map(t => ({
+                        ...t,
+                        stage: mainCategory,
+                        paperUrl: t['paper url'] || t['paperurl'] || t['pdf'] || "",
+                        solutionUrl: t['solution url'] || t['solutionurl'] || t['solution'] || "",
+                        questions: t['questions'] || t['question count'] || "",
+                        marks: t['marks'] || t['total marks'] || "",
+                        description: t['description'] || ""
+                    }));
+
+                    normalizedTree[mainCategory][subCategory].push(...formattedTests);
+                });
+
+                sessionStorage.setItem(cacheKey, JSON.stringify(normalizedTree));
+                initDynamicUI();
+            } catch (err) {
+                console.error("Fetch error:", err);
+                document.getElementById('loading-state').innerHTML = `
+                    <div class="text-red-600 font-bold text-sm">Failed to connect with Google Sheet.</div>
+                    <div class="text-xs text-slate-500 mt-1">Check your Apps Script Web App URL and permissions.</div>
+                `;
+            }
+        }
+
+        // Initialize UI with zero hardcoding
+        function initDynamicUI() {
+            document.getElementById('loading-state').classList.add('hidden');
+            const mainKeys = Object.keys(normalizedTree);
+
+            if (mainKeys.length === 0) {
+                document.getElementById('empty-state').classList.remove('hidden');
+                return;
+            }
+
+            // Set default main category
+            currentMainCategory = mainKeys[0];
+            renderMainCategories();
+            renderSubCategories();
+        }
+
+        // Render Primary Category Buttons (Prelims, Mains, etc.)
+        function renderMainCategories() {
+            const container = document.getElementById('primary-tabs');
+            const mainKeys = Object.keys(normalizedTree);
+
+            container.innerHTML = mainKeys.map(cat => `
+                <button onclick="switchMainCategory('${cat}')" id="main-btn-${cat}" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${cat === currentMainCategory ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-700 hover:text-slate-900'}">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function switchMainCategory(cat) {
+            currentMainCategory = cat;
+            renderMainCategories();
+            renderSubCategories();
+        }
+
+        // Render Sub-Category Tabs (History, Polity, etc.)
+        function renderSubCategories() {
+            const subCategories = Object.keys(normalizedTree[currentMainCategory] || {});
+
+            if (subCategories.length === 0) {
+                document.getElementById('desktop-subject-tabs').innerHTML = "";
+                document.getElementById('mobile-subject-dropdown').innerHTML = "";
+                renderCards();
+                return;
+            }
+
+            currentSubCategory = subCategories[0];
+
+            // Desktop Buttons
+            const desktopContainer = document.getElementById('desktop-subject-tabs');
+            desktopContainer.innerHTML = subCategories.map((sub, idx) => `
+                <button onclick="onSubCategorySelect('${sub}')" id="sub-btn-${sub}" class="sub-pill px-4 py-2 rounded-xl text-xs font-bold transition-all ${idx === 0 ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20' : 'bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500'}">
+                    ${sub}
+                </button>
+            `).join('');
+
+            // Mobile Dropdown
+            const mobileDropdown = document.getElementById('mobile-subject-dropdown');
+            mobileDropdown.innerHTML = subCategories.map(sub => `
+                <option value="${sub}">${sub}</option>
+            `).join('');
+
+            renderCards();
+        }
+
+        function onSubCategorySelect(sub) {
+            currentSubCategory = sub;
+
+            // Desktop active state
+            document.querySelectorAll('.sub-pill').forEach(btn => {
+                btn.className = "sub-pill px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white text-slate-700 border border-amber-900/10 hover:border-amber-500";
+            });
+            const activeBtn = document.getElementById(`sub-btn-${sub}`);
+            if (activeBtn) {
+                activeBtn.className = "sub-pill px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-600 text-white shadow-md shadow-amber-600/20";
+            }
+
+            // Mobile dropdown sync
+            document.getElementById('mobile-subject-dropdown').value = sub;
+
+            renderCards();
+        }
+
+        // Render Cards
+        function renderCards() {
+            const grid = document.getElementById('tests-grid');
+            const empty = document.getElementById('empty-state');
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+
+            const tests = (normalizedTree[currentMainCategory] && normalizedTree[currentMainCategory][currentSubCategory]) || [];
+
+            const filtered = tests.filter(t => !query || (t.title && String(t.title).toLowerCase().includes(query)));
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            grid.innerHTML = filtered.map(t => {
+                const encodedTitle = encodeURIComponent(t.title);
+                const safeUrl = (t.paperUrl || '').replace(/'/g, "\\'");
+                const safeTitle = (t.title || '').replace(/'/g, "\\'");
+                
+                return `
+                <div class="warm-card rounded-2xl p-6 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${t.stage === 'Prelims' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-900 border border-amber-200'}">
+                                ${t.stage}
+                            </span>
+                            ${t.marks ? `<span class="text-[11px] font-semibold text-slate-500 ml-auto">${t.marks} Marks</span>` : ''}
+                        </div>
+
+                        <h3 class="text-base font-bold font-serif text-slate-900 leading-snug">
+                            ${t.title}
+                        </h3>
+
+                        ${t.description ? `<p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">${t.description}</p>` : ''}
+
+                        ${t.questions ? `
+                            <div class="mt-4 flex items-center gap-2 text-[11px] text-slate-600 font-semibold bg-amber-50/70 p-2.5 rounded-xl border border-amber-200/50">
+                                <span>📄 ${t.questions} Questions</span>
+                                <span>•</span>
+                                <span>PDF Ready</span>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-amber-900/10 flex flex-col gap-2">
+                        <div class="flex items-center gap-2">
+                            <!-- ON-DEMAND VIEW BUTTON -->
+                            <button onclick="openPdfModal('${safeUrl}', '${safeTitle}', '${t.stage}')" class="flex-1 bg-slate-900 hover:bg-amber-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition shadow-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <span>View Test Paper</span>
+                            </button>
+                            
+                            ${t.solutionUrl ? `
+                                <button onclick="openPdfModal('${t.solutionUrl.replace(/'/g, "\\'")}', '${safeTitle} (Solution)', '${t.stage}')" class="px-3 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 text-xs font-bold rounded-xl transition">
+                                    Solution
+                                </button>
+                            ` : ''}
+                        </div>
+
+                        ${t.stage === 'Mains' ? `
+                            <a href="mailto:${EVALUATION_EMAIL}?subject=Mains Copy Submission: ${encodedTitle}&body=Respected Faculty,%0D%0A%0D%0APlease find attached my handwritten answer sheet PDF for evaluation.%0D%0A%0D%0AStudent Name: %0D%0AContact Number: " class="text-center text-[11px] font-bold text-amber-800 hover:text-amber-950 py-1 transition flex items-center justify-center gap-1">
+                                <span>✉️ Submit Copy for Evaluation</span>
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // ================= ON-DEMAND MODAL CONTROLLER =================
+        function openPdfModal(url, title, stage) {
+            if (!url || url === '#' || url === '') {
+                alert("The PDF link is not yet uploaded in the Google Sheet for this test.");
+                return;
+            }
+
+            const modal = document.getElementById('pdf-modal');
+            const frame = document.getElementById('pdf-frame');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSubtitle = document.getElementById('modal-subtitle');
+            const downloadBtn = document.getElementById('modal-download-btn');
+            const loader = document.getElementById('pdf-loader');
+
+            modalTitle.innerText = title;
+            modalSubtitle.innerText = `${stage} Document`;
+            downloadBtn.href = url;
+
+            loader.classList.remove('hidden');
+            
+            // Only set src when clicked
+            frame.src = formatDriveUrl(url);
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdf-modal');
+            const frame = document.getElementById('pdf-frame');
+            
+            modal.classList.add('hidden');
+            // Clear source to instantly kill background downloading/memory
+            frame.src = "";
+            document.body.style.overflow = '';
+        }
+
+        // Force Sync Button
+        function refreshData() {
+            sessionStorage.removeItem("triratna_parsed_cache");
+            fetchSheetData(true);
+        }
+
+        // Start
+        fetchSheetData();
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>

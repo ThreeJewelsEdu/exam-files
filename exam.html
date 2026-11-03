@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Competitive Examinations | TRIRATNA Coaching Institute</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmBg: '#FAF7F2',
+                        brandGold: '#D97706',
+                        brandAmber: '#B45309',
+                        brandNavy: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        /* 3D tilt perspective */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.22s ease-out, box-shadow 0.22s ease-out, border-color 0.25s ease;
+            will-change: transform;
+        }
+
+        /* Executive Warm Card Design */
+        .exec-card {
+            background: linear-gradient(145deg, #ffffff 0%, #fffdf9 60%, #fff9ee 100%);
+            border: 1px solid rgba(217, 119, 6, 0.2);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .exec-card:hover {
+            border-color: rgba(217, 119, 6, 0.55);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px -8px rgba(180, 83, 9, 0.16);
+        }
+
+        /* Dynamic Stagger Animation when switching tabs */
+        @keyframes cardPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.96) translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .card-animate {
+            animation: cardPop 0.35s ease forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#FAF7F2] text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900 overflow-x-hidden">
+
+    <!-- ================= TOP HEADER ================= -->
+    <header class="border-b border-amber-900/10 bg-[#FAF7F2]/90 sticky top-0 z-30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-amber-600/20 shrink-0">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-serif">TRIRATNA</span>
+                    <span class="block text-[10px] tracking-widest uppercase text-amber-700 font-bold -mt-1">Coaching Institute</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
+                <a href="index.html" class="hover:text-amber-700 transition">Home</a>
+                <a href="about-us.html" class="hover:text-amber-700 transition">About Us</a>
+                <a href="ask-a-doubt.html" class="hover:text-amber-700 transition flex items-center gap-1.5">
+                    <span>Doubt Desk</span>
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Support</span>
+                </a>
+            </nav>
+
+            <a href="book-appointment.html" class="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm flex items-center gap-2">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Book an Appointment</span>
+                <span class="sm:hidden">Appointment</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ================= MAIN CONTAINER ================= -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-grow w-full">
+        
+        <!-- Header Banner -->
+        <div class="space-y-4 mb-8 text-center sm:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-amber-500/30 bg-amber-50 text-amber-800 text-xs font-bold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Official Examination Hub & Syllabus Directory
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-bold font-serif text-slate-900">
+                Competitive Examination Blueprints
+            </h1>
+            <p class="text-slate-600 max-w-3xl text-xs sm:text-sm leading-relaxed font-serif italic">
+                "Select your target examination vertical below to explore individual pattern breakdowns, educational eligibility criteria, and preparation roadmaps."
+            </p>
+        </div>
+
+        <!-- ================= INTERACTIVE FILTER & SEARCH BAR ================= -->
+        <div class="bg-white/85 backdrop-blur-md p-4 rounded-2xl border border-amber-200/80 shadow-sm mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Category Tabs (Filter Buttons) -->
+            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="filterTabs">
+                <button onclick="setFilter('all')" data-cat="all" class="tab-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-600 text-white shadow-sm flex items-center gap-1.5">
+                    <span>All Examinations</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px]">22</span>
+                </button>
+                <button onclick="setFilter('banking')" data-cat="banking" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-100/70 text-amber-900 hover:bg-amber-200/60 flex items-center gap-1.5">
+                    <span>Banking</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-amber-200 text-[10px]">6</span>
+                </button>
+                <button onclick="setFilter('ssc')" data-cat="ssc" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-100/70 text-amber-900 hover:bg-amber-200/60 flex items-center gap-1.5">
+                    <span>SSC</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-amber-200 text-[10px]">8</span>
+                </button>
+                <button onclick="setFilter('railway')" data-cat="railway" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-100/70 text-amber-900 hover:bg-amber-200/60 flex items-center gap-1.5">
+                    <span>Railway</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-amber-200 text-[10px]">7</span>
+                </button>
+                <button onclick="setFilter('upsc')" data-cat="upsc" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-100/70 text-amber-900 hover:bg-amber-200/60 flex items-center gap-1.5">
+                    <span>UPSC CSE</span>
+                    <span class="px-1.5 py-0.5 rounded-full bg-amber-200 text-[10px]">1</span>
+                </button>
+            </div>
+
+            <!-- Instant Live Search Bar -->
+            <div class="relative w-full md:w-72">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search exam (e.g. CGL, RBI, ALP)..." class="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-amber-600 focus:bg-white transition">
+            </div>
+
+        </div>
+
+        <!-- ================= EXAM CARDS GRID (ALL CARDS IN PREMIUM UPSC-LEVEL DESIGN) ================= -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="examsGrid">
+
+            <!-- ================= UPSC SECTION ================= -->
+            <!-- 1. UPSC Civil Services (Exclusive Flagship Showcase) -->
+            <div class="exam-card tilt-card exec-card p-6 sm:p-7 rounded-2xl flex flex-col justify-between border-2 border-amber-400 shadow-md md:col-span-2 lg:col-span-3" data-category="upsc" data-name="upsc civil services examination cse ias ips ifs">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-500 text-white flex items-center justify-center shadow-md shadow-amber-600/30">
+                            <i data-lucide="award" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-600 text-white shadow-sm">
+                            Dedicated Single Exam Vertical
+                        </span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <h2 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900">UPSC Civil Services Examination (CSE)</h2>
+                        <p class="text-xs text-amber-800 font-bold uppercase tracking-wider">IAS • IPS • IFS • IRS • Central Group 'A' Services</p>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-4xl pt-1">
+                            India's premier civil administrative entrance conducted in 3 rigorous stages: Preliminary (Objective GS + CSAT), Mains (9 Descriptive Subjective Papers), and Personality Test (Interview Board). Our pedagogy focuses on analytical answer synthesis and current affairs integration.
+                        </p>
+                    </div>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-5 pt-3 border-t border-amber-200/80">
+                        <div class="p-2.5 rounded-xl bg-white border border-amber-200 text-center">
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white border border-amber-200 text-center">
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Prelims + Mains + Interview</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white border border-amber-200 text-center">
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">Negative Marking</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd (Prelims)</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-white border border-amber-200 text-center">
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase">Cadre</span>
+                            <span class="text-xs font-bold text-slate-800">All India Services</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-amber-200">
+                    <button onclick="openExamModal('UPSC CSE', 'Civil Services Examination', 'Graduate in any discipline (Age 21-32)', 'Prelims (Paper 1 GS 200M + Paper 2 CSAT 200M) -> Mains (9 Descriptive Papers: Essay, GS I-IV, Optional I & II, Language) -> Interview (275M)', 'GS Foundation (History, Polity, Economy, Geography, Environment, Science & Tech), Ethics (GS IV), Optional Subject mastery, Daily Answer Writing, CSAT aptitude.')" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                        <span>View Complete Blueprint</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <div class="flex items-center gap-3 text-xs">
+                        <a href="ask-a-doubt.html" class="font-bold text-amber-800 hover:text-amber-900 underline">Ask Doubt in UPSC</a>
+                        <span>•</span>
+                        <a href="book-appointment.html" class="font-bold text-amber-800 hover:text-amber-900 underline">Book UPSC Mentorship</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================= BANKING SECTION (6 CARDS) ================= -->
+
+            <!-- 2. SBI PO -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="sbi po probationary officer state bank of india">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="building" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                            Officer Scale I
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SBI PO</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">State Bank of India — Probationary Officer</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Premier managerial entry into India's largest bank testing high-level quantitative data analysis, reasoning puzzles, and English descriptive writing.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">3 Tiers</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SBI PO', 'Probationary Officer (State Bank of India)', 'Graduation in any discipline (Age 21-30)', 'Prelims (100 Marks: English 30, Quant 35, Reasoning 35) -> Mains (200 Marks Objective + 50 Marks Descriptive) -> GE & Interview (50 Marks)', 'High-speed Quantitative Aptitude, High-level Reasoning Puzzles, Data Analysis, Banking & Financial Awareness, English letter/essay writing.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 3. SBI Clerk -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="sbi clerk junior associate customer support sales">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            No Interview
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SBI Clerk (Junior Associate)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Customer Support & Sales Cadre</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Two-tier direct recruitment testing speed mathematics, logical reasoning, English comprehension, and general financial awareness.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Prelims + Mains</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SBI Clerk', 'Junior Associate (Customer Support & Sales)', 'Graduation in any stream (Age 20-28)', 'Prelims (100 Marks, 60 mins) -> Mains (190 Questions, 200 Marks, 2 Hours 40 Mins). No Interview round.', 'Numerical Ability, Reasoning Ability, General English, General/Financial Awareness, Local Language Proficiency.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 4. IBPS PO -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="ibps po probationary officer nationalised banks">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                            11 Public Banks
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">IBPS PO</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Management Trainee / Officer Cadre</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Centralized common recruitment for Probationary Officers across major nationalized banks with timed sectional Prelims and descriptive Mains.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">3 Tiers</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('IBPS PO', 'Probationary Officer across Nationalized Banks', 'Graduation in any discipline (Age 20-30)', 'Prelims (100 Marks, sectional timing) -> Mains (225 Marks Objective + Descriptive) -> Interview (100 Marks).', 'Reasoning & Computer Aptitude, General/Economy/Banking Awareness, English Language, Data Analysis & Interpretation.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 5. IBPS Clerk -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="ibps clerk clerical cadre public sector banks">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="file-text" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            Direct Merit
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">IBPS Clerk</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Clerical Cadre Across PSBs</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        State-wise merit entry across all participating public sector banks through computer-based Prelims and Mains without interview.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Prelims + Mains</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('IBPS Clerk', 'Clerical Assistant across Public Sector Banks', 'Graduation in any discipline (Age 20-28)', 'Prelims (100 Questions, 100 Marks, 60 Mins) -> Mains (190 Questions, 200 Marks, 160 Mins). No Interview.', 'Quantitative Aptitude, Reasoning Ability, English Comprehension, General Awareness with special reference to Banking industry.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 6. RBI Exam (Unified Single Mention) -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="rbi exam reserve bank of india grade b assistant regulatory">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="landmark" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
+                            Central Bank
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RBI Exam</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Reserve Bank of India Recruitment</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Prestigious regulatory central banking examination evaluating Economic & Social Issues (ESI), Finance & Management (FM), and Descriptive English.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduation (60%)</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Phase I + II + Int</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RBI Exam', 'Reserve Bank of India Recruitment', 'Graduation with min 60% marks (Age 21-30)', 'Phase-I (Objective 200 Marks) -> Phase-II (Paper 1 ESI, Paper 2 Descriptive English, Paper 3 Finance & Management) -> Interview (75 Marks).', 'Economic and Social Issues (ESI), Financial System & Regulation, Management Principles, Descriptive English, Macroeconomics.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 7. IBPS RRB -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="banking" data-name="ibps rrb regional rural banks officer scale office assistant">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="home" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-purple-50 text-purple-800 border border-purple-200">
+                            Regional Languages
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">IBPS RRB (Scale I & Assistant)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Regional Rural Banks Recruitment</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        State-wise recruitment for Officer Scale I and Office Assistant posts with tests available in multiple regional Indian languages.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Prelims + Mains</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/4th Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('IBPS RRB', 'Regional Rural Banks (Officer Scale I & Office Assistant)', 'Graduation in any discipline + Regional Language (Age 18-30)', 'Prelims (Reasoning 40 + Quant 40 = 80 Marks, 45 mins) -> Mains (200 Marks) -> Interview (Only for Scale I).', 'Reasoning, Quantitative Aptitude, General Awareness, English/Hindi Language option, Computer Knowledge.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+
+            <!-- ================= SSC SECTION (8 CARDS) ================= -->
+
+            <!-- 8. SSC CGL -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc cgl combined graduate level inspector aso excise">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="layers" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                            Group B & C Gazetted
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC CGL</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Combined Graduate Level Examination</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        For premier central posts including Assistant Section Officer (ASO), Income Tax Inspector, Central Excise, and Enforcement Officer.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Tier I + Tier II</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">0.50 / 1 Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC CGL', 'Combined Graduate Level Examination', 'Bachelor Degree in any discipline (Age 18-32)', 'Tier-I (CBT: 100 Qs, 200 Marks, 60 mins) -> Tier-II (Mathematical Abilities, Reasoning, English, General Awareness, Computer Module + Typing Test).', 'Quantitative Aptitude, General Intelligence & Reasoning, English Comprehension, General Awareness, Computer Proficiency.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 9. SSC CHSL -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc chsl combined higher secondary level ldc jsa deo 12th">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="file-check-2" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            10+2 Level
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC CHSL</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Combined Higher Secondary Level</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Recruitment for Lower Division Clerk (LDC), Junior Secretariat Assistant (JSA), and Data Entry Operators across central ministries.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">12th Pass</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Tier I + Tier II</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Skill Test</span>
+                            <span class="text-xs font-bold text-slate-800">Typing / DEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC CHSL', 'Combined Higher Secondary (10+2) Level', '12th Pass from recognized board (Age 18-27)', 'Tier-I (CBT: 100 Qs, 200 Marks) -> Tier-II (Section I: Maths & Reasoning; Section II: English & GA; Section III: Skill/Typing Test).', 'Basic Mathematics, General Intelligence, English Language (Basic Knowledge), General Awareness, Typing speed.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 10. SSC CPO -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc cpo sub inspector delhi police capf bsf crpf">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
+                            Sub-Inspector Cadre
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC CPO (Central Police)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">SI in Delhi Police & Central Armed Forces</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Executive Sub-Inspector selection across Delhi Police, BSF, CISF, CRPF, ITBP, and SSB through written exams and physical efficiency standards.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Paper 1 + PET + P2</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Physical</span>
+                            <span class="text-xs font-bold text-slate-800">Mandatory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC CPO', 'Sub-Inspector in Delhi Police & CAPFs', 'Bachelor Degree in any discipline (Age 20-25)', 'Paper-I (200 Marks) -> Physical PET/PST -> Paper-II (English Comprehension 200 Marks) -> Detailed Medical Exam (DME).', 'General Intelligence, General Knowledge, Quantitative Aptitude, English Comprehension, Physical Endurance Standards.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 11. SSC MTS & Havaldar -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc mts havaldar multi tasking staff cbic 10th pass">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="users" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-purple-50 text-purple-800 border border-purple-200">
+                            Matric Level
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC MTS & Havaldar</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Multi-Tasking Staff & CBIC Havaldar</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Matriculation-level entrance evaluating English, General Awareness, Numerical Aptitude, and Reasoning. Single CBT with Session-based scoring.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th Pass</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT Sessions</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Interview</span>
+                            <span class="text-xs font-bold text-slate-800">None</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC MTS', 'Multi-Tasking Staff & Havaldar (CBIC/CBN)', '10th Class Pass (Age 18-25 / 18-27)', 'Session-I (Numerical Math & Reasoning, No Negative Marking) -> Session-II (General Awareness & English Language, Merit determining).', 'Numerical Aptitude, Reasoning, General Awareness (Current + Static), General English grammar and vocabulary.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 12. SSC GD Constable -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc gd constable paramiltary bsf crpf itbp cisf">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="user-check" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            Central Forces
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC GD Constable</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">General Duty Constables (CAPFs & SSF)</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Written test and physical standards examination for Constable positions in BSF, CISF, ITBP, CRPF, and Assam Rifles.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th Pass</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT + PET/PST</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Language</span>
+                            <span class="text-xs font-bold text-slate-800">13 Reg. Langs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC GD Constable', 'General Duty Constables (CAPFs & SSF)', '10th Matriculation Pass (Age 18-23)', 'Computer Based Exam (80 Qs, 160 Marks, 60 mins) -> Physical Efficiency Test (PET) & Physical Standard Test (PST) -> Medical Exam.', 'General Intelligence & Reasoning, General Knowledge & General Awareness, Elementary Mathematics, English/Hindi.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 13. SSC JE -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc je junior engineer civil mechanical electrical btech diploma">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="settings" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-50 text-cyan-800 border border-cyan-200">
+                            Technical Cadre
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC JE</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Junior Engineer (Civil, Mech, Electrical)</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Technical engineering recruitment for CPWD, MES, BRO, and Central Water Commission across Paper-1 (CBT) and Paper-2 (Core Domain).
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Diploma / B.Tech</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Paper 1 + Paper 2</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Mode</span>
+                            <span class="text-xs font-bold text-slate-800">Online CBT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC JE', 'Junior Engineer (Civil, Electrical, Mechanical)', 'Diploma or B.Tech in relevant Engineering branch (Age up to 30/32)', 'Paper-I (200 Marks: 50 Reasoning, 50 GA, 100 Engineering) -> Paper-II (300 Marks: Core Technical CBT).', 'General Engineering (Civil/Mech/Electrical), General Intelligence, General Awareness.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 14. SSC Stenographer -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc stenographer grade c d shorthand english no maths">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="pen-tool" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200">
+                            Zero Maths
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC Stenographer</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Grade 'C' & Grade 'D' Examination</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Zero-maths exam pattern testing English (100 Marks), Reasoning (50), and GA (50), followed by the official Shorthand Skill Test.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">12th Pass</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Skill Test</span>
+                            <span class="text-xs font-bold text-slate-800">Shorthand</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Mathematics</span>
+                            <span class="text-xs font-bold text-slate-800">Not Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC Stenographer', 'Grade C & Grade D Examination', '12th Pass + Shorthand skills (Age 18-30 for C, 18-27 for D)', 'Computer Based Exam (200 Marks: 100 English, 50 Reasoning, 50 GA) -> Shorthand Dictation & Transcription Skill Test.', 'English Language & Comprehension, General Intelligence, General Awareness. (No Mathematics).')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 15. SSC Selection Post -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="ssc" data-name="ssc selection post phase recruitment matric 12th graduation">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="check-square" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                            Phase Cadres
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">SSC Selection Post</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Phase Recruitment Examinations</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Specialized vacancies across ministries divided into 3 qualification tiers evaluated through single computer-based tests.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th / 12th / Grad</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Single CBT</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">0.50 Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('SSC Selection Post', 'Phase Recruitment Examination', 'Matriculation / 10+2 / Graduation (Depending on Post)', 'Single Stage CBT (100 Qs, 200 Marks, 60 mins) -> Skill test if applicable -> Document Verification.', 'Basic to Advanced Math, Reasoning, General Awareness, English Language according to qualification tier.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+
+            <!-- ================= RAILWAY SECTION (7 CARDS) ================= -->
+
+            <!-- 16. RRB NTPC -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rrb ntpc station master clerk goods guard cbt 1 2">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="train" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
+                            Non-Technical
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RRB NTPC</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Graduate & Under-Graduate Cadres</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Station Master, Goods Train Manager, Commercial Apprentice, and Accounts Clerk via CBT 1, CBT 2 & CBAT/Typing rounds.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">12th & Grad</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT 1 + CBT 2</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RRB NTPC', 'Non-Technical Popular Categories (RRB)', '12th Pass or Bachelor Degree depending on Level (Age 18-33/36)', 'CBT-1 (100 Qs: 40 GA, 30 Math, 30 Reasoning) -> CBT-2 (120 Qs: 50 GA, 35 Math, 35 Reasoning) -> CBAT/Typing Skill Test.', 'General Awareness (Current + Static Science), Mathematics, General Intelligence and Reasoning.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 17. RRB Group D -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rrb group d level 1 track maintainer helper 10th iti">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="hammer" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            Level-1 Cadre
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RRB Group D (Level-1)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Track Maintainer & Operational Helpers</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Single CBT stage focusing on Class 10th NCERT General Science, Mathematics, and Reasoning, followed by Physical Efficiency Test (PET).
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th / ITI</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT + PET</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RRB Group D', 'Level-1 Posts (Track Maintainer, Pointsman, Assistant)', '10th Pass or ITI from NCVT/SCVT (Age 18-33)', 'Single CBT (100 Qs: 25 Science, 25 Math, 30 Reasoning, 20 Current Affairs, 90 mins) -> Physical Efficiency Test (PET).', 'NCERT Class 10th General Science (Physics, Chemistry, Biology), Basic Math, Reasoning.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 18. RRB ALP -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rrb alp assistant loco pilot cockpit train driver iti diploma">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
+                            Locomotive Pilot
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RRB ALP</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Assistant Loco Pilot (Loco Cockpit)</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Dedicated selection for locomotive cockpit train pilots via CBT 1 (60 mins), CBT 2 (Part A Merit + Part B Trade), and CBAT Psychometric tests.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th + ITI / Dip</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT 1 & 2 + CBAT</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Medical</span>
+                            <span class="text-xs font-bold text-slate-800">A-1 Standard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RRB ALP', 'Assistant Loco Pilot (Locomotive Driver)', 'Matriculation + ITI / Diploma in Mech/Electrical/Electronics (Age 18-30)', 'CBT-1 (75 Qs, 60 mins) -> CBT-2 (Part A: 100 Qs Merit + Part B: 75 Qs Qualifying Trade Test) -> CBAT Aptitude Test.', 'Basic Science & Engineering, Mathematics, General Intelligence, Relevant ITI Technical Trade.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 19. RRB Technician -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rrb technician grade 1 3 signal workshop iti degree diploma">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="wrench" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-cyan-50 text-cyan-800 border border-cyan-200">
+                            Signal & Workshop
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RRB Technician</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Grade I Signal & Grade III Workshop</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Specialized recruitment for Diploma/Degree holders (Grade I) and ITI/Matric technicians (Grade III) across Electrical, Signal & Workshop trades.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">ITI / Dip / Degree</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">Single CBT</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RRB Technician', 'Technician Grade I (Signal) & Grade III', 'B.Sc/Diploma/Engg for Grade I; 10th + ITI for Grade III (Age 18-33/36)', 'Single Stage CBT (Grade I: 100 Qs Basic Science & Engg, Math, GK; Grade III: 100 Qs Math, Science, Reasoning).', 'General Science, Mathematics, Technical Trade Foundation, General Awareness.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 20. RRB JE -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rrb je junior engineer dms cma civil mechanical electrical">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="cpu" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-purple-50 text-purple-800 border border-purple-200">
+                            Technical Cadre
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RRB JE (Engineering)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Civil, Mech, Electrical, Electronics & IT</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Junior Engineer, Depot Material Superintendent (DMS), and CMA cadres through non-tech CBT 1 and technical core domain CBT 2.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Diploma / B.Tech</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT 1 + CBT 2</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RRB JE', 'Junior Engineer (Railway Recruitment Board)', 'Diploma or Degree in Engineering in relevant branch (Age 18-33)', 'CBT-1 (100 Qs Non-Tech: Math, Reasoning, Science, GA) -> CBT-2 (150 Qs: 100 Core Engineering + 50 Non-Tech).', 'Core Technical Engineering Subjects, Physics & Chemistry, Computer Basics, Environmental Pollution.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 21. RPF Sub-Inspector -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rpf si sub inspector railway protection force graduate">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="shield" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
+                            Executive Force
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RPF Sub-Inspector (SI)</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">Graduate Executive Cadre</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Railway Protection Force sub-inspectors through 120-question CBT (50 GA, 35 Maths, 35 Reasoning), PMT, and 1600m run physical tests.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">Graduate</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT + PET/PMT</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RPF SI', 'Sub-Inspector in Railway Protection Force', 'Bachelor Degree in any discipline (Age 20-28)', 'Computer Based Test (120 Qs, 120 Marks, 90 mins: 50 GA, 35 Arithmetic, 35 Reasoning) -> Physical Measurement & Efficiency Test (PET/PMT).', 'General Awareness (Indian History, Art, Geography, Economics, General Science), Basic Arithmetic, General Intelligence.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- 22. RPF Constable -->
+            <div class="exam-card tilt-card exec-card p-6 rounded-2xl flex flex-col justify-between shadow-sm" data-category="railway" data-name="rpf constable railway security frontline 10th pass">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            Security Cadre
+                        </span>
+                    </div>
+
+                    <h2 class="text-xl font-bold font-serif text-slate-900">RPF Constable</h2>
+                    <p class="text-xs text-amber-800 font-bold mb-2">10th Pass Security Cadre</p>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        Frontline passenger and property security cadre across RPF & RPSF via 90-minute CBT followed by rigorous physical endurance standards.
+                    </p>
+
+                    <!-- Miniature Spec Badges -->
+                    <div class="grid grid-cols-3 gap-2 my-4 pt-3 border-t border-amber-200/70 text-center">
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Eligibility</span>
+                            <span class="text-xs font-bold text-slate-800">10th Pass</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Stages</span>
+                            <span class="text-xs font-bold text-slate-800">CBT + PET/PMT</span>
+                        </div>
+                        <div class="p-2 rounded-lg bg-white border border-amber-200/80">
+                            <span class="block text-[9px] text-slate-400 font-bold uppercase">Negative</span>
+                            <span class="text-xs font-bold text-slate-800">1/3rd Mark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="openExamModal('RPF Constable', 'Constable (Executive) in RPF / RPSF', '10th Class Pass from recognized board (Age 18-28)', 'Single Stage CBT (120 Qs, 90 mins: 50 GA, 35 Math, 35 Reasoning) -> Physical PET/PMT (1600m run, Long jump, High jump).', 'General Awareness, Basic Arithmetic, General Intelligence and Logical Reasoning.')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                    <span>View Complete Blueprint</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Empty State (When search yields no results) -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="search-x" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg font-bold font-serif text-slate-900">No Examinations Found</h3>
+            <p class="text-xs text-slate-500 mt-1">Try searching with a different keyword like "CGL", "RBI", or "NTPC".</p>
+        </div>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- INTERACTIVE EXAM BLUEPRINT MODAL (On-Demand Detailed Drawer)   -->
+    <!-- ============================================================== -->
+    <div id="examModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="relative w-full max-w-2xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-amber-300 scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" id="modalContainer">
+            
+            <!-- Close Button -->
+            <button onclick="closeExamModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="border-b border-amber-200/80 pb-4 mb-5">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200" id="mBadge">Exam Blueprint</span>
+                <h2 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 mt-2" id="mTitle">Exam Title</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1" id="mSub">Sub Details</p>
+            </div>
+
+            <!-- Modal Body Blocks -->
+            <div class="space-y-4 text-xs sm:text-sm">
+                
+                <div class="p-4 rounded-xl bg-amber-50/60 border border-amber-200">
+                    <strong class="block text-xs uppercase font-extrabold text-amber-800 tracking-wider mb-1">🎓 Eligibility & Age Criteria:</strong>
+                    <p class="text-slate-700 leading-relaxed" id="mEligibility"></p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                    <strong class="block text-xs uppercase font-extrabold text-slate-800 tracking-wider mb-1">📋 Selection Stages & Pattern:</strong>
+                    <p class="text-slate-600 leading-relaxed" id="mPattern"></p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                    <strong class="block text-xs uppercase font-extrabold text-slate-800 tracking-wider mb-1">📚 Key Syllabus Breakdown:</strong>
+                    <p class="text-slate-600 leading-relaxed" id="mSyllabus"></p>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer Actions (Direct Links to Doubt & Appointment) -->
+            <div class="mt-6 pt-5 border-t border-amber-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <a href="ask-a-doubt.html" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 font-bold text-xs transition text-center flex items-center justify-center gap-1.5">
+                    <i data-lucide="help-circle" class="w-4 h-4 text-amber-700"></i>
+                    <span>Ask a Doubt in this Exam</span>
+                </a>
+                <a href="book-appointment.html" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition shadow-sm text-center flex items-center justify-center gap-1.5">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span>Book 1-on-1 Guidance</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="border-t border-amber-900/10 py-8 text-center text-xs text-slate-500 bg-[#FAF7F2] mt-16">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="font-serif font-bold text-slate-800">TRIRATNA COACHING INSTITUTE</span>
+                <span class="text-slate-400">•</span>
+                <span class="italic font-serif">"Compassionate Learning for Success"</span>
+            </div>
+            <div>
+                © TRIRATNA Coaching Institute. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= LOGIC & 3D SCRIPT ================= -->
+    <script>
+        lucide.createIcons();
+
+        /* ================= 1. CATEGORY FILTER & HASH ROUTING ================= */
+        let currentCategory = 'all';
+
+        function setFilter(cat) {
+            currentCategory = cat;
+
+            // Update Tab Active Styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const btnCat = btn.getAttribute('data-cat');
+                if (btnCat === cat) {
+                    btn.className = "tab-btn active px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-600 text-white shadow-sm flex items-center gap-1.5";
+                } else {
+                    btn.className = "tab-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-amber-100/70 text-amber-900 hover:bg-amber-200/60 flex items-center gap-1.5";
+                }
+            });
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.exam-card');
+            let visibleCount = 0;
+
+            cards.forEach((card, index) => {
+                const cardCat = card.getAttribute('data-category');
+                const cardName = card.getAttribute('data-name') || '';
+
+                const matchesCat = (currentCategory === 'all' || cardCat === currentCategory);
+                const matchesSearch = !query || cardName.includes(query) || card.innerText.toLowerCase().includes(query);
+
+                if (matchesCat && matchesSearch) {
+                    card.classList.remove('hidden');
+                    // Add smooth entry animation with stagger delay
+                    card.classList.remove('card-animate');
+                    void card.offsetWidth; // trigger reflow
+                    card.classList.add('card-animate');
+                    card.style.animationDelay = `${(visibleCount % 6) * 0.04}s`;
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            const emptyState = document.getElementById('emptyState');
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        function handleSearch() {
+            applyFilters();
+        }
+
+        // Check URL Hash on Load (e.g. exams.html#banking or #ssc or #railway or #upsc)
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '').toLowerCase();
+            if (['banking', 'ssc', 'railway', 'upsc'].includes(hash)) {
+                setFilter(hash);
+            } else {
+                setFilter('all');
+            }
+        });
+
+        // Listen if hash changes in URL
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '').toLowerCase();
+            if (['banking', 'ssc', 'railway', 'upsc'].includes(hash)) {
+                setFilter(hash);
+            } else {
+                setFilter('all');
+            }
+        });
+
+        /* ================= 2. 3D CARD TILT PHYSICS ================= */
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = -(y / (rect.height / 2)) * 6;
+                const rotateY = (x / (rect.width / 2)) * 6;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+            });
+        });
+
+        /* ================= 3. MODAL LOGIC ================= */
+        const modal = document.getElementById('examModal');
+        const modalContainer = document.getElementById('modalContainer');
+
+        function openExamModal(title, sub, eligibility, pattern, syllabus) {
+            document.getElementById('mTitle').textContent = title;
+            document.getElementById('mSub').textContent = sub;
+            document.getElementById('mEligibility').textContent = eligibility;
+            document.getElementById('mPattern').textContent = pattern;
+            document.getElementById('mSyllabus').textContent = syllabus;
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-95');
+            modalContainer.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeExamModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeExamModal();
+        });
+    </script>
+<script src="nav.js"></script>
+</body>
+</html>
